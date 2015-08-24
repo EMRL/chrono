@@ -17,7 +17,7 @@
           </fieldset>
         </td>
         <td valign="top" width="50%">
-          <fieldset>
+          <!--//<fieldset>
             <legend>
               <%=_ 'Custom Avatar' %>
             </legend>
@@ -43,17 +43,36 @@
             <label>
               &#160;
             </label>
-          </fieldset>
+          </fieldset> //-->
+
+        <fieldset>
+          <legend>
+            <%=_ 'Custom Avatar' %>
+          </legend>         
+
+            <p>
+              <a href="http://en.gravatar.com/emails/">
+                <%= "<img src=\"#{h(@current_user.avatar_url(150))}\" class=\"photo tooltip\" title=\"You can change your avatar at gravatar.com\" />" %></a>
+            </p>
+            <p>
+              To change your avatar, login to <a href="http://en.gravatar.com/emails/">gravatar.com</a> with your EMRL email address and password.
+            </p><br />
+          <a href="http://en.gravatar.com/emails/" style="    background-color: #47acdf; border-style: none; color: #fff; cursor: pointer; font-family: 'Arimo', sans-serif; font-size: 1.1rem; font-weight: bold; margin-right: 0.5em; overflow: visible; padding: 9px 10px;"> Change Avatar </a>
+        </fieldset>
+
+
+
           <% if current_user.admin > 1 %>
                     <fieldset>
                       <legend>
-              <%=_ 'Miscellaneous' %>
+              <%=_ 'Miscellaneous Administration' %>
             </legend>
           <a href="/admin/stats">Statistics</a><br />
           <a href="/companies/edit/1">System Settings</a><br />
           <a href="/admin/news">Manage News</a><br />
           <a href="<%=request.protocol%><%=request.host_with_port%>/login/shortlist_auth/<%= current_user.autologin %>">Mobile View</a><br />
-          <a href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d">Work RSS Feed</a>
+          <a href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d">Work RSS Feed</a><br />
+          <a href="/users/new">Create User</a><br />
           <% end %>
                     </fieldset>
         </td>
