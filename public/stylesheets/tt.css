@@ -1072,7 +1072,7 @@ a.description {
 #content div.task_raised_pri {
 	border-left: solid 4px #FFC266;
 	    border-right: solid 4px #FFC266;
-    background: repeating-linear-gradient( 45deg, #FFFFFF, rgba(255, 194, 102, 0.06) 0px, #FFFFFF 1px, rgba(255, 194, 102, 0.06) 4px );
+    background: repeating-linear-gradient( 45deg, #FFFFFF, rgba(255, 194, 102, 0.2) 0px, #FFFFFF 1px, rgba(255, 194, 102, 0.2) 4px );
 }
 #content div.task_low_pri {
 	border-left: solid 4px #e7e0c4;
