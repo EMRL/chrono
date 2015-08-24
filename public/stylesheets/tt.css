@@ -354,7 +354,6 @@ input.checkbox {
 	width: 13px;
 }
 .small-collapse-indicator-open {
-	/*background: url(/images/expand-indicator-small.png) 10px 0px no-repeat;*/
 	color: #a6a6a6;
 	float: left;
 	font-size: 1.2rem;
@@ -364,7 +363,6 @@ input.checkbox {
 	padding-right: 2px;
 }
 .small-collapse-indicator-closed {
-	/* background: url(/images/expand-indicator-small.png) 10px -13px no-repeat; */
 	color: #a6a6a6;
 	float: left;
 	font-size: 1.2rem;
@@ -1040,7 +1038,6 @@ a.description {
 	text-align: left;
 }
 #content div.task {
-	background: url(/images/pri_normal_bkg.png) repeat-y;
 	border-left: solid 4px #b0d295;
 	clear: both;
 	font-size: 1.1rem;
@@ -1929,7 +1926,6 @@ h4 {
 	padding-left: 1em;	text-decoration: none;
 }
 a.widget-open {
-	background: url(/images/expand-indicator-small.png) 0px 0px no-repeat;
 	color: #a6a6a6;
 	float: left;
 	/* font-size: 80%; */
@@ -1941,7 +1937,6 @@ a.widget-open {
 	text-decoration: none;
 }
 a.widget-collapsed {
-	background: url(/images/expand-indicator-small.png) 0px -13px no-repeat;
 	color: #a6a6a6;
 	float: left;
 	/* font-size: 80%; */
@@ -2238,7 +2233,6 @@ div.rtc {
 	padding: 4px 3px 18px;
 }
 div.rtc a.rtct {
-	/* background: url('../images/comments.png') top left no-repeat; */
 	font-weight: normal;
 	font-size: 0.9em;
 	padding-bottom: 2px;
