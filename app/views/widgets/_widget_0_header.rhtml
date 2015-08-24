@@ -1,0 +1,7 @@
+<!-- TASKS (WIDGET_0) -->
+<div style="height: 18px;">
+	<span id="name-<%=@widget.dom_id%>">
+		<%= @widget.name %>
+	</span>
+	<%= link_to( content_tag(:span, '<i class="icon-rss icon-2x"></i>', :style => "", :border => 0, :class => "tooltip", :title => _("Subscribe to this widgets RSS feed")), :controller => 'feeds', :action => 'rss', :id => current_user.uuid, :widget => @widget )%>
+</div>

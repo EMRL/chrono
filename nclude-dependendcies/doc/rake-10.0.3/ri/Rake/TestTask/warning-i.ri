@@ -1,0 +1,2 @@
+U:RDoc::Attr[i"warning"Rake::TestTask#warning"RW:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["=Request that the tests be run with the warning flag set."?E.g. warning=true implies "ruby -w" used to run the tests.:
+@file"lib/rake/testtask.rbF@

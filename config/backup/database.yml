@@ -1,0 +1,26 @@
+development:
+  adapter: mysql
+  database: emrl_projectmanager
+  host: localhost
+  username: mysql
+  password: rRYFB4nFtqfR3AbV
+  encoding: utf8
+  socket: /var/run/mysql/mysql.sock
+
+test:
+  adapter: mysql
+  database: cit_test
+  host: localhost
+  username: cit
+  password: cit
+  encoding: utf8
+  socket: /var/run/mysql/mysql.sock
+
+production:
+  adapter: mysql
+  database: emrl_projectmanager
+  host: localhost
+  username: mysql
+  password: rRYFB4nFtqfR3AbV
+  encoding: utf8
+  socket: /var/run/mysql/mysql.sock

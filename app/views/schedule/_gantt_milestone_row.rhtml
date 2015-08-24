@@ -1,0 +1,21 @@
+<% range_start = Time.new.year - 5 %>
+<% range_end   = range_start + 10 %>
+<tr style="background-color:#eee;">
+    <td style="height:21px;vertical-align:middle;white-space:nowrap;padding:0;border-bottom:1px solid #eee;"><div style="height:19px;width:200px;overflow:hidden;font-weight:bold;">&nbsp;&nbsp;<i class="icon-flag"></i>&nbsp;&nbsp;<%= @t.milestone.name %> [<%= @t.project.name %>]</div></td>
+    <td width="1%" style="text-align:right;padding-right:0.5em;font-weight:bold;white-space:nowrap;"><%= worked_nice(@t.milestone.worked_minutes)%></td>
+    <td id="duration-<%=@t.milestone.dom_id%>" width="1%" style="text-align:right;font-weight:bold;white-space:nowrap"><%= worked_nice(@t.milestone.duration)%></td>
+    <td>&nbsp;</td>
+	<td style="padding-left:0.5em;text-align:right;white-space:nowrap;">
+	<% if current_user.can?(@t.project,'milestone')%>
+	    <input class="date" tabindex="<%=tab+1%>" id="due-<%=@t.milestone.dom_id%>" name="due" size="8" type="text" style="font-size:11px;" value="<%= @t.milestone.scheduled_date.strftime(current_user.date_format) if @t.milestone.scheduled_date %>" />
+        <!--//
+        <i class="icon-calendar-empty tooltip" id="start-<%=@t.dom_id%>-calendar" title="Show Calendar" style="color:#757575;"></i>
+        //-->
+        <script type="text/javascript">
+        Calendar.setup({ inputField:"due-<%=@t.milestone.dom_id%>",step:1,firstDay:1,button:"due-<%=@t.milestone.dom_id%>-calendar",ifFormat:"<%=current_user.date_format%>",range:[<%=range_start%>, <%=range_end%>],showOthers:true, onUpdate:function(){new Ajax.Request('/schedule/reschedule_milestone/<%=@t.milestone.id%>', {asynchronous: true, evalScripts: true, parameters:'due='+$('due-<%=@t.milestone.dom_id%>').value });} })
+        </script>
+        <%else%>
+        <%= @t.milestone.due_at.strftime(current_user.date_format) if @t.milestone.due_at %>
+        <% end %>
+    </td>
+</tr>

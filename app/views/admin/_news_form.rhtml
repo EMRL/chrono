@@ -1,0 +1,24 @@
+    <br />
+    <table>
+      <tr>
+        <td valign="top">
+          <label for="news_body">Message Body</label>
+        </td>
+        <td>
+          <%= text_area 'news', 'body', :cols => 100, :rows => 1  %><br />
+          <div class="optional">
+            Make sure the the news item is not too long, or it will blow up. It should be about one line of text,<br>
+            and you can include a hyperlink if you need to link to more information.
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <label for="news_publc">Public</label>
+        </td>
+        <td>
+          <%= check_box 'news', 'portal' %>
+        </td>
+      </tr>
+    </table>
+	<br />

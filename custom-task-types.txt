@@ -1,0 +1,3 @@
+/app/models/task.rb [402, 668]
+/app/views/tasks/_form.rhtml [226]
+/app/views/reports/list.rhtml [183]

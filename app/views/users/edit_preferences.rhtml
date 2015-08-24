@@ -1,0 +1,63 @@
+ <table cellspacing=0 cellpadding=0 class="content" width="99%" style="margin-left: 1em;padding-right:1em;" id="content">
+  <tr>
+    <td align=left colspan=2 class="page_header">
+      <%=_ 'Preferences' %>
+    </td>
+  </tr>
+  <tr>
+    <td align="left" colspan="2" style="padding-bottom:1em; padding-top:1em;">
+      <table width="90%" border=0 cellspacing=0 cellpadding=0>
+        <tr>
+          <td valign="top" width="50%">
+            <% form_tag :action => 'update_preferences', :id => @user do %><%= render :partial => "preferences" %>
+            <label>
+              &#160;
+            </label>
+            <%= submit_tag _("Save"), :class => 'nolabel' %><% end %>
+          </fieldset>
+        </td>
+        <td valign="top" width="50%">
+          <fieldset>
+            <legend>
+              <%=_ 'Custom Avatar' %>
+            </legend>
+            <% if @user.avatar? -%>
+            <p>
+              <label for="current_logo">
+                <%=_ 'Current Avatar' %>
+              </label>
+              <%= tag("img", {:src => @user.avatar_url(25), :border => 0 } ) %><%= tag("img", {:src => @user.avatar_url, :border => 0 } ) %><%= link_to _("[Delete]"), :controller => 'users', :action => "delete_avatar", :id => "#{@user.id}" %>
+            </p><% end -%><% form_tag({ :controller => 'users', :action => 'upload_avatar', :id => @user.id}, { :multipart => "true" }) do %>
+            <p>
+              <label for="users_tmp_file">
+                <%=_ 'New Avatar' %>
+              </label>
+              <%= file_field 'user', 'tmp_file' %>
+              &nbsp;&nbsp;
+              <%= submit_tag _("Upload"), :class => 'nolabel' %><% end %>
+            </p><br />
+            <label for="options_text"></label>
+            <span class="optional" style="clear:both;">
+              <%=_ "Thie file you upload will be resized to 25x25 and 50x50 while preserving its aspect ratio." %>
+            </span>
+            <label>
+              &#160;
+            </label>
+          </fieldset>
+          <% if current_user.admin > 1 %>
+                    <fieldset>
+                      <legend>
+              <%=_ 'Miscellaneous' %>
+            </legend>
+          <a href="/admin/stats">Statistics</a><br />
+          <a href="/companies/edit/1">System Settings</a><br />
+          <a href="/admin/news">Manage News</a><br />
+          <a href="<%=request.protocol%><%=request.host_with_port%>/login/shortlist_auth/<%= current_user.autologin %>">Mobile View</a><br />
+          <a href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d">Work RSS Feed</a>
+          <% end %>
+                    </fieldset>
+        </td>
+      </tr>
+    </table>
+
+</td></tr></table>

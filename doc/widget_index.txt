@@ -1,0 +1,11 @@
+0	Tasks
+1 	Projects
+2 	Recent Activities
+3 	Tasks / Day Chart
+4	Burndown Chart
+5	Burnup Chart
+6	Comments = 6
+7	Due Tasks
+8	Google Gadgets
+9	Work Status
+10	Active Tasks

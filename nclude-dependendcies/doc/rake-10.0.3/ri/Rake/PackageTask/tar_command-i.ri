@@ -1,0 +1,2 @@
+U:RDoc::Attr[i"tar_command""Rake::PackageTask#tar_command"RW:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["HTar command for gzipped or bzip2ed archives.  The default is 'tar'.:
+@file"lib/rake/packagetask.rbF@

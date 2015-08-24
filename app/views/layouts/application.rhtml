@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="alternate" type="application/rss+xml" title="EMRL Work Timeline Feed" href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d">
+    <link href="http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d" />
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+    <%= javascript_include_merged :base %>
+    <%= yield :tinymce %>
+    <%= javascript_include_merged :tt %>
+    <%= javascript_include_tag "beast" if ['forums', 'posts', 'topics'].include? controller.controller_name %>
+    <%= javascript_include_tag "swfobject" %>
+    <%= stylesheet_link_merged :tt %>
+    <%= stylesheet_link_tag "beast" if ['forums', 'posts', 'topics'].include? controller.controller_name %>
+    <%= javascript_include_tag "builder" if ['activities'].include? controller.controller_name %>
+    <% if ['activities'].include? controller.controller_name %>
+    <%= javascript_include_tag "portal" %>
+    <!--[if IE]><%= javascript_include_tag "excanvas" %><![endif]-->
+    <%= javascript_include_tag "flotr" %><% end %><%= yield :tinymce_init %>
+    <!--[if lt IE 7]>
+    <%= javascript_include_tag "IE7" %>
+		<style type="text/css">
+			#presence {
+      position: relative;
+      }
+		</style>
+    <![endif]-->
+    <%= stylesheet_link_tag "print", { :media => "print" } %><%= auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) %>
+    <title>
+      <%= controller.controller_name + " / " + controller.action_name %>
+    </title>
+      <% @internal = Customer.find(:first, :conditions => ["company_id = ? AND (name = 'Internal' or name = ?)", current_user.company_id, current_user.company.name ]) %>
+      <style type="text/css">
+      <% if !@internal.nil? && !@internal.css.nil? && @internal.css.length > 0 %><%= @internal.css %><% end %><% unless current_user.option_floating_chat %>#presence
+      { position:relative; } <% end %>
+      </style>
+    </head>
+      <body id="body" style="height:100%;">
+        <div id="loading" style="z-index: 1000; position:absolute; right: 10px; top: 10px; width:70px; height:20px; color: white; padding:6px; display: none;">
+          <%= image_tag('spinner.gif', :border => 0) %>
+        </div>
+        <div id="tip" style="position:absolute;top:250px;left:250px;visibility:hidden;max-width:600px;">
+          <table border="0">
+            <tr>
+              <td style="" id="message">
+                <br />
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div id="passive-chat-container" style="display:none;">
+          <table width="100%" cellspacing="0">
+            <tbody id="passive-chat"></tbody>
+          </table>
+        </div>
+        <table width="100%" cellspacing="0" cellpadding="0">
+          <tr>
+            <td colspan="2">
+              <div id="menu">
+                <%= render(:partial => "layouts/menu") %>
+              </div>
+              <table width="100%" cellpadding="0" cellspacing="0"
+              border="0" style="margin-top:0.5em;">
+                <tr>
+                  <td valign="bottom" style="padding-left:0px;"
+                  width="100%">
+                    <div id="globalMenu" width="100%">
+                      <div id="menucontainer" width="100%">
+                        <div id="tabmenu" width="100%">
+                          <%= render :partial => "layouts/tabmenu" %>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" height="10px">&#160;</td>
+          </tr>
+          <tr>
+            <td valign="top" width="100%">
+              <% news = NewsItem.find(:first, :order => "id desc", :conditions => ["id > ?", current_user.seen_news_id ]) %><% unless news.nil? %>
+              <div id="news">
+                <table class="news" id="news_table">
+                  <tr>
+                    <td width="1%" nowrap="nowrap" valign="top">
+                      <span class="news_date">
+                        [<%= tz.utc_to_local(news.created_at).strftime("#{current_user.time_format} #{current_user.date_format}") %>]
+                      </span>
+                    </td>
+                    <td>
+                      <span class="news_body" id="news_body">
+                        <%= news.body %>
+                      </span>
+                    </td>
+                    <td align="right" width="1%">
+                      <%= link_to_remote "#{_('<i class="icon-remove-sign icon-large"></i>')}", :url => { :controller => 'users', :action => 'update_seen_news', :id => news.id }, :success => visual_effect(:fade, "news", :duration => 0.5) %>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <% end %>
+              <div id="flash" <%="style=\"display:none\"" unless flash['notice']%>>
+                <table class="flash" id="flash_body" style="padding-right:1em;">
+                  <tr>
+                    <td id="flash_message" valign="middle"><i class="icon-info-sign icon-large"></i>&nbsp;&nbsp;
+                      <%= flash['notice'] %>
+                      <br />
+                    </td>
+                    <td width="1%" align="right">
+                      <a href="#" onClick="Effect.Fade('flash'); return false;"><i class="icon-remove-sign icon-large"></i></a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              <div class="content_body" style="margin-left: 4px; margin-right: 4px; padding-top: 0pt;">
+                <div style="background-color: rgb(238, 238, 238);">
+                  <span style="border-color: rgb(238, 238, 238); border-width: 1px 2px 0px; border-top: 1px solid rgb(238, 238, 238); overflow: hidden; background-color: rgb(255, 255, 255); display: block; height: 0px; font-size: 1px; margin-left: 3px; margin-right: 3px;">
+                  </span>
+                  <span style="border-style: solid; border-color: rgb(238, 238, 238); border-width: 0px 1px; overflow: hidden; background-color: rgb(255, 255, 255); display: block; height: 1px; font-size: 1px; margin-left: 2px; margin-right: 2px;">
+                  </span>
+                  <span style="border-style: solid; border-color: rgb(238, 238, 238); border-width: 0px 1px; overflow: hidden; background-color: rgb(255, 255, 255); display: block; height: 1px; font-size: 1px; margin-left: 1px; margin-right: 1px;">
+                  </span>
+                  <span style="border-style: solid; border-color: rgb(238, 238, 238); border-width: 0px 1px; overflow: hidden; background-color: rgb(255, 255, 255); display: block; height: 2px; font-size: 1px; margin-left: 0px; margin-right: 0px;">
+                  </span>
+                </div>
+                <div style="border-left: 1px solid rgb(238, 238, 238); border-right: 1px solid rgb(238, 238, 238);">
+                  <table width="100%" id="main-table">
+                    <tr>
+                      <td valign="top" id="main_col" style="height:100%;">
+                        <%= @content_for_layout %>
+                      </td>
+                      <!--//  Begin the collapsing right sidebar utility menu. Yes it's filled with many, many tables of of death and destruction. Sorry. Currently organized from top to bottom: user info/time/weather, task views, recent wikis, and resources. Would be nice to make this better someday. // -->
+                      <td id="right-menu-collapse" class="open" onclick="new Ajax.Request('/activities/toggle_menu', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}}); return false;">
+                        &nbsp;
+                      </td>
+                      <td align="right" valign="top" style="width:15%;<%= "display:none;" if session[:collapse_menu].to_i > 0 %>" id="left_menu">
+                        <table align="left" style="width:100%;padding-left:0.5em;" class="projects" cellspacing="0" cellpadding="0">
+                          <tr>
+                            <td align="left" class="page_header_user" width="100%" colspan="2">
+                              <div style="float:left;">
+                                <%= h(current_user.name) %><br />
+                                  <!--//  Instead of using the ruby time with <%=tz.now.strftime("#{current_user.time_format}")%> I'm using a bit of code to display time, and force it to update on the display. It's not using the user's time format settings though. Oh well we get what we pay for, right? //-->
+                                <script>
+                                function GetClock(){
+                                  d = new Date();
+                                  nhour  = d.getHours();
+                                  nmin   = d.getMinutes();
+                                  if(nhour ==  0) {ap = " AM";nhour = 12;} 
+                                  else if(nhour <= 11) {ap = " AM";} 
+                                  else if(nhour == 12) {ap = " PM";} 
+                                  else if(nhour >= 13) {ap = " PM";nhour -= 12;}
+                                  if(nmin <= 9) {nmin = "0" +nmin;}
+                                  document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+ap+"";
+                                  setTimeout("GetClock()", 1000);
+                                  }
+                                  window.onload=GetClock;
+                                </script>
+                                <span id="clockbox"></span> &bull; 
+                                <span id="res" class="tooltip" title="This is the temperature at our shop.<br />It whimsically updates whenever it feels like it."></span><br />
+                                  <!--// Ok, grabbing the weather from Yahoo's JSON API. The URL seems more than a little bit ghetto, with slow or no updates. FML //-->
+                                  <script>
+                                  function weather(o){
+                                    document.getElementById("res").innerHTML=""+o.query.results.channel.item.condition.temp+"&deg;"
+                                    document.getElementById("upd").innerHTML=o.query.results.channel.item.condition.date
+                                  }
+                                  </script>
+                                  <script src="http://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20location%3D%2295814%22&amp;format=json&amp;callback=weather">
+                                  </script>
+                                  <%= "#{online_users} #{_('Online')}" %>
+                              </div>
+                              <div>
+                                <div style="float:right;padding-top:0.1em;">
+                                  <%= "<img src=\"#{h(@current_user.avatar_url(50))}\" class=\"photo desaturate tooltip\" title=\"
+                                  You are a beautiful butterfly\" />" %><br />
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td><br />
+                              <!--// Display how much the user has worked today. Arbeit ist das schöne Leben!!! //-->
+                              <div style="float:left;padding-top:1px;padding-right:3px;color:#CC2233;opacity:0.5;">
+                                <% if total_today > 0 %>
+                                <i class="icon-li icon-exclamation-sign icon-2x"></i>
+                              </div>
+                              <div style="margin-left:3.1em;font-size:1.2rem;">
+                                <%=_ 'You have worked'%> <%= distance_of_time_in_words(total_today.minutes) %>
+                                <%=_ 'today.'%>
+                                <% end %>
+                              </div>
+                              <div style="clear:both;"></div><br />
+                            </td>
+                          </tr>
+                          <tr>
+                          <td align="left" colspan="2" width="100%">
+                            <div <%= "style=\"display:none;\"" if @current_sheet.nil? || controller.action_name == "stop_work" %>
+                            id="work-log">
+                              <table align="left"
+                              style="width:100%;" cellspacing="0"
+                              cellpadding="0">
+                                <tr>
+                                  <td align="left" width="100%"
+                                  class="page_header_side">
+                                    <div class="tooltip"
+                                    title="<%= _'Text entered here will be saved to you work log.automatically to your current task.'%>">
+                                      <%= _'Work Log' %>
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td align="left" width="100%">
+                                    <form method="post"
+                                    onsubmit="return false;"
+                                    id="worklog_form">
+                                      <textarea name="worklog[body]"
+                                      id="worklog_body"
+                                      style="resize:vertical; font-size:11px; margin:0px; border:none; width:97%;" rows="7" placeholder="Text entered here will be saved automatically to your current task."><%= @current_sheet.body if @current_sheet%></textarea>
+                                    </form>
+                                    <div id="worklog-saved"
+                                    class="optional"
+                                    style="text-align:right;padding-bottom:0.3em;padding-right:1em;">
+                                    </div>
+                                  </td>
+                                </tr>
+                                <tr>
+                              <td>
+                                &nbsp;
+                              </td>
+                            </tr>
+                          </table>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td align="left" class="page_header_side tooltip" colspan="2" width="100%" title="<%= _'Custom saved filters showing a subset of your tasks'%>">
+                        <div style="float: left;">
+                          <%=_ 'Task Views' %>
+                        </div>
+                        
+                        <div style="float:right;">
+                          <%= link_to _('<i class="icon-plus-sign"></i><br />'), :controller => 'views', :action => 'new' %>
+                        </div>
+                      </td>
+                    </tr>
+                    <!--// Commented out for now
+                    <tr>
+                      <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                        <%= link_to "#{_('Open Tasks')}", :controller => 'views', :action => 'all_tasks'%>
+                      </td>
+                    </tr>
+                    //-->
+                    <tr>
+                      <td class="views_item" colspan="2">
+                        <%= link_to _('My Open Tasks'), :controller => 'views', :action => 'my_tasks'%>
+                      </td>
+                    </tr>
+                    <!--// Commented out for now
+                    <tr>
+                      <td class="views_item" colspan="2">
+                        <%= link_to _('My In Progress Tasks'), :controller => 'views', :action => 'my_in_progress_tasks'%>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td class="views_item" colspan="2">
+                        <%= link_to _('Unassigned Tasks'), :controller => 'views', :action => 'unassigned_tasks'%>
+                      </td>
+                      </tr>
+                      //-->
+                      <!--// Careful with the formatting this next bit, it's fragile! //-->
+                      <% project_ids = current_project_ids %><% client_ids = current_projects.collect(&:customer_id).uniq.join(',')
+                         client_ids = "0" if client_ids.nil? || client_ids.empty?
+                         views = View.find(:all, :conditions => ["company_id = ? AND (user_id = ? or shared = 1) AND (filter_customer_id = 0 OR filter_customer_id IS NULL OR filter_customer_id IN (#{client_ids})) AND (filter_project_id = 0 OR filter_project_id IS NULL OR filter_project_id IN (#{project_ids}))", current_user.company_id, current_user.id], :order => "shared, name")
+                         for view in views %>
+                      <tr>
+                        <td class="views_item">
+                          <%= link_to view.name, :controller => 'views', :action => 'select', :id => view %>
+                          <%= link_to _('<i class="icon-edit-sign" style="text-decoration: none;"></i>'), :controller => 'views', :action => 'edit', :id => view if(view.user_id == current_user.id || current_user.admin?)%>
+                        </td>
+                        <td align="right">
+                        </td>
+                      </tr><% end %>
+                      <tr>
+                        <td colspan="2">
+                          &nbsp;
+                        </td>
+                      </tr>
+                      <tr>
+                        <td align="left" class="page_header_side tooltip" width="100%" colspan="2" title="<%= _'Quickly access recently edited Wikis'%>">
+                          <div style="float:left;">
+                            <%=_ 'Recent Wikis'%>
+                          </div>
+                        </td>
+                      </tr>
+           						<% wikis = WikiPage.find(:all, :limit => 6, :order => "updated_at DESC") %>
+				          		<% wiki_i = 0 %>
+			           			<% for wiki in wikis %>
+        							<tr>
+                        <td class="views_item" style="white-space:nowrap;<%= "padding-top:0.2em;" if (wiki_i == 0) %>">
+								          <div style="">
+									         <%= wiki.to_url_truncate(28) %>
+                         </div>
+        								</td>
+				        				<td<%= " style=\"color: padding-top:0.2em\"" if (wiki_i == 0) %>>
+        									&nbsp;&nbsp;<span style="color:#B8B8B8; font-weight:normal;"><%= wiki.updated_at.strftime("%m/%d") %></span>
+				        				</td>
+                      </tr>
+                      <% wiki_i += 1 %>
+          						<% end %>
+                      <tr>
+                        <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          &nbsp;
+                        </td>
+                        <!--//
+                      </tr>
+                      <tr>
+                        <td align="left" class="page_header_side tooltip" width="100%" colspan="2" title="<%= _'Commonly Accessed Information'%>">
+                          <div style="float:left;">
+                            <%=_ 'Resources'%>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                         <div style="">
+                          <a href="/wiki/show/">EMRL Wiki</a>
+                        </div>
+                      </td>
+                      <td>
+                      </td>
+                    </tr>  
+                      <tr>
+                        <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                         <div style="">
+									<a href="/wiki/show/Creative%20Dialogue">Creative Dialogue</a>
+                </div>
+              </td>
+							<td>
+							</td>
+						</tr>            
+            <tr>
+              <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                <div style="">
+									<a href="/wiki/show/The%20Project%20Manager">Project Management</a>
+                </div>
+              </td>
+							<td>
+							</td>
+						</tr>	
+            <tr>
+              <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                <div style="">
+									<a href="/wiki/show/Strategic%20Advertising%20Notes">Strategic Advertising Notes</a>
+                </div>
+              </td>
+							<td>
+							</td>
+						</tr>	
+						<tr>
+							<td class="views_item" style="padding-top: 0.2em;" colspan="2">
+								<div style="">
+									<a href="/wiki/show/Workflow">Workflow</a></div>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
+              <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                &nbsp;
+              </td>
+            </tr> //-->
+            <tr>
+              <td align="left" class="page_header_side tooltip" width="100%" colspan="2" title="<%= _'Commonly Accessed Information'%>">
+                <div style="float:left;">
+                  <%=_ 'Blog'%>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                <div style="">
+                  <!--// Insert the EMRL Blog feed via feed2js.org. Ghetto but it seemed the simplest way. //-->
+                  <script src="http://feed2js.org//feed2js.php?src=http%3A%2F%2Femrl.com%2Ffeed&amp;num=3&amp;desc=50>1&amp;targ=y&amp;utf=y"></script>
+                </div>
+              </td>
+              <td>
+              </td>
+            </tr>   
+            <tr>
+              <td class="views_item" style="padding-top: 0.2em;" colspan="2">
+                &nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                &nbsp;
+              </td>
+            </tr>
+            <tr>
+              <td align="left" colspan="2" width="100%">
+                <!--// The Short URL Generator, using YoURLs on http://emrl.co //-->
+                <iframe src="http://emrl.co/widget/pm.html" width="100%" scrolling="no" marginheight="0" frameborder="0" marginwidth="0"></iframe>
+                &nbsp;
+              </td>
+            </tr>
+            <!--// The notepad function is currently commented out. i'm not sure yet what to do with it. It works, but I don't know if we really need it.
+            <tr>
+              <td align="left" class="page_header_side tooltip" width="100%" colspan="2" title="<%= _'Easy access to commonly needed information.'%>">
+                <div style="float:left;">
+                  <%=_ 'Notepad'%>
+                </div>
+                <div style="float:right;padding-top:0.4em; margin-right:-0.6em;">
+                  <%= link_to _('New'), :controller => 'pages', :action => 'new' %>
+                </div>
+              </td>
+            </tr> 
+            <tr>
+              <td colspan="2">
+                <div style="height:0.2em;"></div>
+               </td>
+            </tr>
+            <% for page in current_pages %>
+            <tr>
+              <td align="left" class="pages_item" colspan="2">
+                <%= link_to "#{page.name}", { :controller => 'pages', :action => 'show', :id => page} %><br />
+                <small>Edited <%=_('%s ago', time_ago_in_words( page.updated_at, false ) )%>.</small>
+              </td>
+            </tr><% end %>//-->
+            <!--//<tr>
+              <td colspan="2"><a href="javascript:var timerwindow=window.open('<%=request.protocol%><%=request.host_with_port%>/login/shortlist_auth/<%= current_user.autologin %>','','resizable=1,toolbar=0,location=0,status=0,menubar=0,scrollbars=1,width=450,height=550');timerwindow.focus();" style="font-size:9px;" class="tooltip" title="<%= _'Testing a Mobile Iteration for Meetings'%>">No Touchie</a></td>
+            </tr>//-->
+          </table>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <% if current_user.company.show_messaging %>
+	<div id="presence" class="full">
+    <div id="presence-ui" class="clearfix">
+      <div id="presence-bar">
+        <div id="presence-buttons">
+          <% current_user.chats.each do |@chat| @user = @chat.target %>
+          <%= render :partial => 'shout/chat_user' if @chat.active >= 0%>
+          <% if @chat.active == 1 %>
+          <script>
+            toggleChatPopup($('presence-toggle-<%=@chat.target.dom_id%>'));
+          </script>
+          <% end %><% end %>
+          <div class="presence-section" id="presence-users">
+            <div class="presence-shadow" style="display:none;" id="presence-users-popup">
+              <div class="presence-popup">
+                <div class="optional">
+                  <%= _'Loading'%>...
+                </div>
+              </div>
+            </div>
+            <div class="presence-bar-text presence-toggle" id="presence-toggle-users">
+              <i class="icon-user icon-large"></i>
+               <%= _('Online')%> (<span id="presence-online"><%= online_users %></span>)
+            </div>
+          </div>
+        </div>
+      </div>
+      <% end %>
+      <%= periodically_call_remote(:url => { :controller => 'tasks', :action => 'update_sheet_info' }, :frequency => 90 ) -%>
+      <%= flash_plugin(session[:channels]) %>
+      <script>
+      // <![CDATA[
+      var userId=<%=current_user.id%>;
+      Event.observe(window, "load", function(e) {
+      <% if current_user.option_tooltips.to_i == 1 %>
+        makeTooltips(1);
+      <% else %>
+        makeTooltips(0);
+      <% end %>
+      <% if controller.controller_name == 'shout' && controller.action_name == 'room' %>
+        init_shout();
+        $('contact').scrollTo();
+        window.scrollBy(0,200);
+      <% end %>
+      Event.observe($('presence-toggle-users'), "click", function(ev) { 
+               toggleChatPopupEvent(ev); 
+               });
+            });
+      new Form.Element.Observer('worklog_body', 2, function(element, value) {new Ajax.Updater('worklog-saved', '/tasks/updatelog', {asynchronous:true, evalScripts:true, parameters: Form.serialize($('worklog_form'))  })});
+      // ]]>
+      </script>
+      <%#= query_review_output %>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+      </body>
+</html>

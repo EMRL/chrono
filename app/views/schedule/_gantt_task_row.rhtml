@@ -1,0 +1,31 @@
+<% range_start = Time.new.year - 5 %>
+<% range_end   = range_start + 10 %>
+<%
+can_work = { :disabled => "disabled" } unless current_user.can?(@t.project, 'work')
+can_work ||= {}
+depth = 1
+%>
+<tr class="gantt-row">
+  <td class="gantt-task" style="height:26px;border-bottom:1px solid #e6e6e6;width:260px;padding:0;padding-right:0.5em; white-space:nowrap;"><div style="width:250px;overflow:hidden;height:16px;" nowrap>
+        <%= link_to_task(@t) %>
+    </div>
+  </td>
+  <td width="1%" style="text-align:right;padding-right:0.5em; white-space:nowrap; border-bottom:1px solid #e6e6e6;">
+    <%= worked_nice(@t.worked_minutes)%>
+  </td>
+  <td width="1%" style="text-align:right; white-space:nowrap; border-bottom:1px solid #e6e6e6;">
+    <% if current_user.can?(@t.project,'prioritize')%><input tabindex="<%=tab%>" type="text" size="5" style="font-size:11px;" id="duration-<%=@t.dom_id%>" name="duration" value="<%= worked_nice(@t.scheduled_duration)%>" /><%else%><%= worked_nice(@t.duration)%><%end%>
+  </td>
+    <td style="padding-left:0.5em;text-align:right; white-space:nowrap; border-bottom:1px solid #e6e6e6;">
+      <% if current_user.can?(@t.project,'prioritize')%>
+      <input class="date" tabindex="<%=tab+1%>" id="start-<%=@t.dom_id%>" name="start" size="8" type="text" style="font-size:11px;" value="<%= @t.start_at.strftime(current_user.date_format) if @t.start_at %>" />
+      <script type="text/javascript">Calendar.setup({ inputField:"start-<%=@t.dom_id%>",step:1,firstDay:1,button:"start-<%=@t.dom_id%>-calendar",ifFormat:"<%=current_user.date_format%>",range:[<%=range_start%>,<%=range_end%>],showOthers:true, onUpdate:function(){new Ajax.Request('/schedule/reschedule/<%=@t.id%>', {asynchronous: true, evalScripts: true, parameters:'start='+$('start-<%=@t.dom_id%>').value });} })</script><%else%>
+      <%= @t.start_at.strftime(current_user.date_format) if @t.start_at %><% end %>
+    </td>
+    <td style="padding-left:0.5em;text-align:right; white-space:nowrap; border-bottom:1px solid #e6e6e6;">
+      <% if current_user.can?(@t.project,'prioritize')%>
+      <input class="date" tabindex="<%=tab+1%>" id="due-<%=@t.dom_id%>" name="due" size="8" type="text" style="font-size:11px;" value="<%= @t.scheduled_due_at.strftime(current_user.date_format) if @t.scheduled_due_at %>" />
+      <script type="text/javascript">Calendar.setup({ inputField:"due-<%=@t.dom_id%>",step:1,firstDay:1,button:"due-<%=@t.dom_id%>-calendar",ifFormat:"<%=current_user.date_format%>",range:[<%=range_start%>,<%=range_end%>],showOthers:true, onUpdate:function(){new Ajax.Request('/schedule/reschedule/<%=@t.id%>', {asynchronous: true, evalScripts: true, parameters:'due='+$('due-<%=@t.dom_id%>').value });} })</script><%else%>
+      <%= @t.due_at.strftime(current_user.date_format) if @t.due_at %><% end %>
+    </td>
+  </tr>

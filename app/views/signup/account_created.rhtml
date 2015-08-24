@@ -1,0 +1,17 @@
+Welcome to EMRL's Project Manager.
+
+<%= @created_by.name %> has created an account for you.
+
+Log in at http://<%= @created_by.company.subdomain %>.<%= $CONFIG[:domain] %>
+<% if @welcome_message && @welcome_message.length > 0 %>
+
+Message from <%= @created_by.name %>:
+<%= '-' * "Message from #{@created_by.name}:".length %>
+<%= @welcome_message %>
+<%= '-' * "Message from #{@created_by.name}:".length %>
+<% end -%>
+
+Your login information
+----------------------
+Username: <%= @user.username %>
+Password: <%= @user.password %>

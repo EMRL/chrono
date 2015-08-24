@@ -1,0 +1,6 @@
+
+ <br />
+ 	<% form_tag( {:controller => 'search', :action => 'search'}, {:method => 'get'}) do %>
+ 	<%= text_field_tag 'query', _('Search'), {:size => 10, :class => 'search', :onfocus => "if($('query').value == '#{_('Search')}') {$('query').value = ''; $('query').removeClassName('optional');};"  }%>
+ 	<% end %>
+

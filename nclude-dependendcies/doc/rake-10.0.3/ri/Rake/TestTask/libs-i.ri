@@ -1,0 +1,2 @@
+U:RDoc::Attr[i"	libs"Rake::TestTask#libs"RW:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["BList of directories to added to $LOAD_PATH before running the"tests. (default is 'lib'):
+@file"lib/rake/testtask.rbF@

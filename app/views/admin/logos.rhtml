@@ -1,0 +1,19 @@
+<table class="content" width="100%" style="margin-left:1em; padding-left: 1em; padding-right: 1em;">
+  <tr>
+    <td colspan="2" class="page_header">
+		Admin / Logos
+    </td>
+  </tr>
+  <tr>
+    <td><p>This page displays all the clients that have a logo associated with them.</p>
+	<p>To view and edit the complete list of clients, <a href="http://projects.emrl.com/customers/list">click here</a>.</td>
+  </tr>
+
+  <% @customers.each do |c| %>
+  <% if c.logo? %>
+  <tr><td><a href="/customers/edit/<%= c.id %>"><%= c.name %></a></td><td><a href="/customers/edit/<%= c.id %>"><img src="/admin/show_logo/<%= c.id %>" border="0"></a></td></tr>
+  <% end %>
+  <% end %>
+
+</table>
+

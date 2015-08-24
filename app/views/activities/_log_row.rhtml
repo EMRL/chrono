@@ -1,0 +1,77 @@
+<% date_format = current_user.time_format %>
+
+<tr class="hoverrow" class="rtcc">
+  <td align="right" valign="top" style="width:80px;">
+    <% if log.log_type == EventLog::TASK_COMMENT && (log.user_id.to_i == current_user.id || current_user.admin?)%>
+    <%= link_to("#{tz.utc_to_local(log.started_at).strftime(date_format)}", { :controller => 'tasks', :action => 'edit_log', :id => log }) %><br/>
+    <% else %>
+    <!--// <%= "#{tz.utc_to_local(log.started_at).strftime(date_format)}"%> //-->
+    <% if log.duration > 0 %> <%= "#{tz.utc_to_local(log.ended_at).strftime(date_format)}"%><br/><% end %>
+    <% end %>
+  <%= link_to "#{worked_nice(log.duration/60)}", { :controller => 'tasks', :action => 'edit_log', :id => log } if (log.duration > 0 && ((log.user && log.user.id == current_user.id) || current_user.admin?) )%>
+  </td>
+  <td align="center" valign="top" style="padding-left:0.3em;padding-right:0.3em;font-size:1.1rem;color:#B0B0B0;">
+  
+
+  <% if log.task_id.to_i > 0 %>
+  <%= content_tag(:span, '<i class="icon-check icon-large"></i>') if log.log_type == EventLog::TASK_COMPLETED %>
+  <%= content_tag(:span, '<i class="icon-ban-circle icon-large"></i>') if log.log_type == EventLog::TASK_REVERTED %>
+  <%= content_tag(:span, '<i class="icon-circle icon-large"></i>', :alt => "New Task") if log.task.type_id == 0 && log.log_type == EventLog::TASK_CREATED %>
+  <%= content_tag(:span, '<i class="icon-circle icon-large"></i>', :alt => "New Defect") if log.task.type_id == 2 && log.log_type == EventLog::TASK_CREATED %>
+  <%= content_tag(:span, '<i class="icon-circle icon-large"></i>', :alt => "New Feature") if log.task.type_id == 1 && log.log_type ==  EventLog::TASK_CREATED %>
+  <%= content_tag(:span, '<i class="icon-circle icon-large"></i>', :alt => "Improvement") if log.task.type_id == 3 && log.log_type ==  EventLog::TASK_CREATED %>
+  <%= content_tag(:span, '<i class="icon-pencil icon-large"></i>') if log.log_type == EventLog::TASK_MODIFIED %>
+  <%= content_tag(:span, '<i class="icon-quote-left icon-large"></i>', :alt => "New Comment") if log.log_type == EventLog::TASK_COMMENT %>
+  <%= content_tag(:span, '<i class="icon-time icon-large"></i>') if log.log_type == EventLog::TASK_WORK_ADDED %>
+  <%= content_tag(:span, '<i class="icon-folder-close icon-large"></i>') if log.log_type == EventLog::TASK_ARCHIVED %>
+  <%= image_tag('<i class="icon-folder-open icon-large"></i>', :alt => "Archived") if log.log_type == EventLog::TASK_RESTORED %>
+
+  <% else %>
+
+  <%= content_tag(:span, '<i class="icon-bookmark icon-large"></i>', :alt => "Page added") if log.log_type == EventLog::PAGE_CREATED %>
+  <%= content_tag(:span, '<i class="icon-bookmark icon-large"></i>', :alt => "Page deleted") if log.log_type == EventLog::PAGE_DELETED %>
+  <%= content_tag(:span, '<i class="icon-bookmark icon-large"></i>', :alt => "Page modified") if log.log_type == EventLog::PAGE_MODIFIED %>
+  <%= content_tag(:span, '<i class="icon-bookmark icon-large"></i>', :alt => "Task Deleted") if log.log_type == EventLog::TASK_DELETED %>
+  <%= content_tag(:span, '<i class="icon-bullseye icon-large"></i>', :alt => "Commit") if log.log_type == EventLog::SCM_COMMIT %>
+
+  <% end %>
+  </td>
+  <td  valign="top" width="90%"><div style="float:left;">
+<% if log.task_id.to_i > 0 && log.task %>
+<%= link_to_task log.task %>
+<% elsif log.scm_changeset_id.to_i > 0 %>
+<%= "<small>" + log.scm_changeset.issue_num + "</small> " + link_to(h(log.scm_changeset.name), {:controller => 'scm', :action => 'edit', :id => log.scm_changeset_id}) -%>
+          <br /><%= "<span class=\"optional\">#{log.scm_changeset.full_name}</span> " %>
+
+<% end %>
+    <%= "<br/>" if (log.task_id.to_i > 0) %>
+            <%= "<span class=\"optional\">#{log.task.full_name}</span> " if log.task_id.to_i > 0 %>
+            <%= "<small><span class=\"otheruser\">[#{log.user.name}]</span></small>" if log.user %>
+            <%= "<small><span class=\"otheruser\">[#{log.event_log.user}]</span></small>" if log.user.nil? && log.event_log.user %>
+            <%= "<small><span class=\"otheruser\">[#{log.scm_changeset.author}]</span></small>" if log.scm_changeset && !log.user %>
+  </div>
+  <div style="float:right;position: relative;
+overflow: hidden;
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+-ms-border-radius: 50%;
+-o-border-radius: 50%;
+border-radius: 50%; "><%= avatar_for log.user, 50 if log.user %></div>
+  <div style="clear:both; width:80%;">
+<% if log.body && log.body.length > 0 %>
+       <%= x = wrap_text( log.body.gsub(/- <strong>([^<]+)<\/strong>/) {|m| "- <strong>#{_($1)}</strong>"}, 100).gsub(/\n/, "<br>") if log.body %>
+<% end %>
+  </div>
+  <div class="rtc">
+	<a href="#" rel="comment_<%= "#{log.task_id.to_i}" %>_<%= "#{log.id.to_i}" %>" class="rtct"><i class="icon-comment"></i>&nbsp;&nbsp;Reply</a>
+	<div class="rtcf">
+		<form method="post" action="/tasks/add_comment/<%= "#{log.task_id.to_i}" %>">
+			<textarea name="comment" id="comment_<%= "#{log.task_id.to_i}" %>_<%= "#{log.id.to_i}" %>" rows="5" cols="40"></textarea><br />
+			<input class="nolabel" value="Submit" name="commit" type="submit" />
+			<input class="checkbox"<%= " checked=\"checked\"" if current_user.send_notifications > 0 %> type="checkbox" name="notify" value="1" id="notify_<%= "#{log.task_id.to_i}" %>_<%= "#{log.id.to_i}" %>" /> 
+			<label for="notify_<%= "#{log.task_id.to_i}" %>_<%= "#{log.id.to_i}" %>">Send notification emails</label>
+		</form>
+	</div>
+  </div>
+  </td>
+</tr>

@@ -1,0 +1,224 @@
+#menu {
+	display: none;
+}
+#globalMenu {
+	display: none;
+}
+#news {
+	display: none;
+}
+#help {
+	display: none;
+}
+#flash {
+	display: none;
+}
+#left_menu {
+	display: none;
+}
+#tasks_filter {
+	display: none;
+}
+#tags {
+	display: none;
+}
+#task_header {
+	display: none;
+}
+.work_icon {
+	display: none;
+}
+.avatar {
+	display: none;
+}
+#task_info {
+	color: #999;
+	font-size: 9pt;
+	padding-left: 0pt;
+}
+.page_header {
+	display: none;
+}
+.contact {
+	display: none;
+}
+#presence {
+	display: none;
+}
+#reports_params {
+	display: none;
+}
+.icon-large:before {
+	display: none;
+}
+* {
+	background-color: white !important;
+	background-image: none !important;
+}
+body {
+	background: white;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+}
+#reports .row_header {
+	color: #000000;
+	font-weight: bold;
+}
+#reports .column_header {
+	color: #000000;
+	font-size: smaller;
+	text-align: center;
+}
+#reports .row_heading {
+	border-top: 1px solid #CCCCCC;
+	color: #000000;
+	font-weight: bold;
+	padding-right: 0.5em;
+	vertical-align: top;
+}
+#reports .row_value {
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+	color: #000000;
+	text-align: right;
+	vertical-align: top;
+}
+#reports .audit {
+	text-align: left;
+}
+#reports .task {
+	text-align: left;
+}
+#reports .even {
+	background-color: #fff;
+}
+#reports .odd {
+	background-color: #f7f7f7;
+}
+#reports .row_total {
+	background-color: #fcfc99;
+	border-left: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
+	text-align: right;
+	vertical-align: top;
+}
+#reports .row_subtotal {
+	background-color: #b0d295;
+	border-left: 1px solid #CCCCCC;
+	text-align: right;
+	vertical-align: top;
+}
+#reports .row_subtotal_heading {
+	text-align: left;
+	vertical-align: top;
+}
+a {
+	color: #999;
+	font-weight: bold;
+	text-decoration: none;
+}
+ul {
+	list-style: none;
+}
+.task a {
+	color: #000000;
+	font-size: 8pt;
+	font-weight: normal;
+}
+.task_crit_pri a {
+	color: #000000;
+	font-size: 11pt;
+	font-weight: bold;
+}
+.task_high_pri a {
+	color: #000000;
+	font-size: 10pt;
+	font-weight: bold;
+}
+.task_raised_pri a {
+	color: #000000;
+	font-size: 9pt;
+	font-weight: normal;
+}
+.task_low_pri a {
+	color: #cccccc;
+	font-weight: normal;
+}
+.task_lowest_pri a {
+	color: #cccccc;
+	font-weight: normal;
+}
+.task {
+	height: 2.7em;
+}
+.task_info a {
+	color: #999;
+	font-weight: normal;
+}
+.task_info {
+	color: #999;
+	font-size: smaller;
+	font-weight: normal;
+}
+#task_info {
+	font-size: 8pt;
+	padding-bottom: 5pt;
+	padding-left: 18pt;
+	padding-top: 3pt;
+}
+#task_info_no_icon {
+	font-size: 8pt;
+	padding-left: 18pt;
+	padding-top: 3pt;
+}
+#print_title {
+	display: block;
+}
+.channel-input {
+	display: none;
+}
+.transcript-navigation {
+	display: none;
+}
+.channel-message {
+	font-size: large;
+}
+.channel-message-system td {
+	font-style: italic;
+}
+.channel-message-time td {
+	font-size: small;
+	font-weight: bold;
+	padding-top: 1em;
+}
+.channel-user {
+	text-align: right;
+}
+
+
+/* Reports */
+
+img[src^="/images/doc_excel_csv.png"],
+div.content_body > div:first-of-type {display:none;}
+div.content_body > div:nth-of-type(2) {border:0 !important;}
+
+/* body:before {content:url('/images/print-logo.png'); margin-left:20px;} */
+#reports th, #reports td {vertical-align:top;}
+#reports .row_heading {font-size:14px; font-weight:bold; color:#999;}
+#reports .row_heading small, #reports .row_heading span {color:#000;}
+#reports tr:nth-of-type(3) th:last-of-type {text-align:right;}
+#reports th.row_total, #reports th.row_total_total {color:#C00; white-space:nowrap; text-align:right; width:10%;}
+#reports td.row_value {white-space:nowrap; text-align:right; width:10%;}
+#reports tr:last-of-type th.row_header:after {
+	content:'Thank you for being our client! If you have questions about this report, please feel free to contact your account manager at (916) 446-2440, or email production@emrl.com';
+	width:80%;
+	font-weight:normal;
+	font-size:10px;
+	color:#999;
+}
+#reports tr:first-of-type th, #reports tr:first-of-type td, #reports tr:nth-of-type(2) th, #reports tr:nth-of-type(2) td {border:0;}
+#reports tr:last-of-type th.row_header {border:0;}
+table {border-collapse:collapse;}
+#reports th, #reports td {border:1px solid #CCC;}
+#reports th:empty {border:0;}
+.print-heading {display:block; font-size:18px; font-weight:bold; padding-left:20px;}

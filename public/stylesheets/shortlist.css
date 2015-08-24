@@ -1,0 +1,68 @@
+.task_info {
+	display: none;
+}
+#content .task {
+	height: auto;
+	margin-left: 0;
+	min-height: 1px;
+}
+#content .task-row {
+	min-height: 1px;
+}
+#content .task-name {
+	float: none;
+	overflow: hidden;
+	padding-top: 0.2em;
+}
+.task a {
+	font-size: 11px;
+}
+.avatar {
+	display: none;
+}
+.task small {
+	font-size: 11px;
+}
+#content legend {
+	font-size: 13px;
+	padding: 5px;
+}
+#content select {
+	float: right;
+	margin-bottom: 0.5em;
+	margin-right: 0.5em;
+}
+#shortlist-legend img {
+	margin: 0;
+}
+.task img {
+	margin: 0;
+}
+fieldset input {
+	float: none;
+}
+fieldset input.button {
+	margin-right: 2px;
+}
+fieldset img {
+	float: none;
+}
+#menu {
+	background-color: #c5cacf;
+	border: 1px solid #b7b7b7;
+	color: #423f54;
+	padding: 1em;
+}
+.popout {
+	display: none;
+}
+#task_name, #project_name {
+	float: none;
+	margin-right: 1em;
+	margin-top: 1em;
+	padding: 0px 0px;
+	width: 100%;
+}
+.initial {
+	color: #acacac;
+}

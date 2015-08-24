@@ -1,0 +1,111 @@
+All the pages/links available!
+------------------------
+
+
+# Welcome page
+<%= link_to "<span>#{_('Tutorial')}", { :controller => 'activities', :action => 'welcome'} %>
+http://projects.emrl.com/activities/welcome
+
+# Main dashboard view
+<%= link_to "#{_('Overview')}", { :controller => 'activities', :action => 'list'} %>
+http://projects.emrl.com/activities/list
+
+# Add new widget
+<%= link_to_remote _('Add New Widget'), :url => { :controller => 'widgets', :action => 'add'} %></li>
+No direct URL
+
+# Browse tasks
+<%= link_to "#{_('Browse')}", :controller => 'views', :action => 'browse' %>
+http://projects.emrl.com/views/browse
+
+# Display all open tasks
+<%= link_to "#{_('Open Tasks')}", :controller => 'views', :action => 'all_tasks'%>
+http://projects.emrl.com/views/all_tasks
+
+# Display only my open tasks
+<%= link_to _('My Open Tasks'), :controller => 'views', :action => 'my_tasks'%>
+http://projects.emrl.com/views/my_tasks
+
+# Display only my in-progress tasks
+<%= link_to _('My In Progress Tasks'), :controller => 'views', :action => 'my_in_progress_tasks'%>
+http://projects.emrl.com/views/my_in_progress_tasks
+
+# Display only tasks that are assigned to nobody
+<%= link_to _('Unassigned Tasks'), :controller => 'views', :action => 'unassigned_tasks'%>
+http://projects.emrl.com/views/unassigned_tasks
+
+# Code to display links to the shared task views
+<%= link_to(view.name, { :controller => 'views', :action => 'select', :id => view }) %><%= link_to("[#{_('Edit')}]", {:controller => 'views', :action => 'edit', :id => view}) if view.user_id == current_user.id %><%= "[#{_('Shared')}]" if view.user_id != current_user.id %>
+
+# Create a new task view
+<%= link_to "[#{_('New View')}]",  :controller => 'views', :action => 'new' %>
+http://projects.emrl.com/views/new
+
+# Timeline view of all activity **** RESOURCE INTENSIVE ****
+<%= link_to "#{_('Timeline')}", :controller => 'timeline', :action => 'list' %>
+http://projects.emrl.com/timeline/list
+
+# Calendar view
+<%= link_to "#{_('Schedule')}", :controller => 'schedule', :action => 'list' %>
+http://projects.emrl.com/schedule/list
+
+# GANTT view (seriously broken but useful for bulk-rescheduling of tasks)
+<%= link_to "#{_('Plan / GANTT')}", :controller => 'schedule', :action => 'gantt'%>
+http://projects.emrl.com/schedule/gantt
+
+# Reports
+<%= link_to "#{_('Reports')}", :controller => 'reports', :action => 'list' %>
+http://projects.emrl.com/reports/list
+
+# Wiki (by default, the page titled "Frontpage" is displayed)
+<%= link_to "#{_('Wiki')}", :controller => 'wiki', :action => 'show' %>
+http://projects.emrl.com/wiki/show
+
+# Chatroom system
+<%= link_to "#{_('Chat')}", :controller => 'shout', :action => 'list' %>
+http://projects.emrl.com/shout/list
+
+# Forums system
+<%= link_to "#{_('Forums')}", :controller => 'forums', :action => 'index' %>
+http://projects.emrl.com/forums/index
+
+# Project files
+<%= link_to "#{_('Files')}", :controller => 'project_files', :action => 'list' %>
+http://projects.emrl.com/project_files/list
+
+# List of all open projects, with details
+<%= link_to "#{_('Projects')}", {:controller => 'projects', :action => 'list'} %>
+http://projects.emrl.com/projects/list
+
+# Create new project
+<%= link_to _("New Project"), :controller => 'projects', :action => 'new' %></li>
+http://projects.emrl.com/projects/new
+
+# Create new task
+<%= link_to "#{_('New Task') + image_tag('tick.png',  :border => 0, :height => 16, :style => "margin-top:-2px;")}", {:controller => 'tasks', :action => 'new'} %>
+http://projects.emrl.com/tasks/new
+
+# Logout
+<%= link_to "#{_('Log Out')}", { :controller => 'login', :action => 'logout'}, :class => "right" %>
+http://projects.emrl.com/login/logout
+
+# User preferences
+<%= link_to "#{_('Preferences')}", { :controller => 'users', :action => 'edit_preferences'}, :class => "right" %>
+http://projects.emrl.com/users/edit_preferences
+
+# Edit the current company (which in our case is EMRL)
+<%= link_to _('Company Settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id %></li>
+http://projects.emrl.com/companies/edit
+
+# Client list (code usually refers to what we call "clients" as "customers")
+<%= link_to "#{_('Clients')}", { :controller => 'customers', :action => 'list'}, :class => "right" %></li>
+http://projects.emrl.com/customers/list
+
+
+# Active users list
+<%= link_to "#{_('Users')}", { :controller => 'users', :action => 'list'}, :class => "right" %></li>
+http://projects.emrl.com/users/list
+
+# Search box code
+<% form_tag( {:controller => 'search', :action => 'search'}, {:method => 'get'}) do %><%= text_field_tag 'query', _('Search'), {:size => 10, :style => "font-size:9px;", :class => 'optional', :onfocus => "if($('query').value == '#{_('Search')}') {$('query').value = ''; $('query').removeClassName('optional');};"  }%>
+http://projects.emrl.com/search/search?query=SEARCHTERM

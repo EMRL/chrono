@@ -1,0 +1,91 @@
+<%= error_messages_for 'log' %>
+
+<!--[form:log]-->
+<!--reassign-->
+<% if current_user.can?(@task.project, 'all') %>
+	<%
+  perms = {}
+  ['comment', 'edit', 'reassign', 'prioritize', 'close', 'milestone', 'all'].each do |p|
+    if @task.project_id.to_i == 0 || current_user.can?( @task.project, p )
+      perms[p] = {}
+    else
+      perms[p] = { :readonly => 'readonly' }
+    end
+  end
+%>
+	<% users = Company.find(1).users.find(:all, :order => 'name' ) rescue [] 
+        resource_string = "<select id=\"task_users\" name=\"users[]\" #{"disabled=\"disabled\"" if @task.project && !current_user.can?( @task.project, 'all' )}>" + users.collect{|us| "<option value=\"#{us.id}\">#{us.name}</option>"}.join('') + "</select>"
+        resource_string = resource_string.split(/\n/).join('').gsub(/'/, "\\\\\'")
+        owner_string = ''
+        num = 0
+        unless @task.users.empty?
+        @task.users.take(1).each do |u|
+        owner_string << "<div id=\"owner_#{num}\"><label for=\"dummy\">#{_('User')}</label>" if num == 0
+        owner_string << "<div id=\"owner_#{num}\"><label for=\"dummy\"></label>" if num != 0
+        owner_string <<  "<select name=\"users[]\" id=\"task_users\" #{"disabled=\"disabled\"" if @task.project && !current_user.can?( @task.project, 'all' )}>" + users.collect{|us| "<option value=\"#{us.id}\" #{(us.id == current_user.id ? "selected=\"selected\"" : '')}>#{us.name}</option>"}.join('').gsub(/'/,"\\\\\'") + "</select>" #, perms['reassign'] )
+        if( perms['all'].keys.size == 0 )
+          owner_string << "<a href=\"#\" onclick=\"javascript:add_owner();return false;\"><i class=\"icon-plus-sign icon-large\" style=\"float:left;margin:0;padding:6px 0 0 0;text-decoration: none;\"></i></a>" if num == 0
+          owner_string << "<a href=\"#\" onclick=\"javascript:new Element.remove('owner_#{num}');return false;\">
+          <i class=\"icon-minus-sign icon-large\" style=\"float:left;margin:0;padding:6px 0 0 0; text-decoration: none;\"></i></a>" if num != 0
+          end
+          owner_string << "</div>"
+          num = num + 1
+          end
+          owner_string = owner_string.split(/\n/).join('')
+        else
+        owner_string = "<select name=\"users[]\" id=\"task_users\" #{"disabled=\"disabled\"" if @task.project && !current_user.can?( @task.project, 'all' )}>" + users.collect{|us| "<option value=\"#{us.id}\" #{"selected" if (us.id == current_user.id && @task.created_at.nil?) }>#{us.name}</option>"}.join('') + "</select>" #, perms['reassign']
+        owner_string = owner_string.split(/\n/).join('').gsub(/'/, "\\\\\'")
+        if perms['all'].keys.size == 0
+          owner_string = "<div id=\"owner_#{num}\"><label for=\"dummy\">#{_('Assigned To')}</label>#{owner_string}"
+          owner_string << "<a href=\"#\" onclick=\"javascript:add_owner();return false;\"><i class=\"icon-plus-sign icon-large\" style=\"float:left;margin:0;padding:6px 0 0 0; text-decoration: none;\"></i></a></div>"
+          end
+        num = num + 1
+        end
+        %>
+        <script type="text/javascript">
+          var num = <%=num%>;
+          var resource = '<%= resource_string %>';
+          var selected_user = "0";
+          function add_owner() {
+            new Insertion.Before("owner_separator", '<div id="owner_' + num + '"><label for="dummy"></label>' + resource + '<a href="#" onclick="javascript:new Element.remove(\'owner_' + num + '\');return false;"><i class=\"icon-minus-sign icon-large\" style=\"float:left;margin:0;padding:6px 0 0 0; text-decoration: none;\"></i></a></div>');
+            num = num + 1;
+          }
+          function remember_user() {
+            for( var i = 1; i < num; i++ ) {
+              if( $("owner_" + i) ) {
+                new Element.remove("owner_" + i);
+              }
+            }
+
+          var element = $('task_users');
+          if( typeof element == 'array' ) {
+            selected_user = "0"
+          } else {
+            selected_user = element.value
+            }
+          }
+          function reset_owners() {
+          for( var i = 1; i < num; i++ ) {
+            if( $("owner_" + i) ) {
+              new Element.remove("owner_" + i);
+            }
+          }
+          $('task_users').value = selected_user;
+        }
+        </script>
+        <%= owner_string %>
+        <div id="owner_separator"></div>
+<% end %>
+
+<label for="log_started_at"><%=_ 'Start' %></label>
+<% range_start = Time.new.year - 5 %>
+<% range_end   = range_start + 10 %>
+<%= calendar_field 'log', 'started_at', { :class => 'date', :field_title => 'Start', :button_title => _('Show Calendar'), :size => '15' },
+        { :ifFormat => "#{current_user.date_format} #{current_user.time_format}", :firstDay => 1, :range => [range_start, range_end], :step => 1, :showOthers => true, :showsTime => true, :timeformat => "24" } %><br/>
+<% if @log.log_type != EventLog::TASK_COMMENT %>
+<label for="log_duration"><%=_ 'Duration Worked' %></label><%= text_field 'log', 'duration', {:value => worked_nice(@log.duration/60), :size => 10, :class => 'tooltip', :title => _('1w 2d 3h 4m') }  %><br/>
+<% end %>
+<label for="log_body"><%=_ 'Notes' %></label><%= text_area 'log', 'body', :rows => 10  %><br/>
+
+<!--[eoform:log]-->
+

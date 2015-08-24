@@ -1,0 +1,58 @@
+All the links available!
+------------------------
+
+
+<%= link_to "<span>#{_('Tutorial')}", { :controller => 'activities', :action => 'welcome'} %>
+
+
+<%= link_to "#{_('Overview')}", { :controller => 'activities', :action => 'list'} %>
+<%= link_to_remote _('Add New Widget'), :url => { :controller => 'widgets', :action => 'add'} %></li>
+
+
+<%= link_to "#{_('Browse')}", :controller => 'views', :action => 'browse' %>
+
+
+<%= link_to "#{_('Open Tasks')}", :controller => 'views', :action => 'all_tasks'%>
+<%= link_to _('My Open Tasks'), :controller => 'views', :action => 'my_tasks'%>
+<%= link_to _('My In Progress Tasks'), :controller => 'views', :action => 'my_in_progress_tasks'%>
+<%= link_to _('Unassigned Tasks'), :controller => 'views', :action => 'unassigned_tasks'%>
+<%= link_to(view.name, { :controller => 'views', :action => 'select', :id => view }) %><%= link_to("[#{_('Edit')}]", {:controller => 'views', :action => 'edit', :id => view}) if view.user_id == current_user.id %><%= "[#{_('Shared')}]" if view.user_id != current_user.id %>
+<%= link_to "[#{_('New View')}]",  :controller => 'views', :action => 'new' %>
+
+
+<%= link_to "#{_('Timeline')}", :controller => 'timeline', :action => 'list' %>
+<%= link_to "#{_('Schedule')}", :controller => 'schedule', :action => 'list' %>
+<%= link_to "#{_('Plan / GANTT')}", :controller => 'schedule', :action => 'gantt'%>
+
+
+<%= link_to "#{_('Reports')}", :controller => 'reports', :action => 'list' %>
+
+
+<%= link_to "#{_('Wiki')}", :controller => 'wiki', :action => 'show' %>
+
+
+<%= link_to "#{_('Chat')}", :controller => 'shout', :action => 'list' %>
+
+
+<%= link_to "#{_('Forums')}", :controller => 'forums', :action => 'index' %>
+
+
+<%= link_to "#{_('Files')}", :controller => 'project_files', :action => 'list' %>
+
+
+<%= link_to "#{_('Projects')}", {:controller => 'projects', :action => 'list'} %>
+<%= link_to _("New Project"), :controller => 'projects', :action => 'new' %></li>
+
+<%= link_to "#{_('New Task') + image_tag('tick.png',  :border => 0, :height => 16, :style => "margin-top:-2px;")}", {:controller => 'tasks', :action => 'new'} %>
+
+
+<%= link_to "#{_('Log Out')}", { :controller => 'login', :action => 'logout'}, :class => "right" %>
+
+<%= link_to "#{_('Preferences')}", { :controller => 'users', :action => 'edit_preferences'}, :class => "right" %>
+
+<%= link_to _('Company Settings'), :controller => 'companies', :action => 'edit', :id => current_user.company_id %></li>
+<%= link_to "#{_('Clients')}", { :controller => 'customers', :action => 'list'}, :class => "right" %></li>
+<%= link_to "#{_('Users')}", { :controller => 'users', :action => 'list'}, :class => "right" %></li>
+
+
+<% form_tag( {:controller => 'search', :action => 'search'}, {:method => 'get'}) do %><%= text_field_tag 'query', _('Search'), {:size => 10, :style => "font-size:9px;", :class => 'optional', :onfocus => "if($('query').value == '#{_('Search')}') {$('query').value = ''; $('query').removeClassName('optional');};"  }%>

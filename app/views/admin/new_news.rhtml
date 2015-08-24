@@ -1,0 +1,30 @@
+    <table class="content" width="100%" style="margin-left:1em; padding-left: 1em; padding-right: 1em;">
+      <tr>
+        <td class="page_header">
+          Admin / Add News Item
+        </td>
+      </tr>
+      <tr>
+
+        <td valign="top">
+<% form_tag :action => 'create_news' do %>
+  <%= render :partial => "news_form" %>
+  <%= submit_tag "Create", :class => 'nolabel' %>
+<% end %>
+        </td>
+      </tr>
+    </table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

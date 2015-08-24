@@ -1,0 +1,2 @@
+U:RDoc::Attr[i"	name"Rake::PackageTask#name"RW:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["-Name of the package (from the GEM Spec).:
+@file"lib/rake/packagetask.rbF@

@@ -1,0 +1,2 @@
+U:RDoc::Attr[i"	name"Rake::Application#name"R:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["3The name of the application (typically 'rake'):
+@file"lib/rake/application.rbF@
