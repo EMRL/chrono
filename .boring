@@ -19,6 +19,7 @@
 (^|/)vssver\.scc$
 \.swp$
 \.git$
+\.pid$
 (^|/)MT($|/)
 (^|/)\{arch\}($|/)
 (^|/).arch-ids($|/)
