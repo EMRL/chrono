@@ -255,28 +255,18 @@
                     </tr>
                     //-->
                     <tr>
-                      <td class="views_item" colspan="2">
+                      <td class="views_item" style="padding-top: 0.2em;" colspan="2">
                         <%= link_to _('My Open Tasks'), :controller => 'views', :action => 'my_tasks'%>
                       </td>
                     </tr>
-                    <!--// Commented out for now
                     <tr>
                       <td class="views_item" colspan="2">
-                        <%= link_to _('My In Progress Tasks'), :controller => 'views', :action => 'my_in_progress_tasks'%>
-                      </td>
-                    </tr>
-
-                    <tr>
-                      <td class="views_item" colspan="2">
-                        <%= link_to _('Unassigned Tasks'), :controller => 'views', :action => 'unassigned_tasks'%>
-                      </td>
-                      </tr>
-                      //-->
                       <!--// Careful with the formatting this next bit, it's fragile! //-->
                       <% project_ids = current_project_ids %><% client_ids = current_projects.collect(&:customer_id).uniq.join(',')
                          client_ids = "0" if client_ids.nil? || client_ids.empty?
                          views = View.find(:all, :conditions => ["company_id = ? AND (user_id = ? or shared = 1) AND (filter_customer_id = 0 OR filter_customer_id IS NULL OR filter_customer_id IN (#{client_ids})) AND (filter_project_id = 0 OR filter_project_id IS NULL OR filter_project_id IN (#{project_ids}))", current_user.company_id, current_user.id], :order => "shared, name")
                          for view in views %>
+                         </td></tr>
                       <tr>
                         <td class="views_item">
                           <%= link_to view.name, :controller => 'views', :action => 'select', :id => view %>
