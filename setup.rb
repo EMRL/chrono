@@ -3,7 +3,7 @@
 begin
   require 'rubygems'
 rescue LoadError
-  puts "Please install the latest version of RubyGems to get started."
+  puts "Please install RubyGems to get started."
   exit
 end
 
@@ -48,15 +48,15 @@ puts "If you don't want this to happen, please press <Ctrl-c> to abort."
 puts "*******************************************************************************************"
 puts
 
-print "Enter MySQL database name for ClockingIT [cit]: "
+print "Enter MySQL database name for Chrono [chrono]: "
 db = gets 
-db = "cit" if db == "\n"
-print "Enter username for ClockingIT MySQL account [cit]: "
+db = "chrono" if db == "\n"
+print "Enter username for Chrono MySQL account [chrono]: "
 dbuser = gets 
-dbuser = "cit" if dbuser == "\n"
-print "Enter password for ClockingIT MySQL account [cit]: "
+dbuser = "chrono" if dbuser == "\n"
+print "Enter password for Chrono MySQL account [chrono]: "
 dbpw = gets 
-dbpw = "cit" if dbpw == "\n"
+dbpw = "chrono" if dbpw == "\n"
 
 db.strip!
 dbuser.strip!
@@ -68,7 +68,7 @@ puts
 
 
 
-puts "Please create the database and user for ClockingIT by running something like this: "
+puts "Please create the database and user for Chrono by running something like this: "
 puts " echo \"CREATE DATABASE #{db} DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; GRANT ALL ON #{db}.* TO '#{dbuser}'@'localhost' IDENTIFIED BY '#{dbpw}'; FLUSH PRIVILEGES;\" | mysql -u root -p "
 puts 
 puts "Press <Return> to continue"
@@ -78,7 +78,7 @@ puts
 domain = "\n"
 while domain == "\n" || domain.split('.').size < 3
   puts
-  print "Enter domain ClockingIT will be accessed from (for example projects.mycompany.com): "
+  print "Enter domain Chrono will be accessed from (for example projects.mycompany.com): "
   domain = gets
 end
 
@@ -88,7 +88,7 @@ subdomain = domain.split('.').first
 domain = domain.split('.')[1..-1].join('.')
 
 puts
-puts "Using '#{subdomain}.#{domain}' to access ClockingIT."
+puts "Using '#{subdomain}.#{domain}' to access Chrono."
 puts
 
 company = "\n"
