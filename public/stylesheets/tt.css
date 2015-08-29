@@ -252,6 +252,7 @@ body,p,ol,ul,td,tr {
 .task-name {
 	float: left;
 	font-size: 1.3rem;
+	text-transform: capitalize;
 }
 .task input {
 	margin: 0 0 1px 0px;
