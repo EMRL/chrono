@@ -15,6 +15,8 @@
 (^|/)_darcs($|/)
 \.bak$
 \.BAK$
+\.lock$
+\.pid$
 \.orig$
 (^|/)vssver\.scc$
 \.swp$
@@ -39,6 +41,8 @@
 (^|/)index($|/)
 (^|/)store($|/)
 (^|/)log($|/)
+(^|/)nclude($|/)
+(^|/)nclude-dependendcies($|/)
 (^|/)database\.yml$
 (^|/)juggernaut_config\.yml$
 (^|/)environment\.rb$
