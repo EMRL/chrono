@@ -2,12 +2,16 @@
 *#
 \.#*
 *.bak
+*.pid
+*.lock
 _darcs
 \.svn
 /index
 /log
 /store
 /nbproject
+/nclude
+/nclude-dependendcies
 config/database.yml
 config/ferret_server.yml
 config/environment.rb
