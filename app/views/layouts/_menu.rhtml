@@ -1,3 +1,4 @@
+<!--// begin app\views\layouts\_menu.rhtml //-->
 <% @internal = Customer.find(:first, :conditions => ["company_id = ? AND (name = 'Internal' or name = ?)", current_user.company.id, current_user.company.name]) if @internal.nil? %>
 <table width="100%" cellspacing="0" cellpadding="0">
   <tr>
@@ -8,3 +9,4 @@
     <td align="right" class="menu" id="menu_login"><%= render :partial => "layouts/login_info" %><br /></td>
   </tr>
 </table>
+<!--// end app\views\layouts\_menu.rhtml //-->

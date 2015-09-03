@@ -1,48 +1,38 @@
-<!--// Hush up.
-<% internal = Customer.find(:first, :conditions => ["company_id = ? AND (name = 'Internal' or name = ?)", current_user.company_id, current_user.company.name]) %>
-<% if !internal.nil? && internal.logo? %>
-<%= tag("img", {:src => "/customers/show_logo/#{internal.id}", :border => 0 } ) %>
-<% else %>
-<%= image_tag("logo.gif", :border => 0, :title => "Clocking IT Beta") %>
-<% end %> //-->
+<!--// begin app\views\layouts\_short_info.rhtml //-->
+<div style="float:left;">EMRL Project Management<br />
+  <%= h(current_user.name) %><br />
+  <!--//  Instead of using the ruby time with <%=tz.now.strftime("#{current_user.time_format}")%> I'm using a bit of code to display time, and force it to update on the display. It's not using the user's time format settings though. Oh well we get what we pay for, right? //-->
+  <script type="text/javascript">
+    function GetClock(){
+    d = new Date();
+    nhour  = d.getHours();
+    nmin   = d.getMinutes();
+    if(nhour ==  0) {ap = " AM";nhour = 12;} 
+    else if(nhour <= 11) {ap = " AM";} 
+    else if(nhour == 12) {ap = " PM";} 
+    else if(nhour >= 13) {ap = " PM";nhour -= 12;}
+    if(nmin <= 9) {nmin = "0" +nmin;}
+    document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+ap+"";
+    setTimeout("GetClock()", 1000);
+    }
+    window.onload=GetClock;
+  </script>
+  <span id="clockbox"></span> &bull; 
+  <span id="res" class="tooltip" title="This is the temperature at our shop.<br />It whimsically updates whenever it feels like it."></span><br />
 
-
-
-
-     <div style="float:left;">EMRL Project Management<br />
-                                <%= h(current_user.name) %><br />
-                                  <!--//  Instead of using the ruby time with <%=tz.now.strftime("#{current_user.time_format}")%> I'm using a bit of code to display time, and force it to update on the display. It's not using the user's time format settings though. Oh well we get what we pay for, right? //-->
-                                <script type="text/javascript">
-                                function GetClock(){
-                                  d = new Date();
-                                  nhour  = d.getHours();
-                                  nmin   = d.getMinutes();
-                                  if(nhour ==  0) {ap = " AM";nhour = 12;} 
-                                  else if(nhour <= 11) {ap = " AM";} 
-                                  else if(nhour == 12) {ap = " PM";} 
-                                  else if(nhour >= 13) {ap = " PM";nhour -= 12;}
-                                  if(nmin <= 9) {nmin = "0" +nmin;}
-                                  document.getElementById('clockbox').innerHTML=""+nhour+":"+nmin+ap+"";
-                                  setTimeout("GetClock()", 1000);
-                                  }
-                                  window.onload=GetClock;
-                                </script>
-                                <span id="clockbox"></span> &bull; 
-                                <span id="res" class="tooltip" title="This is the temperature at our shop.<br />It whimsically updates whenever it feels like it."></span><br />
-                                  <!--// Ok, grabbing the weather from Yahoo's JSON API. The URL seems more than a little bit ghetto, with slow or no updates. FML //-->
-                                  <script>
-                                  function weather(o){
-                                    document.getElementById("res").innerHTML=""+o.query.results.channel.item.condition.temp+"&deg;"
-                                    document.getElementById("upd").innerHTML=o.query.results.channel.item.condition.date
-                                  }
-                                  </script>
-                                  <script type="text/javascript" src="http://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20location%3D%2295814%22&format=json&callback=weather">
-                                  </script>
-                                  <%= "#{online_users} #{_('Online')}" %>
-                              </div>
+  <!--// Ok, grabbing the weather from Yahoo's JSON API. The URL seems more than a little bit ghetto, with slow or no updates. FML //-->
+  <script>
+    function weather(o){
+    document.getElementById("res").innerHTML=""+o.query.results.channel.item.condition.temp+"&deg;"
+    document.getElementById("upd").innerHTML=o.query.results.channel.item.condition.date
+    }
+  </script>
+  <script type="text/javascript" src="http://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20location%3D%2295814%22&format=json&callback=weather">
+  </script>
+  <%= "#{online_users} #{_('Online')}" %>
+</div>
 
 <div style="float:right;padding-top:0.1em;">
-                                  <%= "<img src=\"#{@current_user.avatar_url(50)}\" class=\"photo desaturate tooltip\" title=\"
-                                  You are a beautiful butterfly\" />" %></div>
-
-
+  <%= "<img src=\"#{@current_user.avatar_url(50)}\" class=\"photo desaturate tooltip\" title=\"You are a beautiful butterfly\" />" %>
+</div>
+<!--// end app\views\layouts\_login_info.rhtml //-->
