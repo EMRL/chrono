@@ -9,7 +9,7 @@ Changes
 There are always ongoing tweaks happening; here are just a few things we've changed or added over the years. Many of these tasks are ongoing.
 
 1. Improved user interface
-2. Replaced UI .gif & .png graphics with [Fontawesome](http://fortawesome.github.io/Font-Awesome/3.2.1/) icons (still on version 3 for now)
+2. Replaced UI .gif & .png graphics with [Font Awesome](http://fortawesome.github.io/Font-Awesome/3.2.1/) icons (still on version 3 for now)
 3. Improved calendar grid layout
 4. Improved report printing
 5. Added inline reply to task comments
@@ -17,6 +17,7 @@ There are always ongoing tweaks happening; here are just a few things we've chan
 7. Improved news display
 8. Added start dates to tasks
 9. Cleaned up many of the system email templates
+10. Added a "Don't send me my own comments" option to cut down on spam
 
 Installation
 --------
