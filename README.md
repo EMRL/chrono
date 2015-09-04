@@ -14,10 +14,11 @@ There are always ongoing tweaks happening; here are just a few things we've chan
 4. Improved report printing
 5. Added inline reply to task comments
 6. Improved many widgets
-7. Improved news display
+7. Improved news/announcement display
 8. Added start dates to tasks
 9. Cleaned up many of the system email templates
 10. Added a "Don't send me my own comments" option to cut down on spam
+11. Added an "Out for Approval" flag for tasks that are waiting for client approval before proceeding further
 
 Installation
 --------
