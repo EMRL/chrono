@@ -1,6 +1,6 @@
 Chrono
 =============
-Chrono is a version of [ClockingIT](http://www.clockingit.com/), heavily modified modified for use by our advertising agency in northern California.
+Chrono is a version of [ClockingIT](http://www.clockingit.com/), heavily modified for use by our advertising agency in northern California.
 
 ![Image](http://emrl.co/assets/img/chrono.jpg)
 
@@ -9,7 +9,7 @@ Changes
 There are always ongoing tweaks happening; here are just a few things we've changed or added over the years. Many of these tasks are ongoing.
 
 1. Improved user interface
-2. Replaced UI .gif & .png graphics with [Font Awesome](http://fortawesome.github.io/Font-Awesome/3.2.1/) icons (still on version 3 for now)
+2. Replaced UI .gif & .png graphics with [Font Awesome](http://fontawesome.github.io/Font-Awesome/3.2.1/) icons (still on version 3 for now)
 3. Improved calendar grid layout
 4. Improved report printing
 5. Added inline reply to task comments
