@@ -1,2 +1,0 @@
-U:RDoc::Attr[i"locations"Rake::Task#locations"R:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["AFile/Line locations of each of the task definitions for this"=task (only valid if the task was defined with the detect"location option set).:
-@file"lib/rake/task.rbF@

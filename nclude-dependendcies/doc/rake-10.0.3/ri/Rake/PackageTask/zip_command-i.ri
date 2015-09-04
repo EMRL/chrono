@@ -1,2 +1,0 @@
-U:RDoc::Attr[i"zip_command""Rake::PackageTask#zip_command"RW:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["<Zip command for zipped archives.  The default is 'zip'.:
-@file"lib/rake/packagetask.rbF@

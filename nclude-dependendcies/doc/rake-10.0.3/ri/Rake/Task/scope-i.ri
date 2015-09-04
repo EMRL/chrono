@@ -1,3 +1,0 @@
-U:RDoc::Attr[i"
-scope"Rake::Task#scope"R:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["HArray of nested namespaces names used for task lookup by this task.:
-@file"lib/rake/task.rbF@

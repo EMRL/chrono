@@ -1,2 +1,0 @@
-U:RDoc::Attr[i"options"Rake::TestTask#options"RW:publico:RDoc::Markup::Document:@parts[o:RDoc::Markup::Paragraph;["8Test options passed to the test suite.  An explicit"CTESTOPTS=opts on the command line will override this. (default"is NONE):
-@file"lib/rake/testtask.rbF@
