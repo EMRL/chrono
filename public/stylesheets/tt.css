@@ -1082,11 +1082,12 @@ a.description {
 	border-left: solid 4px #F3F3F3;
 }
 #content div.task-row {
-#	border-top: solid 1px #eee;
+	/*border-top: solid 1px #eee;*/
 	min-height: 3.5em;
 	padding-bottom: 2.0rem;
 	padding-top: 0.6rem;
 	padding-left: 0.4rem;
+    overflow: hidden;
 }
 #content div.task-row img {
 	filter: alpha(opacity=65);
