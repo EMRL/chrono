@@ -105,7 +105,7 @@ end
     </td>
     <td valign="top">
         <label for="task_severity_id"><%=_ 'Severity' %></label><br />
-        <%= select 'task', 'severity_id', [[_('Blocker'),3],[_('Critical'),2],[_('Major'),1],[_('Normal'),0],[_('Minor'),-1],[_('Trivial'),-2]], {:selected => @task.severity_id}, perms['prioritize']  %>
+        <%= select 'task', 'severity_id', [[_('Awaiting Approval'),3],[_('Critical'),2],[_('Major'),1],[_('Normal'),0],[_('Minor'),-1],[_('Trivial'),-2]], {:selected => @task.severity_id}, perms['prioritize']  %>
     </td>
 </tr>
 <tr>

@@ -117,7 +117,7 @@
               <select name="filter_severity" id="filter_severity" onchange="javascript:document.forms[1].submit();" class="tooltip" title="<%=_('Show tasks with at least this severity')%>">
                 <option value="-10" class="select_default"><%= _("[Any Severity]") %></option>
                 <%
-                   @serverities = [[_('Blocker'),"3"],[_('Critical'),"2"],[_('Major'),"1"],[_('Normal'),"0"],[_('Minor'),"-1"],[_('Trivial'),"-2"]]
+                   @serverities = [[_('Awaiting Approval'),"3"],[_('Critical'),"2"],[_('Major'),"1"],[_('Normal'),"0"],[_('Minor'),"-1"],[_('Trivial'),"-2"]]
                 %>
                 <%= options_for_select @serverities, session[:filter_severity] %>
               </select>

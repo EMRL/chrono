@@ -435,7 +435,7 @@ class Task < ActiveRecord::Base
   end
 
   def Task.severity_types
-    { -2 => "Trivial", -1 => "Minor", 0 => "Normal", 1 => "Major", 2 => "Critical", 3 => "Blocker"}
+    { -2 => "Trivial", -1 => "Minor", 0 => "Normal", 1 => "Major", 2 => "Critical", 3 => "Awaiting Approval"}
   end
 
   def owners
