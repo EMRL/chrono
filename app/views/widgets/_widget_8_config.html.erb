@@ -1,3 +1,4 @@
+<!--// Obsolete Google Gadget widget code, left here for reference
 <div id="config-<%= @widget.dom_id %>" style="display:none;" class="widget-config">
 	<% form_remote_tag :url => {:controller => 'widgets', :action => 'update', :id => @widget }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" do  %>
 	<label for="widget_name"><%= _("Title") %></label><%= text_field 'widget', 'name', {:size => 10} %>
@@ -10,3 +11,4 @@
 		</span>
 	</div>
 </div>
+//-->
