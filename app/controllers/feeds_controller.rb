@@ -1,6 +1,5 @@
 #
 # Provide a RSS feed of Project WorkLog activities.
-# Author:: Erlend Simonsen (mailto:admin@clockingit.com)
 #
 class FeedsController < ApplicationController
 
@@ -159,9 +158,9 @@ class FeedsController < ApplicationController
           xmlns:dc="http://purl.org/dc/elements/1.1/"
           xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
           <channel>
-            <title>No such ClockingIT widget</title>
-            <link>http://www.clockingit.com/</link>
-            <description>No such ClockingIT widget.</description>
+            <title>No such Chrono widget</title>
+            <link>http://projects.emrl.com/</link>
+            <description>No such Chrono widget.</description>
           </channel>
         </rss>'
       end 
