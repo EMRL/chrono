@@ -165,7 +165,7 @@
                                   <!--// Ok, grabbing the weather from Yahoo's JSON API. The URL seems more than a little bit ghetto, with slow or no updates. FML //-->
                                   <script>
                                   function weather(o){
-                                    document.getElementById("res").innerHTML=""+o.query.results.channel.item.condition.temp+"&deg;"
+                                    document.getElementById("res").innerHTML=o.query.results.channel.item.condition.temp+"&deg;"
                                     document.getElementById("upd").innerHTML=o.query.results.channel.item.condition.date
                                   }
                                   </script>
