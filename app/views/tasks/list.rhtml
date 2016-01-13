@@ -79,13 +79,15 @@
               %>
               <%= options_for_select @status, session[:filter_status] %>
             </select>
-            <br/>
+          <!--  <input type="checkbox" name="overdue_only" id="overdue_only" title="Overdue Only" class="overdue_only" value="1" onChange="checkOverDue();"><div style="float:left;padding-top:2px;" title="Overdue Only" class="tooltip"> Overdue Only</div>
+            -->
+            <br />
 
             <select name="group_by" id="group_by" onchange="javascript:document.forms[1].submit();">
               <option value="0" class="select_default"><%= _("[No Grouping]") %></option>
 
               <%
-                 @group_by = [[_("Tags"), "1"],[_("Clients"), "2"],[_("Projects"), "3"],[_("Milestones"), "4"],[_("Projects / Milestones"), "10"],[_("Users"), "5"],[_("Task Type"), "6"],[_("Status"), "7"],[_("Priority"), "9"],[_("Severity"), "8"], [_("Requested By"), "11"]]
+                 @group_by = [[_("Tags"), "1"],[_("Clients"), "2"],[_("Projects"), "3"],[_("Milestones"), "4"],[_("Projects / Milestones"), "10"],[_("Users"), "5"],[_("Task Type"), "6"],[_("Status"), "7"],[_("Priority"), "9"],[_("Workflow"), "8"], [_("Requested By"), "11"]]
               %>
               <%= options_for_select @group_by, session[:group_by] %>
             </select>
@@ -114,8 +116,8 @@
                 %>
                 <%= options_for_select @types, session[:filter_type] %>
               </select>
-              <select name="filter_severity" id="filter_severity" onchange="javascript:document.forms[1].submit();" class="tooltip" title="<%=_('Show tasks with at least this severity')%>">
-                <option value="-10" class="select_default"><%= _("[Any Severity]") %></option>
+              <select name="filter_severity" id="filter_severity" onchange="javascript:document.forms[1].submit();" class="tooltip" title="<%=_('Show tasks with at least this Workflow status')%>">
+                <option value="-10" class="select_default"><%= _("[Any Workflow]") %></option>
                 <%
                    @serverities = [[_('Awaiting Approval'),"3"],[_('Critical'),"2"],[_('Major'),"1"],[_('Normal'),"0"],[_('Minor'),"-1"],[_('Trivial'),"-2"]]
                 %>
@@ -134,6 +136,7 @@
             </div>
           </form>
             </fieldset>
+
             <% end %>
             <div id="quick_add_container" style="display:none;"></div>
 
@@ -195,11 +198,12 @@
          link = tag[0]
 
       %>
-
+      
       <tr><td align="right"><span class="<%= (@selected_tags.include?(tag[0])) ? "tag_active" : "tag" %>"><a href="/tasks/list?tag=<%=URI.encode(link)%>"><%= tag[0] %></a> (<%= @tags[tag[0]] %>)</span></td></tr>
       <% end %>
       </table>
     </td>
   </tr>
 </table>
+
 

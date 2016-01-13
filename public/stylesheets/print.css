@@ -45,6 +45,15 @@
 #presence {
 	display: none;
 }
+#presence_actives{
+	float:   right;
+	padding-right:3%;
+}
+#presence_actives img{
+	height:  32px;
+	width:   32px;
+	border-radius:50%;
+}
 #reports_params {
 	display: none;
 }

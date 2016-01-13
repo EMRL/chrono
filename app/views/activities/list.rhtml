@@ -18,6 +18,27 @@
 </table>
 <br />
 
+<script>
+function status(arg,checkbox_id)
+{
+  if(document.getElementById(checkbox_id).checked && arg > 0)
+  {
+    if(confirm("This task is being shared externally. Please check your comment and click OK only if it is safe to send!") == true)
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
+  }
+  else 
+  {
+    return true; 
+  }
+}
+</script>
+
 <script type="text/javascript" language="javascript" charset="utf-8">
 // <![CDATA[
 

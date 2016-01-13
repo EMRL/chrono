@@ -25,13 +25,19 @@
 %>
 
 
-
-
-
-
-
 <% if @log.log_type == EventLog::TASK_WORK_ADDED  %>
-<label for="task_status"><%=_ 'Status' %></label><%= select 'task', 'status', options, {:selected => @task.status}, can_close %>
+    <label for="task_status"><%=_ 'Status' %></label>
+    <%= select 'task', 'status', options, {:selected => @task.status}, can_close %>
+    <table>
+        <tr>
+            <% if @task.severity_id.to_i == 3 %>
+                <td><%= check_box_tag( "severity","sever", true ) %></td>
+            <% else %>
+                <td><%= check_box_tag( "severity","sever", false ) %></td>
+            <% end %>
+                <td>Awaiting  Approval</td>
+        </tr>
+    </table>
 <% else %>
 <label for="notify"></label>
 <% end %>

@@ -221,6 +221,10 @@ class TasksController < ApplicationController
 
   end
 
+ # def overdues
+ #   @title = "Overdues!"
+ # end
+
   # Return a json formatted list of options to refresh the Milestone dropdown
   def get_milestones
     @milestones = Milestone.find(:all, :order => 'milestones.due_at, milestones.name', :conditions => ['company_id = ? AND project_id = ? AND completed_at IS NULL', current_user.company_id, params[:project_id]]).collect{|m| "{\"text\":\"#{m.name.gsub(/"/,'\"')}\", \"value\":\"#{m.id}\"}" }.join(',')
@@ -367,6 +371,7 @@ class TasksController < ApplicationController
                 @task.notify_emails ||= ""
                 @task.notify_emails << "," unless @task.notify_emails.empty?
                 @task.notify_emails << w
+
               end
             end
           end
@@ -457,7 +462,7 @@ class TasksController < ApplicationController
     
     
     @task.due_at = tz.utc_to_local(@task.due_at) unless @task.due_at.nil?
-	@task.start_at = tz.utc_to_local(@task.start_at) unless @task.start_at.nil?
+	  @task.start_at = tz.utc_to_local(@task.start_at) unless @task.start_at.nil?
     @tags = Tag.top_counts({ :company_id => current_user.company_id, :project_ids => current_project_ids, :filter_hidden => session[:filter_hidden]})
     unless @logs = WorkLog.find(:all, :order => "work_logs.started_at desc,work_logs.id desc", :conditions => ["work_logs.task_id = ? #{"AND (work_logs.comment = 1 OR work_logs.log_type=6)" if session[:only_comments].to_i == 1}", @task.id], :include => [:user, :task, :project])
           @logs = []
@@ -466,6 +471,8 @@ class TasksController < ApplicationController
 
     @notify_targets = current_projects.collect{ |p| p.users.collect(&:name) }.flatten.uniq
     @notify_targets += Task.find(:all, :conditions => ["project_id IN (#{current_project_ids}) AND notify_emails IS NOT NULL and notify_emails <> ''"]).collect{ |t| t.notify_emails.split(',').collect{ |i| i.strip } }.flatten.uniq
+    
+    
 
   end
 
@@ -545,19 +552,19 @@ class TasksController < ApplicationController
 	  end
 
 	  if body.length > 0
-		worklog.user = current_user
-		worklog.company = @task.project.company
-		worklog.customer = @task.project.customer
-		worklog.project = @task.project
-		worklog.task = @task
-		worklog.started_at = Time.now.utc
-		worklog.duration = 0
-		worklog.body = body
-		worklog.save
+  		worklog.user = current_user
+  		worklog.company = @task.project.company
+  		worklog.customer = @task.project.customer
+  		worklog.project = @task.project
+  		worklog.task = @task
+  		worklog.started_at = Time.now.utc
+  		worklog.duration = 0
+  		worklog.body = body
+  		worklog.save
 
-		if(params['notify'].to_i == 1)
-		  Notifications::deliver_changed( update_type, @task, current_user, email_body.gsub(/<[^>]*>/,'')) rescue nil
-		end
+  		if(params['notify'].to_i == 1)
+  		  Notifications::deliver_changed( update_type, @task, current_user, email_body.gsub(/<[^>]*>/,'')) rescue nil
+  		end
 	  end
 	  
 	  Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => @task.id)}');", ["tasks_#{current_user.company_id}"])
@@ -635,7 +642,7 @@ class TasksController < ApplicationController
               if w.include?('@')
                 @task.notify_emails ||= ""
                 @task.notify_emails << "," unless @task.notify_emails.empty?
-                @task.notify_emails << w
+                @task.notify_emails << w                
               end
             end
           end
@@ -847,7 +854,7 @@ class TasksController < ApplicationController
         worklog.body = body
         worklog.save
 
-        if(params['notify'].to_i == 1)
+        unless params[:notify].nil?
           Notifications::deliver_changed( update_type, @task, current_user, email_body.gsub(/<[^>]*>/,'')) rescue nil
         end
       end
@@ -1144,6 +1151,10 @@ class TasksController < ApplicationController
         @log = worklog
         @log.started_at = tz.utc_to_local(@log.started_at)
         @task = @log.task
+        @ts = Task.find(:first, :conditions=> ["id =?", @task.id])
+        @task.severity_id = @ts.severity_id
+
+        
         render :action => 'edit_log'
         Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => @task.id)}');", ["tasks_#{current_user.company_id}"])
       else
@@ -1276,10 +1287,37 @@ class TasksController < ApplicationController
 
   def save_log
     @log = WorkLog.find( params[:id], :conditions => ["company_id = ?", current_user.company_id] )
-    
+    @task = Task.find( :first, :conditions=> ["id =?", @log.task.id] )
+
     old_duration = @log.duration
     old_note = @log.body
-    
+    severity = ""
+    severity = params[:severity]
+    updated = false
+
+    unless @log.nil?
+      if severity.eql? "sever" 
+        if @log.task.severity_id != 3       
+          Task.update( @task.id, :severity_id => 3 )        
+          updated = true
+          if !@log.task.nil?
+            @log.task.severity_id = 3
+            @log.task.save  
+          end 
+        end   
+      else
+        if @log.task.severity_id != 0
+          Task.update( @task.id, :severity_id => 0 )        
+          updated = true
+          unless @log.task.nil?
+            @log.task.severity_id = 0
+            @log.task.save  
+          end
+        end 
+      end
+    end   
+
+
     if !params[:log].nil? && !params[:log][:started_at].nil? && params[:log][:started_at].length > 0
       begin
         due_date = DateTime.strptime( params[:log][:started_at], "#{current_user.date_format} #{current_user.time_format}" )
@@ -1288,6 +1326,7 @@ class TasksController < ApplicationController
         params[:log][:started_at] = Time.now.utc
       end
     end
+
 
     if @log.update_attributes(params[:log])
 
@@ -1323,12 +1362,12 @@ class TasksController < ApplicationController
         @log.task.status = params[:task][:status].to_i
         @log.task.updated_by_id = current_user.id
         @log.task.completed_at = Time.now.utc
-        Notifications::deliver_changed( status_type, @log.task, current_user, params[:log][:body] ) if(params['notify'].to_i == 1) rescue nil
+        Notifications::deliver_changed( status_type, @log.task, current_user, params[:log][:body] ) if(!params[:notify].nil?) rescue nil
 
-      elsif !params[:log][:body].blank? && params[:log][:body] != old_note &&  params['notify'].to_i == 1
+      elsif !params[:log][:body].blank? && params[:log][:body] != old_note && !params[:notify].nil?
         Notifications::deliver_changed( :comment, @log.task, current_user, params[:log][:body].gsub(/<[^>]*>/,'')) rescue nil
       end
-
+      
       @log.task.save
       @log.save
 
@@ -1594,8 +1633,15 @@ class TasksController < ApplicationController
     session[:only_comments] = 1 - session[:only_comments]
 
     @task = Task.find(params[:id], :conditions => ["project_id IN (#{current_project_ids})"])
-    unless @logs = WorkLog.find(:all, :order => "work_logs.started_at desc,work_logs.id desc", :conditions => ["work_logs.task_id = ? #{"AND (work_logs.comment = 1 OR work_logs.log_type=6)" if session[:only_comments].to_i == 1}", @task.id], :include => [:user, :task, :project])
+    unless @logs = WorkLog.find(:all, 
+                    :order => "work_logs.started_at desc,work_logs.id desc", 
+                    :conditions => ["work_logs.task_id = ? #{"AND (work_logs.comment = 1 OR work_logs.log_type=6)" if session[:only_comments].to_i == 1}", @task.id], 
+                    :include => [:user, :task, :project])
       @logs = []
+    end
+
+    @logs.each do |log|
+        log.name = log.body.split("\n[")
     end
 
     render :update do |page|

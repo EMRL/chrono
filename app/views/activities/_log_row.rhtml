@@ -13,7 +13,6 @@
   </td>
   <td align="center" valign="top" style="padding-left:0.3em;padding-right:0.3em;font-size:1.1rem;color:#B0B0B0;">
   
-
   <% if log.task_id.to_i > 0 %>
   <%= content_tag(:span, '<i class="icon-check icon-large"></i>') if log.log_type == EventLog::TASK_COMPLETED %>
   <%= content_tag(:span, '<i class="icon-ban-circle icon-large"></i>') if log.log_type == EventLog::TASK_REVERTED %>
@@ -46,22 +45,32 @@
 
 <% end %>
     <%= "<br/>" if (log.task_id.to_i > 0) %>
-            <%= "<span class=\"optional\">#{log.task.full_name}</span> " if log.task_id.to_i > 0 %>
-            <%= "<small><span class=\"otheruser\">[#{log.user.name}]</span></small>" if log.user %>
+            <%= "<span class=\"optional\">#{log.task.full_name}</span> " if log.task_id.to_i > 0 %>   
+            <% if log.user %>
+                <small><span class=\"otheruser\"><%= "[#{log.user.name}]" %></span></small>
+              <% else %>
+                <% @name = log.body.split("\n\n\n") %>
+                <small><span class=\"otheruser\"><%= @name[1] %></span></small>
+              <% end %>
             <%= "<small><span class=\"otheruser\">[#{log.event_log.user}]</span></small>" if log.user.nil? && log.event_log.user %>
             <%= "<small><span class=\"otheruser\">[#{log.scm_changeset.author}]</span></small>" if log.scm_changeset && !log.user %>
   </div>
-  <div style="float:right;position: relative;
-overflow: hidden;
--webkit-border-radius: 50%;
--moz-border-radius: 50%;
--ms-border-radius: 50%;
--o-border-radius: 50%;
-border-radius: 50%; "><%= avatar_for log.user, 50 if log.user %></div>
-  <div style="clear:both; width:80%;">
+  <div style="float:right;position: relative; overflow: hidden; -webkit-border-radius: 50%; -moz-border-radius: 50%; -ms-border-radius: 50%; -o-border-radius: 50%; border-radius: 50%; "><%= avatar_for log.user, 50 if log.user %></div>
+  <div style="clear:both; width:80%; overflow: hidden; text-overflow: ellipsis; overflow-wrap: break-word;
+  word-wrap: break-word; -ms-word-break: break-all; word-break: break-all; word-break: break-word; -ms-hyphens: auto; -moz-hyphens: auto; -webkit-hyphens: auto; hyphens: auto;">
 <% if log.body && log.body.length > 0 %>
   <!--// Originally it was 100).gusb & {|m| "  <strong>#{_($1)}</strong>"} //-->
-       <%= x = wrap_text( log.body.gsub(/- <strong>([^<]+)<\/strong>/) {|m| "  <strong>#{_($1)}</strong>"}, 1000).gsub(/\n/, "<br />") if log.body %>
+    <% if log.user %>
+      <%= x = wrap_text( log.body.gsub(/- <strong>([^<]+)<\/strong>/) {|m| "  <strong>#{_($1)}</strong>"}, 1000).gsub(/\n/, "<br />") if log.body %>
+    <% else %>
+      <%  str = log.body.split("\n\n\n")  %>
+      <%= x = wrap_text( str[0].gsub(/- <strong>([^<]+)<\/strong>/) {|m| "  <strong>#{_($1)}</strong>"}, 1000).gsub(/\n/, "<br />") if log.body %>
+    <% end %>
+<% end %>
+<% unless log.task.notify_emails.nil? %>
+  <% guests = log.task.notify_emails.length %>
+<% else %>
+  <% guests = 0 %>
 <% end %>
   </div>
   <div class="rtc">
@@ -69,7 +78,7 @@ border-radius: 50%; "><%= avatar_for log.user, 50 if log.user %></div>
 	<div class="rtcf">
 		<form method="post" action="/tasks/add_comment/<%= "#{log.task_id.to_i}" %>">
 			<textarea name="comment" id="comment_<%= "#{log.task_id.to_i}" %>_<%= "#{log.id.to_i}" %>" rows="5" cols="40"></textarea><br />
-			<input class="nolabel" value="Submit" name="commit" type="submit" />
+			<input class="nolabel" value="Submit" name="commit" type="submit" onclick="return status('<%= guests %>','notify_<%= log.task_id.to_i %>_<%= log.id.to_i %>');" />
 			<input class="checkbox"<%= " checked=\"checked\"" if current_user.send_notifications > 0 %> type="checkbox" name="notify" value="1" id="notify_<%= "#{log.task_id.to_i}" %>_<%= "#{log.id.to_i}" %>" /> 
 			<label for="notify_<%= "#{log.task_id.to_i}" %>_<%= "#{log.id.to_i}" %>">Send notification emails</label>
 		</form>

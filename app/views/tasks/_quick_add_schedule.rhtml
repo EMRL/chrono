@@ -104,7 +104,7 @@ end
         <%= select 'task', 'priority', [[_('Critical'),3],[_('Urgent'),2],[_('High'),1],[_('Normal'),0],[_('Low'),-1],[_('Lowest'),-2]], {:selected => @task.priority}, perms['prioritize']  %>
     </td>
     <td valign="top">
-        <label for="task_severity_id"><%=_ 'Severity' %></label><br />
+        <label for="task_severity_id"><%=_ 'Workflow' %></label><br />
         <%= select 'task', 'severity_id', [[_('Awaiting Approval'),3],[_('Critical'),2],[_('Major'),1],[_('Normal'),0],[_('Minor'),-1],[_('Trivial'),-2]], {:selected => @task.severity_id}, perms['prioritize']  %>
     </td>
 </tr>

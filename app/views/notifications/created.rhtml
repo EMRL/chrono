@@ -7,7 +7,7 @@
   Milestone:    <%= @task.milestone.name %>
 <% end -%>
   Task Type:    <%= @task.issue_type %>
-  Severity:     <%= @task.severity_type %>
+  Workflow:     <%= @task.Workflow_type %>
   Priority:     <%= @task.priority_type %>
 <% unless @task.due_at.nil? -%>
   Due:          <%= @user.tz.utc_to_local(@task.due_at).strftime("%A, %d %B %Y") %>

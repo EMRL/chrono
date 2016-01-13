@@ -301,6 +301,7 @@ img {
 	padding: 0;
 	vertical-align: middle;
 	border: 0;
+	max-width: 100%;
 }
 img.desaturate { 
 	filter: grayscale(100%);
@@ -370,6 +371,9 @@ input.checkbox {
 	margin-top: 1px;
 	padding-left: 20px;
 	padding-right: 2px;
+}
+.hide{
+	display:none;
 }
 .help {
 	background-color: #ffffff;
@@ -1066,9 +1070,8 @@ a.description {
     background: repeating-linear-gradient( 45deg, #FFFFFF, rgba(204, 34, 51, 0.06) 0px, #FFFFFF 1px, rgba(204, 34, 51, 0.06) 4px );
 }
 
-}
 #content div.task_high_pri {
-	border-left: solid 4px #f2ab99;
+	border-left: solid 4px #FFCC00;
 }
 #content div.task_raised_pri {
 	border-left: solid 4px #FFC266;
@@ -2060,11 +2063,11 @@ a.widget-collapsed {
 #presence {
 	bottom: 0;
 	display: block;
-	float: left;
-	height: 26px;
-	left: 0;
+	float: right;
+	height: 35%;
+	right: 0;
 	position: fixed;
-	width: 100%;
+	width: 35px;
 	z-index: 9;
 }
 #presence.full {
@@ -2083,16 +2086,16 @@ a.widget-collapsed {
 	z-index: 9;
 }
 .presence-section {
-	background-color: #eee;
+	// background-color: #eee;
 	// border-left: 1px solid #ccc;
 	// border-top: 1px solid #ccc;
-	float: left;
+	float: right;
 	height: 21px;
 	padding-left: 2px;
 	padding-right: 2px;
 	padding-top: 4px;
 	position: relative;
-	width: 120px;
+	width: 35px;
 	z-index: 10;
 }
 .presence-section img {
@@ -2105,7 +2108,7 @@ a.widget-collapsed {
 	padding-left: 4px;
 }
 .presence-section:hover {
-	background-color: #eee;
+	/*background-color: #eee;*/
 }
 .presence-section:hover .presence-bar-text {
 	text-decoration: none;
@@ -2127,10 +2130,10 @@ a.widget-collapsed {
 	position: absolute;
 }
 .presence-popup {
-	background-color: #EEE;
+	/*background-color: #EEE;
 	border-bottom: 1px solid #FFF;
 	border-left: 1px solid #EEE;
-	border-right: 1px solid #EEE;
+	border-right: 1px solid #EEE;*/
 	// border-top: 1px solid #ccc;
 	margin: 0;
 	padding: 0 0 1px 0;

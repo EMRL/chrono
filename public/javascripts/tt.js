@@ -363,3 +363,4 @@ function addMilestone() {
 function refreshMilestones(pid,mid) {
   new Ajax.Updater('task_milestone_id', '/tasks/get_milestones', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');$('task_milestone_id').value=mid;}, onLoading:function(request){Element.show('loading');}, parameters:'project_id=' + pid, insertion: updateSelect });
 }
+

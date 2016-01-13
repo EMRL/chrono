@@ -9,12 +9,16 @@
 			<div style="float:left;">
 				<%= _ 'History' %>
 			</div>
-			<div style="float:right;font-size:9px;padding-top:0.2em;padding-right:1.5em;text-transform: none; font-weight: none; letter-spacing:0">
-				<% if session[:only_comments].to_i == 0 %>
-					<%= link_to_remote _('Showing Full History'), :url => {:action => 'toggle_history', :id => @task.id }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
-				<% else %>
-					<%= link_to_remote _('Showing Only Comments'), :url => {:action => 'toggle_history', :id => @task.id}, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
-				<% end %>
+			<div class="comment_visibility" style="float:right;font-size:9px;padding-top:0.2em;padding-right:1.5em;text-transform: none; font-weight: none; letter-spacing:0">
+				<div id="multiple_comments" style="cursor:pointer"> <%= _('Showing Full History') %> </div>
+				<div id="single_comment" style="cursor:pointer"> <%= _('Showing Only Comments') %> </div>
+				<%# if session[:only_comments].to_i == 0 %>
+					
+					<%#= link_to_remote _('Showing Full History'), :url => {:action => 'toggle_history', :id => @task.id }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
+				<%# else %>
+					
+					<%#= link_to_remote _('Showing Only Comments'), :url => {:action => 'toggle_history', :id => @task.id}, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
+				<%# end %>
 			</div>
 		</td>
 	</tr>
@@ -23,16 +27,56 @@
 			&nbsp;
 		</td>
 	</tr>
-	<% day = 0
-		for log in @logs
-		if day != (tz.utc_to_local(log.started_at)).yday
-		day = (tz.utc_to_local(log.started_at)).yday %>
-	<tr>
-		<td class="log_header" colspan="3">
-			<%= tz.utc_to_local(log.started_at).strftime("%A, %d %B %Y") %>
-		</td>
-	</tr>
-	<% end %>
-	<%= render :partial => 'activities/log_row', :locals => {:log => log} %>
-	<% end %>
+	<% day = 0 %>
+	<% for log in @logs %> 
+		
+		<%	
+		   if day != (tz.utc_to_local(log.started_at)).yday
+			  day = (tz.utc_to_local(log.started_at)).yday 
+		%>
+				
+			<tr>
+				<td class="log_header" colspan="3">
+				 <%= tz.utc_to_local(log.started_at).strftime("%A, %d %B %Y") %>
+				</td>
+			</tr>
+			<% end %>
+			<%= render :partial => 'activities/log_row', :locals => {:log => log} %>
+			
+		<% end %>
 </table>
+
+<script>
+	var multi = document.getElementById("multiple_comments");
+	var single = document.getElementById("single_comment");
+	var header = document.getElementsByClassName("log_header");
+	var hoverrow = document.getElementsByClassName("hoverrow");
+
+
+	<% if session[:only_comments].to_i == 1 %>
+		addClass(single," hide");
+		removeClass(multi,"hide");
+	<% else %>
+		addClass(multi," hide");
+		removeClass(single,"hide");
+	<% end %>
+	
+	multi.addEventListener("click",function(){
+		addClass(multi," hide");
+		removeClass(single,"hide");
+
+		addClassInRange(header," hide",1,header.length);
+		addClassInRange(hoverrow," hide",1,hoverrow.length);
+
+	});
+	
+	single.addEventListener("click",function(){
+		addClass(single," hide");
+		removeClass(multi,"hide");
+
+		removeClassInRange(header,"hide",1,header.length);
+		removeClassInRange(hoverrow,"hide",1,hoverrow.length);
+		
+	});
+	
+</script>

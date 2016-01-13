@@ -3,6 +3,7 @@
 # Author:: Erlend Simonsen (mailto:admin@clockingit.com)
 class ActivitiesController < ApplicationController
 
+  
   # Redirect to list
   def index
     list
@@ -12,6 +13,8 @@ class ActivitiesController < ApplicationController
   # Show the overview page including whatever widgets the user has added.
   def list
     session[:channels] += ["activity_#{current_user.company_id}", "tasks_#{current_user.company_id}"]
+    
+    
   end
 
   # Update the page, due to a Juggernaut push message
@@ -66,5 +69,4 @@ class ActivitiesController < ApplicationController
       page.toggle('left_menu')
     end
   end
-
 end

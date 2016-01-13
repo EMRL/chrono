@@ -1,4 +1,5 @@
 <%= error_messages_for 'task' %>
+
 <%
   perms = {}
   ['comment', 'edit', 'reassign', 'prioritize', 'close', 'milestone'].each do |p|
@@ -45,13 +46,14 @@
         <br />
       </div>
       <label>&nbsp;</label>
+     
       <div class="buttons">
         <% if @task.new_record? %>
         <%= submit_tag _("Create"), :class => "nolabel" %>
         <%= check_box_tag 'notify', '1', (current_user.send_notifications > 0) %><div style="padding-top:0.2em;padding-left:0.2em;float:left;"><%=_ 'Send notification emails' %>
       </div>
       <% else %>
-      <%= submit_tag _("Save"), :class => "nolabel" %>
+      <%= submit_tag _("Save"), :class => "nolabel",:onclick=>"return status()" %>
       <span class="optional" style="float:left;padding-right:0.4em;padding-top:0.4em">
         <%=_ 'and' %>
       </span>
@@ -468,8 +470,44 @@
         <div style="clear:both; display:none;" id="notification-autocomplete"></div>
         <div style="clear:both;" id="notifications"></div>
 
+
+
 		<script type="text/javascript">
 			var watchers = <%= @task.watchers.size + (@task.notify_emails.nil? ? 0 : @task.notify_emails.count(',')) %>;
+      var checkAction = 0;
+      var guests = 0;
+      document.getElementById("notify").onchange = function(){
+        if(document.getElementById("notify").checked){
+          checkAction = 1;          
+        }
+        else{
+          checkAction = 0;      
+        }
+      }
+        
+      function status(){
+        
+        <% unless @task.notify_emails.nil? %>
+          guests = <%= @task.notify_emails.size %>;
+        <% else %>
+          guests = 0;
+        <% end %>
+        
+        if(checkAction < 1){
+          guests = checkAction;          
+        }        
+
+        if(guests > 0)
+        {
+          if(confirm("This task is being shared externally. Please check your comment and click OK only if it is safe to send!") == true){
+            return true;
+          }
+          else
+          {
+            return false;
+          }
+        }
+      }
 
 			function updateList(text) {
 			   new Insertion.Top($('notifications'), '<div id="watcher-' + watchers + '" class="notify-row"><div class="notify-user">' + text + '</div><div style="float:right; padding-right:6px;"><a href="#" onclick="javascript:new Element.remove(\'watcher-' + watchers + '\');false"><i class="icon-minus-sign tooltip" style="text-decoration: none;" title="<%=_ 'Remove notification'%>" class="tooltip"></i></a></div><input type="hidden" name="watchers[]" value="' + text + '" /></div>' );

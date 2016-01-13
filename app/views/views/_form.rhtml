@@ -72,7 +72,7 @@ new Form.Element.EventObserver('view_filter_project_id', function(element, value
   <% end %>
 
   <label for="view_filter_type_id"><%=_ 'Type' %></label><%= select 'view', 'filter_type_id', [[_('[Any Type]'), '-1'],[_('Task'),0],[_('New Feature'),1],[_('Defect'),2],[_('Improvement'),3]], :selected => @view.filter_type_id %><br/>
-  <label for="view_filter_severity"><%=_ 'Severity' %></label><%= select 'view', 'filter_severity', [[_('[Any Severity]'), '-10'],[_('Awaiting Approval'),3],[_('Critical'),2],[_('Major'),1],[_('Normal'),0],[_('Minor'),-1],[_('Trivial'),-2]], :selected => @view.filter_severity %><br/>
+  <label for="view_filter_severity"><%=_ 'Workflow' %></label><%= select 'view', 'filter_severity', [[_('[Any Workflow]'), '-10'],[_('Awaiting Approval'),3],[_('Critical'),2],[_('Major'),1],[_('Normal'),0],[_('Minor'),-1],[_('Trivial'),-2]], :selected => @view.filter_severity %><br/>
   <label for="view_filter_priority"><%=_ 'Priority' %></label><%= select 'view', 'filter_priority', [[_('[Any Priority]'), '-10'],[_('Critical'),3],[_('Urgent'),2],[_('High'),1],[_('Normal'),0],[_('Low'),-1],[_('Lowest'),-2]], :selected => @view.filter_priority %><br/>
   <label for="view_filter_status"><%=_ 'Status' %></label><%= select 'view', 'filter_status', [[_('[Any Status]'), '-1'],[_('Open'),0],[_('In Progress'),1],[_('Closed'),2],[_('Won\'t Fix'),3],[_('Invalid'),4],[_('Duplicate'),5], [_('Archived'), -2]], :selected => @view.filter_status %><br/>
 
@@ -81,7 +81,7 @@ new Form.Element.EventObserver('view_filter_project_id', function(element, value
               <option value="0" class="select_default"><%= _("[No Grouping]") %></option>
 
               <%
-                 @group_by = [[_("Tags"), "1"],[_("Clients"), "2"],[_("Projects"), "3"],[_("Milestones"), "4"],[_("Projects / Milestones"), "10"],[_("Users"), "5"],[_("Task Type"), "6"],[_("Status"), "7"],[_("Priority"), "9"],[_("Severity"), "8"]]
+                 @group_by = [[_("Tags"), "1"],[_("Clients"), "2"],[_("Projects"), "3"],[_("Milestones"), "4"],[_("Projects / Milestones"), "10"],[_("Users"), "5"],[_("Task Type"), "6"],[_("Status"), "7"],[_("Priority"), "9"],[_("Workflow"), "8"]]
               %>
               <%= options_for_select @group_by, @view.auto_group.to_s %>
             </select><br/>

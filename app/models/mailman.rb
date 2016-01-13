@@ -106,7 +106,21 @@ class Mailman < ActionMailer::Base
         end
 
         w = WorkLog.new
-        w.user = e.user
+        user = nil
+        if e.user.nil?
+          user = User.new
+          user.id = 10000000
+          user.email = email.from.first
+          user.name = email.from.first
+          user.receive_notifications = 1
+          w.body = e.body + "\n[" + user.email + "]"
+        else 
+          user = e.user
+          w.body = e.body
+        end
+
+        
+        w.user = user        
         w.company = target.project.company
         w.customer = target.project.customer
         w.project = target.project
@@ -114,21 +128,21 @@ class Mailman < ActionMailer::Base
         w.started_at = Time.now.utc
         w.duration = 0
         w.log_type = EventLog::TASK_COMMENT
-        w.body = e.body
+        
         w.save
 
         w.event_log.user = e.user
         w.event_log.save
 
-        user = nil
-        if e.user.nil?
-          user = User.new
-          user.name = email.from.first
-          user.email = email.from.first
-          user.receive_notifications = 1
-        else
-          user = e.user
-        end
+        # user = nil
+        # if e.user.nil?
+        #   user = User.new
+        #   user.name = email.from.first
+        #   user.email = email.from.first
+        #   user.receive_notifications = 1
+        # else
+        #   user = e.user
+        # end
 
         Notifications::deliver_changed( :comment, target, user, e.body.gsub(/<[^>]*>/,'')) rescue begin
 #                                                                                                    Rails.logger "Error sending notificaiton email"

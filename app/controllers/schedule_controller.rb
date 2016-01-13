@@ -24,64 +24,64 @@ class ScheduleController < ApplicationController
 
     @tasks = Task.find(:all, :order => 'tasks.duration desc, tasks.name', :conditions => ["tasks.project_id IN (#{current_project_ids}) AND tasks.company_id = '#{current_user.company_id}' AND ((tasks.due_at is NOT NULL AND tasks.due_at >= '#{start_date.to_s(:db)}' AND tasks.due_at <= '#{end_date.to_s(:db)}') OR (tasks.completed_at is NOT NULL AND tasks.completed_at >= '#{start_date.to_s(:db)}' AND tasks.completed_at <= '#{end_date.to_s(:db)}'))", ], :include => [:milestone] )
     @milestones = Milestone.find(:all, :conditions => ["company_id = ? AND project_id IN (#{current_project_ids})", current_user.company_id])
-    @dates = {}
+    @dates = {} 
 
     # Mark milestones
-    @milestones.each do |m|
-      unless m.due_at.nil?
-        @dates[tz.utc_to_local(m.due_at).to_date] ||= []
-        @dates[tz.utc_to_local(m.due_at).to_date] << m
-      end
-    end
-
-    # Mark all tasks
-    @tasks.each do |t|
-      due_date = tz.utc_to_local(t.due_at).to_date unless t.due_at.nil?
-      due_date ||= tz.utc_to_local(t.completed_at).to_date unless t.completed_at.nil?
-
-
-      @dates[due_date] ||= []
-
-      duration = t.duration
-
-      days = (duration / (60*8)) - 1
-
-      days = 0 if days < 0
-
-      found = false
-      slot = 0
-      until found
-        found = true
-
-        done = days
-        d = -1
-
-        while done >= 0
-          d += 1
-          wday1 = (due_date - d)
-          wday2 = (due_date.wday)
-          dpw = current_user.days_per_week
-
-          next if( ((wday1 == 0 && dpw < 7) || (wday1 == 6 && dwp < 6)) && !((wday2 == 0 && dpw < 7) || (wday2 == 6 && dpw <6)) )
-          unless @dates[due_date - d].nil? || @dates[due_date - d][slot].nil?
-            found = false
-          end
-          done -= 1
+    
+      @milestones.each do |m|
+        unless m.due_at.nil?
+          @dates[tz.utc_to_local(m.due_at).to_date] ||= []
+          @dates[tz.utc_to_local(m.due_at).to_date] << m
         end
-        slot += 1 unless found
-      end
+      end 
+      # Mark all tasks
+     
+      @tasks.each do |t|
+        
+          due_date = tz.utc_to_local(t.due_at).to_date unless t.due_at.nil?
+          due_date ||= tz.utc_to_local(t.completed_at).to_date unless t.completed_at.nil?
+          
+          @dates[due_date] ||= []
+          
+          duration = t.duration
 
-      while days >= 0
-        days -= 1
-        @dates[due_date] ||= []
-        @dates[due_date][slot] = t
-        due_date -= 1.days
-        due_date -= 1.days if due_date.wday == 6 && current_user.days_per_week < 6
-        due_date -= 2.days if due_date.wday == 0 && current_user.days_per_week < 7
-      end
+          days = (duration / (60*8)) - 1
+          days = 0 if days < 0
+        
+          found = false
+          slot = 0
+          until found
+            found = true
 
-    end
+            done = days
+            d = -1
 
+            while done >= 0
+              d += 1
+              wday1 = (due_date - d)
+              wday2 = (due_date.wday)
+              dpw = current_user.days_per_week
+
+              next if( ((wday1 == 0 && dpw < 7) || (wday1 == 6 && dwp < 6)) && !((wday2 == 0 && dpw < 7) || (wday2 == 6 && dpw <6)) )
+              unless @dates[due_date - d].nil? || @dates[due_date - d][slot].nil?
+                found = false
+              end
+              done -= 1
+            end
+            slot += 1 unless found
+          end
+
+          while days >= 0
+            days -= 1
+            @dates[due_date] ||= []
+            @dates[due_date][slot] = t
+            due_date -= 1.days
+            due_date -= 1.days if due_date.wday == 6 && current_user.days_per_week < 6
+            due_date -= 2.days if due_date.wday == 0 && current_user.days_per_week < 7
+          end
+        end
+      
+      
   end
 
   # New event

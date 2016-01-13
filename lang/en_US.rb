@@ -23,4 +23,5 @@ Localization.define('en_US') do |l|
   l.store "%d completed milestone", ["%d completed milestone", "%d completed milestones"] # Erlend Simonsen
   l.store "Last %d Completed Tasks", ["Last %d Completed Tasks", "Last %d Completed Tasks"]
   l.store "%d translations updated.", ["%d translations updated.", "%d translations updated."]
+  l.store "Guests",["There is a Guest in the task.","There are Guest in the task."]
 end

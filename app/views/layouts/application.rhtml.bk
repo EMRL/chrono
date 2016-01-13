@@ -6,7 +6,11 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,400italic,700,700italic,300,300italic' rel='stylesheet" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="alternate" type="application/rss+xml" title="RSS" href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d" />
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>
+    <!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.0/jquery.min.js"></script>-->
+    <!--<script type='text/javascript' src='http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js?ver=1.4.2'></script>-->
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+   <!--  // <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
     <%= javascript_include_merged :base %>
     <%= yield :tinymce %>
     <%= javascript_include_merged :tt %>
@@ -19,13 +23,14 @@
     <%= javascript_include_tag "portal" %>
     <!--[if IE]><%= javascript_include_tag "excanvas" %><![endif]-->
     <%= javascript_include_tag "flotr" %><% end %><%= yield :tinymce_init %>
+
     <!--[if lt IE 7]>
     <%= javascript_include_tag "IE7" %>
-        <style type="text/css">
-            #presence {
+		<style type="text/css">
+			#presence {
       position: relative;
       }
-        </style>
+		</style>
     <![endif]-->
     <%= stylesheet_link_tag "print", { :media => "print" } %><%= auto_discovery_link_tag(:rss, {:controller => 'feeds', :action => 'rss', :id => current_user.uuid }) %>
     <title>
@@ -117,6 +122,9 @@
                   </tr>
                 </table>
               </div>
+              <div <%="style=\"display:none\"" unless flash['warning'] %>>
+                <%= flash['warning'] %>
+              </div>
               <div class="content_body" style="margin-left: 4px; margin-right: 4px; padding-top: 0pt;">
                 <div style="background-color: rgb(238, 238, 238);">
                   <span style="border-color: rgb(238, 238, 238); border-width: 1px 2px 0px; border-top: 1px solid rgb(238, 238, 238); overflow: hidden; background-color: rgb(255, 255, 255); display: block; height: 0px; font-size: 1px; margin-left: 3px; margin-right: 3px;">
@@ -175,8 +183,8 @@
                               </div>
                               <div>
                                 <div style="float:right;padding-top:0.1em;">
-                                  <%= "<img src=\"#{h(@current_user.avatar_url(50))}\" class=\"photo desaturate tooltip\" title=\"
-                                  You are a beautiful butterfly\" />" %><br />
+                                  <a href="/users/edit_preferences/"><%= "<img src=\"#{h(@current_user.avatar_url(50))}\" class=\"photo desaturate tooltip\" title=\"
+                                  You are a beautiful butterfly\" />" %></a><br />
                                 </div>
                               </div>
                             </td>
@@ -287,21 +295,21 @@
                           </div>
                         </td>
                       </tr>
-                                <% wikis = WikiPage.find(:all, :limit => 6, :order => "updated_at DESC") %>
-                                <% wiki_i = 0 %>
-                                <% for wiki in wikis %>
-                                    <tr>
+           						<% wikis = WikiPage.find(:all, :limit => 6, :order => "updated_at DESC") %>
+				          		<% wiki_i = 0 %>
+			           			<% for wiki in wikis %>
+        							<tr>
                         <td class="views_item" style="white-space:nowrap;<%= "padding-top:0.2em;" if (wiki_i == 0) %>">
-                                          <div style="">
-                                             <%= wiki.to_url_truncate(28) %>
+								          <div style="">
+									         <%= wiki.to_url_truncate(28) %>
                          </div>
-                                        </td>
-                                        <td<%= " style=\"color: padding-top:0.2em\"" if (wiki_i == 0) %>>
-                                            &nbsp;&nbsp;<span style="color:#B8B8B8; font-weight:normal;"><%= wiki.updated_at.strftime("%m/%d") %></span>
-                                        </td>
+        								</td>
+				        				<td<%= " style=\"color: padding-top:0.2em\"" if (wiki_i == 0) %>>
+        									&nbsp;&nbsp;<span style="color:#B8B8B8; font-weight:normal;"><%= wiki.updated_at.strftime("%m/%d") %></span>
+				        				</td>
                       </tr>
                       <% wiki_i += 1 %>
-                                <% end %>
+          						<% end %>
                       <tr>
                         <td class="views_item" style="padding-top: 0.2em;" colspan="2">
                         </td>
@@ -331,39 +339,39 @@
                       <tr>
                         <td class="views_item" style="padding-top: 0.2em;" colspan="2">
                          <div style="">
-                                    <a href="/wiki/show/Creative%20Dialogue">Creative Dialogue</a>
+									<a href="/wiki/show/Creative%20Dialogue">Creative Dialogue</a>
                 </div>
               </td>
-                            <td>
-                            </td>
-                        </tr>            
+							<td>
+							</td>
+						</tr>            
             <tr>
               <td class="views_item" style="padding-top: 0.2em;" colspan="2">
                 <div style="">
-                                    <a href="/wiki/show/The%20Project%20Manager">Project Management</a>
+									<a href="/wiki/show/The%20Project%20Manager">Project Management</a>
                 </div>
               </td>
-                            <td>
-                            </td>
-                        </tr>   
+							<td>
+							</td>
+						</tr>	
             <tr>
               <td class="views_item" style="padding-top: 0.2em;" colspan="2">
                 <div style="">
-                                    <a href="/wiki/show/Strategic%20Advertising%20Notes">Strategic Advertising Notes</a>
+									<a href="/wiki/show/Strategic%20Advertising%20Notes">Strategic Advertising Notes</a>
                 </div>
               </td>
-                            <td>
-                            </td>
-                        </tr>   
-                        <tr>
-                            <td class="views_item" style="padding-top: 0.2em;" colspan="2">
-                                <div style="">
-                                    <a href="/wiki/show/Workflow">Workflow</a></div>
-                            </td>
-                            <td>
-                            </td>
-                        </tr>
-                        <tr>
+							<td>
+							</td>
+						</tr>	
+						<tr>
+							<td class="views_item" style="padding-top: 0.2em;" colspan="2">
+								<div style="">
+									<a href="/wiki/show/Workflow">Workflow</a></div>
+							</td>
+							<td>
+							</td>
+						</tr>
+						<tr>
               <td class="views_item" style="padding-top: 0.2em;" colspan="2">
                 &nbsp;
               </td>
@@ -434,11 +442,39 @@
     </table>
   </div>
   <% if current_user.company.show_messaging %>
-    <div id="presence" >
+	<div id="presence" style="margin-bottom:2%;padding-right:1%">
+    <div id="presence_actives" >
+      <% all_users.each do |u| %>
+        <% if u.id != current_user.id %>
+          <% if u.online? %>   
+            <div class="user-avatars" style="float:right;padding:0.25%">         
+              <img 
+                   src="<%= u.avatar_url(32) %>" 
+                   class="photo" 
+                   style="height:32px;width:32px;border-radius:50%" 
+                   title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>" 
+              ><!-- end of image tag -->
+              
+            </div>
+          <% elsif u.idle? %>
+            <img 
+                 src="<%= u.avatar_url(32) %>" 
+                 class="photo" 
+                 style="height:32px;width:32px;border-radius:50%;opacity:0.3;filter:alpha(opacity=30)"
+                 title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>" 
+            ><!-- end of image tag -->    
+            
+          <% end %>          
+        <% end %>
+      <% end %>
+    </div>
+     
+<!--
     <div id="presence-ui" class="clearfix">
       <div id="presence-bar">
         <div id="presence-buttons">
           <% current_user.chats.each do |@chat| @user = @chat.target %>
+
           <%= render :partial => 'shout/chat_user' if @chat.active >= 0%>
           <% if @chat.active == 1 %>
           <script>
@@ -454,46 +490,21 @@
               </div>
             </div>
             <div class="presence-bar-text presence-toggle" id="presence-toggle-users">
-              <!-- <i class="icon-user icon-large"></i> -->
-              <!--  <%= _('Online')%> (<span id="presence-online"><%= online_users %></span>) -->
 
-
-
-               <% all_users.each do |u| %>
-               
-                <% if u.id != current_user.id %>
-                  <% if u.online? %>   
-                    <div class="user-avatars" style="float:right;padding:0.25%">         
-                      <img 
-                           src="<%= u.avatar_url(32) %>" 
-                           class="photo tooltip" 
-                           style="height:32px;width:32px;border-radius:50%"
-                           class="tooltip"
-                           title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>"     
-                      ><!-- end of image tag -->
-                    </div>
-                  <% elsif u.idle? %>
-                    <img 
-                         src="<%= u.avatar_url(32) %>" 
-                         class="photo desaturate tooltip" 
-                         style="height:32px;width:32px;border-radius:50%;opacity:0.3;filter:alpha(opacity=30)"                           
-                         title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>"    
-                    ><!-- end of image tag -->    
-                  <% end %> 
-                <% end %>
-              <% end %>
-
-
+              <i class="icon-user icon-large"></i>
+               <%= _('Online')%> (<span id="presence-online"><%= online_users %></span>)
             </div>
           </div>
         </div>
       </div>
-      <% end %>
-      <!-- task/update_sheet_info refresh the page every 90 sec  -->
-      <%= periodically_call_remote(:url => { :controller => 'tasks', :action => 'update_sheet_info' }, :frequency => 90 ) -%>
+      <% end %> 
+    
+-->
+
+      <%= periodically_call_remote(:url => { :controller => 'tasks', :action => 'update_sheet_info' }, :frequency => 90 ) %>
       <%= flash_plugin(session[:channels]) %>
-      <script>
-      // <![CDATA[
+     <script>
+      //<[CDATA[
       var userId=<%=current_user.id%>;
       Event.observe(window, "load", function(e) {
       <% if current_user.option_tooltips.to_i == 1 %>
@@ -506,20 +517,15 @@
         $('contact').scrollTo();
         window.scrollBy(0,200);
       <% end %>
-
       Event.observe($('presence-toggle-users'), "click", function(ev) { 
-              // toggleChatPopupEvent(ev); 
+               toggleChatPopupEvent(ev); 
                });
             });
-
       new Form.Element.Observer('worklog_body', 2, function(element, value) {new Ajax.Updater('worklog-saved', '/tasks/updatelog', {asynchronous:true, evalScripts:true, parameters: Form.serialize($('worklog_form'))  })});
-      
-      // ]]>
-      </script>
+     // ]]>
+    </script> 
       <%#= query_review_output %>
-                  </div>
-                </div>
-              </div>
+            </div>
             </td>
           </tr>
         </table>

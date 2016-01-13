@@ -103,13 +103,13 @@ class="task <%=classes%>" style="position:relative;<% if depth > 1 %>margin-left
 
    <div class="task_info description">
    <% if controller.controller_name != 'search' %>
-   <%= task.full_name %>
+    <%= task.full_name %>
    <% else %>
-   <%= highlight_all(task.full_name_without_links, @keys) %>
+    <%= highlight_all(task.full_name_without_links, @keys) %>
    <% end %>
-   <%= "<span class=\"otheruser\"><br />[#{name}]</span>" %>
-   <%= due_in_words(task) unless task.due_date && task.done?%>
-   <%= "[#{overdue_time(task.completed_at)}]" if task.done?%>
+    <%= "<span class=\"otheruser\"><br />[#{name}]</span>" %>
+    <%= due_in_words(task) unless task.due_date && task.done?%>
+      <%= "<span class=\"overdue #{task.id}\" >[#{overdue_time(task.completed_at)}]</span>" if task.done?%>
    </div>
    </div>
    </div>
@@ -120,3 +120,6 @@ class="task <%=classes%>" style="position:relative;<% if depth > 1 %>margin-left
 <% end %>
 <% #<div style="clear:both; padding-bottom:0.3rem;"></div> %>
 <% end %>
+
+
+
