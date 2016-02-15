@@ -1,5 +1,7 @@
 Chrono
 =============
+[![Code Climate](https://codeclimate.com/github/EMRL/chrono/badges/gpa.svg)](https://codeclimate.com/github/EMRL/chrono)
+
 Chrono is a version of [ClockingIT](http://www.clockingit.com/), heavily modified for use by our advertising agency in northern California.
 
 ![Image](http://emrl.co/assets/img/chrono.jpg)
