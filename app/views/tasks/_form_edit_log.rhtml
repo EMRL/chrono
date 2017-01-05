@@ -3,16 +3,15 @@
 <!--[form:log]-->
 <!--reassign-->
 <% if current_user.can?(@task.project, 'all') %>
-	<%
-  perms = {}
-  ['comment', 'edit', 'reassign', 'prioritize', 'close', 'milestone', 'all'].each do |p|
-    if @task.project_id.to_i == 0 || current_user.can?( @task.project, p )
-      perms[p] = {}
-    else
-      perms[p] = { :readonly => 'readonly' }
+	<% perms = {}
+    ['comment', 'edit', 'reassign', 'prioritize', 'close', 'milestone', 'all'].each do |p|
+      if @task.project_id.to_i == 0 || current_user.can?( @task.project, p )
+        perms[p] = {}
+      else
+        perms[p] = { :readonly => 'readonly' }
+      end
     end
-  end
-%>
+  %>
 	<% users = Company.find(1).users.find(:all, :order => 'name' ) rescue [] 
         resource_string = "<select id=\"task_users\" name=\"users[]\" #{"disabled=\"disabled\"" if @task.project && !current_user.can?( @task.project, 'all' )}>" + users.collect{|us| "<option value=\"#{us.id}\">#{us.name}</option>"}.join('') + "</select>"
         resource_string = resource_string.split(/\n/).join('').gsub(/'/, "\\\\\'")

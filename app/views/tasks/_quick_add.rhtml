@@ -97,7 +97,7 @@ end
   </td>
     <td valign="top">
       <label for="task_type_id"><%=_ 'Type' %></label><br />
-        <%= select 'task', 'type_id', [[_('Task'),0],[_('Design'),1],[_('Coding'),2],[_('Research'),3],[_('Management'),4],[_('Meeting'),5]], {:selected => @task.type_id}, perms['prioritize']  %>
+        <%= select 'task', 'type_id', [[_('Task'),0],[_('Design'),1],[_('Development'),2],[_('Research'),3],[_('Management'),4],[_('Meeting'),5]], {:selected => @task.type_id}, perms['prioritize']  %>
     </td>
     <td valign="top">
         <label for="task_priority"><%=_ 'Priority' %></label><br />

@@ -112,7 +112,7 @@
               <select name="filter_type" id="filter_type" onchange="javascript:document.forms[1].submit();" class="tooltip" title="<%=_('Only show tasks of this type')%>">>
                 <option value="-1" class="select_default"><%= _("[Any Type]") %></option>
                 <%
-                   @types = [[_("Task"), "0"],[_("Design"), "1"],[_("Coding"), "2"],[_("Research"), "3"],[_("Management"), "4"],[_("Meeting"), "5"]]
+                   @types = [[_("Task"), "0"],[_("Design"), "1"],[_("Development"), "2"],[_("Research"), "3"],[_("Management"), "4"],[_("Meeting"), "5"]]
                 %>
                 <%= options_for_select @types, session[:filter_type] %>
               </select>

@@ -93,7 +93,7 @@
           <%= select 'task', 'hide_until', defer_options %>
         </div>
         <%= check_box_tag 'notify', '1', (current_user.send_notifications > 0) %>
-        <div style="padding-top:0.2em;padding-left:0.2em;float:left;">
+        <div style="padding-top:0.5em;padding-left:0.2em;float:left;">
           <%=_ 'Send notification emails' %>
         </div>
       </div>
@@ -105,6 +105,9 @@
   <div id="task_history">
     <%= render :partial => "history" %>
   </div>
+
+
+
   <!--// The to-do list //-->
   <style type="text/css">
     .todo-container {padding-left: 0;}
@@ -133,23 +136,25 @@
           <%= render :partial => "tasks/todo_container", :locals => {:task => @task, :depth => 0} %>
         </td>
       </tr>
-      </table>
-      <script type="text/javascript">
+    </table>
+
+    <script type="text/javascript">
       //<![CDATA[
       Element.show('todo-container-<%=@task.dom_id%>');
       //]]>
-      </script>
-      <% else %>
-      <!--// This is a new task, so do nothing //-->
-      <% end %>
-      <% unless @tags.nil? %>
+    </script>
+    <% else %>
+    <!--// This is a new task, so do nothing //-->
+    <% end %>
+    <% unless @tags.nil? %>
       <script type="text/javascript">
-      new Autocompleter.Local('task_set_tags', 'task_set_tags_auto_complete', [<%= @tags.collect {|t| "'#{t[0].gsub(/'/, "\\\\\'")}'"}.join(', ') %>], {tokens:[','], minChars:0, frequency: 0, choices: 15});
+        new Autocompleter.Local('task_set_tags', 'task_set_tags_auto_complete', [<%= @tags.collect {|t| "'#{t[0].gsub(/'/, "\\\\\'")}'"}.join(', ') %>], {tokens:[','], minChars:0, frequency: 0, choices: 15});
       </script>
-      <% end %>
-      </td>
-      <td valign="top" rowspan="2" style="width:22em;">
-      <% if @task.project_id > 0 
+    <% end %>
+  </td>
+
+  <td valign="top" rowspan="2" style="width:22em;">
+    <% if @task.project_id > 0 
       selected_project = @task.project_id
       elsif session[:last_project_id].to_i > 0 && Project.exists?(session[:last_project_id])
       selected_project = session[:last_project_id].to_i
@@ -158,23 +163,23 @@
       else
         selected_project = current_user.projects.find(:first, :order => 'name').id
         end
-        selected_project = current_user.projects.find(selected_project).id rescue current_user.projects.find(:first, :order => 'name').id
-      %>
-      <fieldset id="task_project_selection" style="padding-right:0;">
-        <legend>
-          <%=_ 'Target' %>
-        </legend>
-        <label for="task_project_id">
-          <%=_ 'Project' %>
-        </label>
-        <select name="task[project_id]" id="task_project_id" <%= "disabled=\"disabled\"" unless perms['reassign'].empty? %>>
+        selected_project = current_user.projects.find(selected_project).id rescue current_user.projects.find(:first, :order => 'name').id %>
+    <fieldset id="task_project_selection" style="padding-right:0;">
+      <legend>
+        <%=_ 'Target' %>
+      </legend>
+      <label for="task_project_id">
+        <%=_ 'Project' %>
+      </label>
+  
+      <select name="task[project_id]" id="task_project_id" <%= "disabled=\"disabled\"" unless perms['reassign'].empty? %>>
         <% @clients = Customer.find(:all, :conditions => ["company_id = ?", current_user.company_id], :order => "name") %>
         <% @clients.each do |c| %>
         <% @client_projects = current_user.projects.find(:all, :conditions => ["customer_id = #{c.id} AND completed_at IS NULL"], :order => "name" ) %>
         <% if @client_projects.size > 0 %>
         <optgroup class="select_heading" label="<%= h(c.name) %>">
         <% @client_projects.each do |p| %>
-        <option value="<%=p.id%>" class="select_item"<%= " selected" if p.id == selected_project%>><%= p.name %></option>
+        <option value="<%=p.id%>" class="select_item" <%="selected" if p.id == selected_project%>><%= p.name %></option>
         <% end %>
         </optgroup>
         <% end %>
@@ -182,7 +187,10 @@
         </select>
         <!--// Come back and finish this later //-->        
         <span id="edit_project">
-          <a href="#"><i class="icon-edit-sign icon-large" style="float:left;margin:0;padding:6px 0 0 0; text-decoration: none;"></i></a>
+
+
+
+          <a href="/projects/edit/<%= selected_project %>"><i class="icon-edit-sign icon-large" style="float:left;margin:0;padding:6px 0 0 0; text-decoration: none;"></i></a>
         </span>
         <br />
         <script type="text/javascript">
@@ -318,9 +326,9 @@
           <br/> 
 
         <input type="radio" name="task[type_id]" id="task_type_id_2" value="2"  style="float:none;vertical-align:middle;" <%= "checked=\"checked\"" if @task.type_id.to_i == 2 %> <%= disabled %>/>
-          <label for="task_type_id_2" style="float:none;text-align:left;width:auto;margin:0;font-weight:normal;" title="Coding" class="tooltip">
+          <label for="task_type_id_2" style="float:none;text-align:left;width:auto;margin:0;font-weight:normal;" title="Development" class="tooltip">
             &nbsp;&nbsp;<i class="icon-code-fork icon-large"></i>&nbsp;
-            <%=_'Coding'%>
+            <%=_'Development'%>
           </label><br/> 
 
         <input type="radio" name="task[type_id]" id="task_type_id_3" value="3"  style="float:none;vertical-align:middle;" <%= "checked=\"checked\"" if @task.type_id.to_i == 3 %> <%= disabled %>/>

@@ -407,7 +407,7 @@ class Task < ActiveRecord::Base
   end
 
   def Task.issue_types
-    ["Task", "Design", "Coding", "Research", "Management", "Meeting"]
+    ["Task", "Design", "Development", "Research", "Management", "Meeting"]
   end
 
   def status_type
@@ -685,7 +685,7 @@ class Task < ActiveRecord::Base
     case icon_type
       when 0 then "<i class=\"icon-flag icon-large tooltip\" title=\"#{_'Task'}\"></i>"
       when 1 then "<i class=\"icon-pencil icon-large tooltip\" title=\"#{_'Design'}\"></i>"
-      when 2 then "<i class=\"icon-code-fork icon-large tooltip\" title=\"#{_'Coding'}\"></i>"
+      when 2 then "<i class=\"icon-code-fork icon-large tooltip\" title=\"#{_'Development'}\"></i>"
       when 3 then "<i class=\"icon-book icon-large tooltip\" title=\"#{_'Research'}\"></i>"
       when 4 then "<i class=\"icon-briefcase icon-large tooltip\" title=\"#{_'Management'}\"></i>"
 	  when 5 then "<i class=\"icon-group icon-large tooltip\" title=\"#{_'Meeting'}\"></i>"

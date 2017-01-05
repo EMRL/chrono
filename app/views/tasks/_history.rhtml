@@ -7,19 +7,18 @@
 	<tr>
 		<td align="left" colspan="3" class="page_header">
 			<div style="float:left;">
-				<%= _ 'History' %>
+				<%= _ 'Comments' %>
 			</div>
-			<div class="comment_visibility" style="float:right;font-size:9px;padding-top:0.2em;padding-right:1.5em;text-transform: none; font-weight: none; letter-spacing:0">
-				<div id="multiple_comments" style="cursor:pointer"> <%= _('Showing Full History') %> </div>
-				<div id="single_comment" style="cursor:pointer"> <%= _('Showing Only Comments') %> </div>
-				<%# if session[:only_comments].to_i == 0 %>
+			<!--div class="comment_visibility" style="float:right;font-size:9px;padding-top:0.2em;padding-right:1.5em;text-transform: none; font-weight: none; letter-spacing:0">
+
+				<% if session[:only_comments].to_i == 0 %>
 					
-					<%#= link_to_remote _('Showing Full History'), :url => {:action => 'toggle_history', :id => @task.id }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
-				<%# else %>
+					<%= link_to_remote _('Showing Full History'), :url => {:action => 'toggle_history', :id => @task.id }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
+				<% else %>
 					
-					<%#= link_to_remote _('Showing Only Comments'), :url => {:action => 'toggle_history', :id => @task.id}, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
-				<%# end %>
-			</div>
+					<%= link_to_remote _('Showing Only Comments'), :url => {:action => 'toggle_history', :id => @task.id}, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" %>
+				<% end %>
+			</div -->
 		</td>
 	</tr>
 	<tr>
@@ -77,6 +76,5 @@
 		removeClassInRange(header,"hide",1,header.length);
 		removeClassInRange(hoverrow,"hide",1,hoverrow.length);
 		
-	});
-	
+	});	
 </script>
