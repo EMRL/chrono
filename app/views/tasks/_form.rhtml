@@ -290,14 +290,13 @@
         </legend>
         <% client = @task.project.customer %>
         <% if File.exists?(client.logo_path) %>
-				<%= "<img src=\"/admin/show_logo/#{@task.project.customer_id}\" alt=\"#{client.name}\" title=\"#{client.name}\" class=\"tooltip\" />" %>
+				<%= "<img src=\"/admin/show_logo/#{@task.project.customer_id}\" style=\"max-width: 100px;\" alt=\"#{client.name}\" title=\"#{client.name}\" class=\"tooltip\" />" %>
 			<% else %>
 			<% end %>
 			<span class="clientdesc"><strong><%= client.name %></strong><br />
 			Contact: <a href="mailto:<%= client.contact_email %>" class="tooltip" title="Send an email to <%= client.contact_name %>" ><%= client.contact_name %></a><br />
 			<a href="/views/select_client/<%= @task.project.customer_id %>" class="tooltip" title="View all open tasks for <%= client.name %>">All Tasks</a> &bull; 
-			 <a target="_blank"  href="http://assets.emrl.com/pages/search.php?search=client:<%= client.name  %>" class="tooltip" title="View <%= client.name %> in the Asset Manager">Assets</a> 
-         &bull; 
+			 <a target="_blank"  href="http://assets.emrl.com/pages/search.php?search=client:<%= client.name  %>" class="tooltip" title="View <%= client.name %> in the Asset Manager">Assets</a><br />
 			<a href="/wiki/show/<%= client.name %>" class="tooltip" title="View the Wiki for <%= client.name %>">Wiki</a>
       <% unless client.evernote.nil? || client.evernote == '' %> &bull;
       <a target="_blank" href="<%= client.evernote %>" class="tooltip" title="View the Evernote Notebook for <%= client.name %>">Notes</a>

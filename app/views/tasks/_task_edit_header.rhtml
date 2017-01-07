@@ -6,4 +6,6 @@
 	<% end -%>
 	<%= link_to(content_tag(:span, "<i class=\"icon-plus-sign icon-2x\"></i>", :border => 0, :class => "tooltip work_icon", :title => _("Add earlier work to <b>%s</b>.", task.name)), {:controller => 'tasks', :action => 'add_work', :id => task})  -%>
 <% end -%>
-<%= task.issue_num %> <%= task.name %> (<%= _ "#{task.status_type}" %>) <%= "(#{worked_nice(task.worked_minutes)} / #{worked_nice( task.duration )})" if current_user.option_tracktime == 1 %>
+<span style="color: #B8B8B8;"><%= task.issue_num %></span>
+<span style="font-weight: 700;"><%= task.name %></span>
+<span style="color: #B8B8B8;">(<%= _ "#{task.status_type}" %>) <%= "(#{worked_nice(task.worked_minutes)} / #{worked_nice( task.duration )})" if current_user.option_tracktime == 1 %></span>

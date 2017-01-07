@@ -102,16 +102,16 @@ class CustomersController < ApplicationController
     if( File.size?(@customer.logo_path).to_i > 0 )
       image = Magick::Image.read( @customer.logo_path ).first
 
-      if image.columns > 250 or image.rows > 50
+      if image.columns > 250 or image.rows > 250
 
         if image.columns > image.rows
           scale = 250.0 / image.columns
         else
-          scale = 50.0 / image.rows
+          scale = 250.0 / image.rows
         end
 
-        if image.rows * scale > 50.0
-          scale = 50.0 / image.rows
+        if image.rows * scale > 250.0
+          scale = 250.0 / image.rows
         end
 
         image.scale!(scale)
