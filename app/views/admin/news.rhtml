@@ -1,25 +1,31 @@
-    <table width="100%" class="content" style="padding-left: 1em; padding-right: 1em;" border="0" cellpadding="0" cellspacing="0">
-      <tr>
-        <td align="left" colspan="2" class="page_header">
-          <div style="float:left;">
-            Admin / Manage News
-          </div>
+<table width="100%" class="content" style="padding-left: 1em; padding-right: 1em;" border="0" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="left" colspan="2" class="page_header">
+			<div style="float:left;">
+            	Admin / Manage News
+          	</div>
         </td>
-      </tr>
-    </table>
-    <table class="content" width="100%" style="margin-left:1em; padding-left: 1em; padding-right: 1em;">
-      <tr>
-        <td height="30" colspan="2">
-          <%= image_tag('doc_text_image.png', :border => 0, :height => 16, :style => "padding-right: 5px;         margin-top:-4px;") %><a class="newsitem" href="/admin/new_news">Add News Item</a>
+    </tr>
+</table>
+
+<table class="content" width="100%" style="margin-left:1em; padding-left: 1em; padding-right: 1em;">
+	<tr>
+    	<td height="30" colspan="2">
+	        <%= content_tag(:span, '<i class="icon-plus-sign"></i>', :style => "padding-right: 5px; margin-top:-4px;") %>
+    		<a class="newsitem" href="/admin/new_news">Add News Item</a>
         </td>
-      </tr><% for news in @news %>
-      <tr>
-        <td valign="top">
-          <%= news.created_at.strftime("%H:%M &#149; %m/%d/%y") %>
+    </tr>
+    <% for news in @news %>
+    <tr>
+    	<td valign="top" style="min-width: 150px;">
+        	<%= news.created_at.strftime("%H:%M &#149; %m/%d/%y") %>
         </td>
-        <td valign="top">
-          <%= news.body %><br>
-          <%= link_to "Edit", :action => "edit_news", :id => news.id %> | <%= link_to "Delete", :action => "delete_news", :id => news.id %>
+        <td valign="top" style="padding-bottom: 2.0em;">
+        	<%= news.body %>
+        	<p>
+        		<%= link_to "Edit", :action => "edit_news", :id => news.id %> | <%= link_to "Delete", :action => "delete_news", :id => news.id %>
+        	</p>
         </td>
-      </tr><% end %>
-    </table>
+    </tr>
+    <% end %>
+</table>

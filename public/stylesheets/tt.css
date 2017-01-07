@@ -398,6 +398,7 @@ input.checkbox {
 	font-size: 1.4rem;
 	margin-bottom: 1em;
 	padding: 0.2em 1em 0.2em 1em;
+	width: 100%;
 }
 .flash a {
 	font-weight: bold;
@@ -1412,6 +1413,10 @@ li.help {
 	border-left: 1px solid #CCCCCC;
 	text-align: right;
 	vertical-align: top;
+}
+#reports .row_total_total {
+	text-align: right;
+	border-left: 1px solid #CCCCCC;
 }
 #reports .row_subtotal {
 	background-color: #b0d295;
