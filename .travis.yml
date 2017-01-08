@@ -3,11 +3,13 @@ rvm: 1.8.7
 sudo: false
 
 before_script:
+# Install dependencies
+- "apt-get install graphicsmagick-libmagick-dev-compat imagemagick ri rdoc librmagick-ruby"
+
 # libmagick9-dev imagemagick ruby1.8 ruby1.8-dev rubygems ri rdoc rake
 - "gem uninstall rake"
 - "gem install rake -v 0.8.7"
 - "gem install RedCloth"
-- "gem install rake"
 - "gem install ferret"
 - "gem install fastercsv"
 - "gem install eventmachine"
