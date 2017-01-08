@@ -25,3 +25,14 @@ There are always ongoing tweaks happening; here are just a few things we've chan
 This will probably never be refined enough to be easily installed by anyone than us, and there's still boatloads of things hard-wired into the code that are unique to our environment. Sorry :(
 
 If you're interested though, the original installation documentation is in [/doc/README.ORIGINAL](https://github.com/EMRL/chrono/blob/master/doc/README.ORIGINAL)
+
+## Known Dependencies
+
+Chrono is known working under Ruby 1.8.X (We are running 1.8.7 in production)
+
+Additionally the following packages are required:
+
+- ruby18-gems
+- ruby18-mysql
+- rubygem-rake
+- ImageMagick
