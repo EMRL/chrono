@@ -219,7 +219,7 @@ div.content_body > div:nth-of-type(2) {border:0 !important;}
 #reports th.row_total, #reports th.row_total_total {color:#C00; white-space:nowrap; text-align:right; width:10%;}
 #reports td.row_value {white-space:nowrap; text-align:right; width:10%;}
 #reports tr:last-of-type th.row_header:after {
-	content:'Thank you for being our client! If you have questions about this report, please feel free to contact your account manager at (916) 446-2440, or email production@emrl.com';
+	content:'Thank you for being our client! If you have questions about this report, please feel free to contact your account manager at (916) 446-2440, or email office@emrl.com';
 	width:80%;
 	font-weight:normal;
 	font-size:10px;

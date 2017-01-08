@@ -238,11 +238,11 @@
 										<%=_ 'User' %>
 									</label>
 									<%= select 'report', 'user_id', [[_('[Any User]'), '0']] + User.find(:all, :order => 'name', :conditions => ['company_id = ?', current_user.company_id] ).collect {|c| [ c.name, c.id ] }, :selected => ((params[:report] && params[:report][:user_id]) ? params[:report][:user_id].to_i : current_user.id) %><br/>
-									<div align="right" style="clear:both;padding-right:0.5em;">
+									<!--div align="right" style="clear:both;padding-right:0.5em;">
 										<a href="#" onclick="$('advanced').toggle();"><%=_ 'Advanced Options' %></a>
-									</div>
+									</div-->
 
-									<div id="advanced" <%= "style=\"display:none;\"" unless (params[:report] && (params[:report][:status] != "-1" || params[:report][:type_id] != "-1" || params[:report][:priority] != "-3" || params[:report][:severity_id] != "-3" || params[:report][:tags].length > 0 ))%>>
+									<div id="advanced" <%= "style=\"/*display:none;*/\"" unless (params[:report] && (params[:report][:status] != "-1" || params[:report][:type_id] != "-1" || params[:report][:priority] != "-3" || params[:report][:severity_id] != "-3" || params[:report][:tags].length > 0 ))%>>
 										<label for="report_status">
 											<%=_ 'Status' %>
 										</label>

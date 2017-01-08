@@ -303,6 +303,15 @@ img {
 	border: 0;
 	max-width: 100%;
 }
+img.round {
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+}
 img.desaturate { 
 	filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);
@@ -2037,7 +2046,6 @@ a.widget-collapsed {
 .client-block {
 	margin: 1em;
 	padding-bottom: 2em;
-	border-left: solid 4px #EEEEEE;
 	padding-left: 5px;
 }
 }
@@ -2052,14 +2060,14 @@ a.widget-collapsed {
 	position: relative;
 }
 .client-heading img {
-	height: 35px;
-	padding-right: 0.3em;
+	height: 60px;
 	position: relative;
-	width: 35px;
+	width: 60px;
 }
 .project-block {
 	margin: 1em;
 	padding-bottom: 1em;
+	border-left: solid 4px #EEEEEE;
 }
 .project-heading {
 	// border-bottom: 1px  #c4c4c4;
