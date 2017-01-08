@@ -124,7 +124,7 @@ To kill running daemons:
 ps ax | grep ruby
 ```
 
-## Setting up Email Integration
+### Step 6: Email Integration
 
 Assuming that you already have your DNS and MX records set correctly, configure sendmail to pass all emails sent to chrono.domain.com to Chrono so that replies can go back to the task.
 
@@ -151,9 +151,6 @@ Then, run the following:
 ```
 cd /etc/mail; make; make restart
 ```
-
-## Configure Apache
-
 
 ## Source Contents
 ```
