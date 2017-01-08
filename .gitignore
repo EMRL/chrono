@@ -2,6 +2,7 @@
 *#
 \.#*
 *.bak
+*.bk
 *.pid
 *.lock
 _darcs
