@@ -26,7 +26,8 @@ before_script:
 - "gem install icalendar -v 1.1.0"
 - "gem install mysql -v 2.7"
 
-#- "ruby ./setup.rb"
+
   
 script:
 #  - "bundle exec rake ci:build"
+- "ruby ./setup.rb"
