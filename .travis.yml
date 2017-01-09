@@ -4,8 +4,7 @@ sudo: false
 
 before_script:
 # Create a database
-- "echo \"CREATE DATABASE chrono DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; GRANT ALL ON chrono.* TO 'travis'@'localhost' IDENTIFIED BY 'chrono'; FLUSH PRIVILEGES;\" | mysql -u travis -p"
-
+# - "echo \"CREATE DATABASE chrono DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; GRANT ALL ON chrono.* TO 'travis'@'localhost' IDENTIFIED BY 'chrono'; FLUSH PRIVILEGES;\" | mysql -u travis -p"
 # Install dependencies
 # - "sudo apt-get install graphicsmagick-libmagick-dev-compat imagemagick ri rdoc librmagick-ruby"
 - "gem install rake -v 0.8.7"
@@ -31,5 +30,4 @@ before_script:
 
 script:
 #  - "bundle exec rake ci:build"
-- echo "This is probably going to break."
-- "ruby ./setup.rb"
+- "ruby ./setup.rb  < ./test/setup.txt"
