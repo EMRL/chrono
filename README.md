@@ -1,6 +1,6 @@
 # Chrono
 
-[![Code Climate](https://codeclimate.com/github/EMRL/chrono/badges/gpa.svg)](https://codeclimate.com/github/EMRL/chrono)
+[![Build Status](https://travis-ci.org/EMRL/chrono.svg?branch=master)](https://travis-ci.org/EMRL/chrono) [![Code Climate](https://codeclimate.com/github/EMRL/chrono/badges/gpa.svg)](https://codeclimate.com/github/EMRL/chrono)
 
 Chrono is project management and time tracking for design and development agencies.
 
