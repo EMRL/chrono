@@ -312,6 +312,15 @@ img.round {
     -o-border-radius: 50%;
     border-radius: 50%;
 }
+img.radius {
+	padding: 0;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -khtml-border-radius: 4px;  
+    border-radius: 4px;
+    overflow: hidden;
+}
 img.desaturate { 
 	filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);
@@ -837,16 +846,15 @@ pre.auto_generated {
 #content li {
 	clear: both;
 	display: block;
-	font-size: 1.0rem;
+	font-size: 0.8em;
 	list-style: none;
 	margin: 0 0 0 0;
 	padding: 0;
 	position: relative;
 }
 .todo-container {
-	font-size: 1.0rem;
 	margin-top: -10px;
-	padding: 0 0 15px 46px;
+	padding: 0 0 1.0em 5.5em;
 }
 .todo {
 }

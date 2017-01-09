@@ -27,5 +27,7 @@ before_script:
 - "gem install mysql -v 2.7"
 
 script:
+- "echo \"Well, that was interesting.\""
+
 # - "bundle exec rake ci:build"
 # - "ruby ./setup.rb  < ./test/setup.txt"
