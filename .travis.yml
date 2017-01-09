@@ -3,6 +3,9 @@ rvm: 1.8.7
 sudo: false
 
 before_script:
+# Create a database
+- "echo \"CREATE DATABASE chrono DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; GRANT ALL ON chrono.* TO 'travis'@'localhost' IDENTIFIED BY 'chrono'; FLUSH PRIVILEGES;\" | mysql -u travis -p"
+
 # Install dependencies
 # - "sudo apt-get install graphicsmagick-libmagick-dev-compat imagemagick ri rdoc librmagick-ruby"
 - "gem install rake -v 0.8.7"
@@ -23,9 +26,10 @@ before_script:
 - "gem install ZenTest -v 4.1.4"
 - "gem install icalendar -v 1.1.0"
 - "gem install mysql -v 2.7"
-
+- "mkdir ./tmp/cache"
+- "mkdir ./tmp/pids"
 
 script:
 #  - "bundle exec rake ci:build"
-- echo "Well that was interesting."
-#- "ruby ./setup.rb"
+- echo "This is probably going to break."
+- "ruby ./setup.rb"
