@@ -186,6 +186,12 @@
         <% end %>
         </select>
         <!--// Come back and finish this later //-->        
+
+<% if current_user.admin > 0%>
+
+
+
+
         <span id="edit_project">
 
 
@@ -193,6 +199,7 @@
           <a href="/projects/edit/<%= selected_project %>"><i class="icon-edit-sign icon-large" style="float:left;margin:0;padding:6px 0 0 0; text-decoration: none;"></i></a>
         </span>
         <br />
+    <% end %>
         <script type="text/javascript">
         //<![CDATA[
         new Form.Element.EventObserver('task_project_id', function(element, value) {new Ajax.Updater('task_milestone_id', '/tasks/get_milestones', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}, parameters:'project_id=' + value, insertion: updateSelect })});
@@ -290,7 +297,7 @@
         </legend>
         <% client = @task.project.customer %>
         <% if File.exists?(client.logo_path) %>
-				<%= "<img src=\"/admin/show_logo/#{@task.project.customer_id}\" style=\"max-width: 100px;\" alt=\"#{client.name}\" title=\"#{client.name}\" class=\"tooltip\" />" %>
+				<%= "<img src=\"/admin/show_logo/#{@task.project.customer_id}\" style=\"width: 100px;\" alt=\"#{client.name}\" title=\"#{client.name}\" class=\"tooltip radius\" />" %>
 			<% else %>
 			<% end %>
 			<span class="clientdesc"><strong><%= client.name %></strong><br />
