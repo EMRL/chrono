@@ -18,6 +18,7 @@ deps = { 'tzinfo' => 'tzinfo', 'redcloth' => 'RedCloth', 'rake' => 'rake', 'ferr
 
 puts "Verifying dependencies..."
 
+
 # Disabling dependencies for now, we need to find a more reliable way to do this 
 # taking into account all the ancient deprecated things going on
 
