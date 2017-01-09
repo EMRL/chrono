@@ -5,8 +5,6 @@ sudo: false
 before_script:
 # Install dependencies
 # - "sudo apt-get install graphicsmagick-libmagick-dev-compat imagemagick ri rdoc librmagick-ruby"
-
-# libmagick9-dev imagemagick ruby1.8 ruby1.8-dev rubygems ri rdoc rake
 - "gem install rake -v 0.8.7"
 - "gem install rdoc -v 2.3.0"
 - "gem install json_pure -v 1.2.0"
@@ -26,8 +24,6 @@ before_script:
 - "gem install icalendar -v 1.1.0"
 - "gem install mysql -v 2.7"
 
-
-  
 script:
 #  - "bundle exec rake ci:build"
 echo "Well that was interesting."
