@@ -7,7 +7,9 @@
 	</tr>
 	<% if current_user.completed_projects.size > 0 %>
 	<tr>
-		<td align="right" class="project_completed" style="padding-right:1em;"><%= link_to _('%d completed project', current_user.completed_projects.size), :controller => 'projects', :action => 'list_completed' %></td></tr>
+		<td align="right" class="project_completed" style="padding-right:1em;"><%= link_to _('%d completed project', current_user.completed_projects.size), :controller => 'projects', :action => 'list_completed' %>
+		</td>
+	</tr>
   	<% end %>
 	<tr>
 		<td>
@@ -21,7 +23,7 @@
 				<div class="client-heading">
 					<div class="client-name">
 						<img class="radius" src="/admin/show_logo/<%= client %>">
-						<%= "<a style=\"textpadding-left: 1.0em;\" href=\"/views/select_client/#{@project.customer_id}\">#{h(@project.customer.name)}</a>" %>
+						<%= "<div style=\"display:inline-block; padding-left: 1.0em;\">	<a style=\"color: #47525a; text-decoration: none; font-size: 1.4em;\" class=\"tooltip\" title=\"Show all open tasks for #{h(@project.customer.name)}\" href=\"/views/select_client/#{@project.customer_id}\">#{h(@project.customer.name)}</a><br /><a href=\"/wiki/show/#{h(@project.customer.name)}\" class=\"tooltip\" title=\"View the Wiki for #{h(@project.customer.name)}\" style=\"text-decoration: none; color: rgba(66, 63, 84, 0.62);\"><i class=\"icon-globe\"></i> <span style=\"position : relative; top : -.1em; text-transform: uppercase; font-size: 0.8em; font-weight: 700;\">Client Wiki</a></div>" %>
 					</div>
 				</div>
 				<% end %>
@@ -31,4 +33,3 @@
 		</td>
 	</tr>
 </table>
-<br />

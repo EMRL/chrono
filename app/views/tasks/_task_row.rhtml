@@ -38,78 +38,78 @@ class="task <%=classes%>" style="position:relative;<% if depth > 1 %>margin-left
   6px;" align="right">
   <% if(@current_sheet && @current_sheet.task_id == task.id) -%>
   <%= link_to_remote content_tag(:span ,"<i class=\"icon-ban-circle tooltip timer-icons-cancel\"></i><br />", :border => 0, :title => _("Cancel working on <b>%s</b>.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'cancel_work_ajax', :id => task, :depth => depth }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');", :confirm => _("Really abort work?") -%>
-        <% if @current_sheet.paused? %>
-          <%= link_to_remote content_tag(:span ,"<i class=\"icon-play tooltip timer-icons\"></i><br />", :border => 0, :title => _("Resume working on <b>%s</b>.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'pause_work_ajax', :id => task, :depth => depth }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" -%>
-        <% else %>
-          <%= link_to_remote content_tag(:span ,"<i class=\"icon-pause tooltip timer-icons\"></i>", :border => 0, :title => _("Pause working on <b>%s</b>.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'pause_work_ajax', :id => task, :depth => depth }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" -%>
-        <% end %>
-    <% else -%>
-        <% if task.done? -%>
-          <% if task.hidden == 0 -%>
-            <!--//<%= link_to_remote content_tag(:span, "<i class=\"icon-folder-close icon-large\"></i>", :border => 0, :title => _("Move <b>%s</b> to the Archive.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'ajax_hide', :id => task }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');", :success => visual_effect(:fade, "task_#{task.id}", :duration => 0.5) -%>//-->
-          <% else -%>
-            <%= link_to_remote content_tag(:span, "<i class=\"icon-folder-open icon-large\"></i>", :border => 0, :title => _("Restore <b>%s</b> from the Archive.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'ajax_restore', :id => task }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');", :success => visual_effect(:fade, "task_#{task.id}", :duration => 0.5) -%>
-          <% end -%>
-        <% end -%>
-      <% end -%>
-     </div>
-    <% end -%>
-    <div id="task-handle-<%=task.id%>" style="float:left; padding-left:0.4em;display:none;" class="handle">
-      <%= content_tag(:span, '<i class="icon-reorder icon-large"></i>', :border => 0) %>
-    </div>
-    <div style="float:left; padding-left:0.3em;">
-    <% unless task.done? %>
-      <%= check_box("task", "done", { "title" => _("Close <b>%s</b>", task.name), "onclick" => "new Ajax.Request('/tasks/ajax_check/#{task.id}', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}})", :class => "button tooltip checkbox", :id => "button_#{task.id}" }.merge(can_complete) ) -%>
-    <% else %>
-      <%= check_box("task", "done", {"title" => _("Revert <b>%s</b> to not completed status.", task.name), "onclick" => "new Ajax.Request('/tasks/ajax_uncheck/#{task.id}', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}})",
-		      :class => "button tooltip checkbox", :checked => "checked", :id => "button_#{task.id}" }.merge(can_complete) ) -%>
-    <% end %>
-    <% if current_user.option_tracktime.to_i == 1 && can_work.size == 0 -%>
-      <% if @current_sheet && @current_sheet.task_id == task.id -%>
-        <%= link_to(content_tag(:span ,"<i class=\"icon-time icon-large\"></i>", :border => 0, :class => "tooltip work_icon", :title => _("Stop working on <b>%s</b>.", task.name)), {:controller => 'tasks', :action => 'stop_work'}, { :class => "stop-work-link work-icon" } )  -%>
-      <% else -%>
-      <a href="#" onclick="new Ajax.Request('/tasks/start_work_ajax/<%=task.id%>?depth=<%=depth%>', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}}); return false;">
-        <%= content_tag(:span, "<i class=\"icon-time icon-large\"></i>", :border => 0, :class => "tooltip work_icon", :style =>"font-size:1.1em;color:#B0B0B0;", :title => _("Start working on <b>%s</b>. Click again when done.", task.name))%></a><br />
-        <div style="text-align: right;">
-        <a href="/tasks/add_work/<%=task.id%>">
-        <%= content_tag(:span, "<i class=\"icon-plus-sign icon-large\" style=\"color:#D3D3D3;\"></i>", :border => 0, :class => "tooltip work_icon", :style =>"font-size:1.1em;color:#B0B0B0;", :title => _("Add work time to <b>%s</b>.", task.name))%></a></div>
-      <% end -%>
+		<% if @current_sheet.paused? %>
+		  <%= link_to_remote content_tag(:span ,"<i class=\"icon-play tooltip timer-icons\"></i><br />", :border => 0, :title => _("Resume working on <b>%s</b>.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'pause_work_ajax', :id => task, :depth => depth }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" -%>
+		<% else %>
+		  <%= link_to_remote content_tag(:span ,"<i class=\"icon-pause tooltip timer-icons\"></i>", :border => 0, :title => _("Pause working on <b>%s</b>.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'pause_work_ajax', :id => task, :depth => depth }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');" -%>
+		<% end %>
+	<% else -%>
+		<% if task.done? -%>
+		  <% if task.hidden == 0 -%>
+			<!--//<%= link_to_remote content_tag(:span, "<i class=\"icon-folder-close icon-large\"></i>", :border => 0, :title => _("Move <b>%s</b> to the Archive.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'ajax_hide', :id => task }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');", :success => visual_effect(:fade, "task_#{task.id}", :duration => 0.5) -%>//-->
+		  <% else -%>
+			<%= link_to_remote content_tag(:span, "<i class=\"icon-folder-open icon-large\"></i>", :border => 0, :title => _("Restore <b>%s</b> from the Archive.", task.name), :class => "tooltip"), :url => { :controller => 'tasks', :action => 'ajax_restore', :id => task }, :loading => "Element.show('loading');", :complete => "Element.hide('loading');", :success => visual_effect(:fade, "task_#{task.id}", :duration => 0.5) -%>
+		  <% end -%>
+		<% end -%>
+	  <% end -%>
+	 </div>
+	<% end -%>
+	<div id="task-handle-<%=task.id%>" style="float:left; padding-left:0.4em;display:none;" class="handle">
+	  <%= content_tag(:span, '<i class="icon-reorder icon-large"></i>', :border => 0) %>
+	</div>
+	<div style="float:left; padding-left:0.3em;">
+	<% unless task.done? %>
+	  <%= check_box("task", "done", { "title" => _("Close <b>%s</b>", task.name), "onclick" => "new Ajax.Request('/tasks/ajax_check/#{task.id}', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}})", :class => "button tooltip checkbox", :id => "button_#{task.id}" }.merge(can_complete) ) -%>
+	<% else %>
+	  <%= check_box("task", "done", {"title" => _("Revert <b>%s</b> to not completed status.", task.name), "onclick" => "new Ajax.Request('/tasks/ajax_uncheck/#{task.id}', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}})",
+			  :class => "button tooltip checkbox", :checked => "checked", :id => "button_#{task.id}" }.merge(can_complete) ) -%>
+	<% end %>
+	<% if current_user.option_tracktime.to_i == 1 && can_work.size == 0 -%>
+	  <% if @current_sheet && @current_sheet.task_id == task.id -%>
+		<%= link_to(content_tag(:span ,"<i class=\"icon-time icon-large\"></i>", :border => 0, :class => "tooltip work_icon", :title => _("Stop working on <b>%s</b>.", task.name)), {:controller => 'tasks', :action => 'stop_work'}, { :class => "stop-work-link work-icon" } )  -%>
+	  <% else -%>
+	  <a href="#" onclick="new Ajax.Request('/tasks/start_work_ajax/<%=task.id%>?depth=<%=depth%>', {asynchronous:true, evalScripts:true, onComplete:function(request){Element.hide('loading');}, onLoading:function(request){Element.show('loading');}}); return false;">
+		<%= content_tag(:span, "<i class=\"icon-time icon-large\"></i>", :border => 0, :class => "tooltip work_icon", :style =>"font-size:1.1em;color:#B0B0B0;", :title => _("Start working on <b>%s</b>. Click again when done.", task.name))%></a><br />
+		<div style="text-align: right;">
+		<a href="/tasks/add_work/<%=task.id%>">
+		<%= content_tag(:span, "<i class=\"icon-plus-sign icon-large\" style=\"color:#D3D3D3;\"></i>", :border => 0, :class => "tooltip work_icon", :style =>"font-size:1.1em;color:#B0B0B0;", :title => _("Add work time to <b>%s</b>.", task.name))%></a></div>
+	  <% end -%>
    <% else -%>
    <!--img src="/images/spacer.gif" width="16" height="16" border="0"-->
    <% end -%>
  </div>
   <!--// <div style="float:right;">
-    <%= avatar_for task.users.first, 50 unless task.users.empty? %>
+	<%= avatar_for task.users.first, 50 unless task.users.empty? %>
   </div> //-->
   <div class="task-name" style="padding-left:8px;">
-    <% if controller.controller_name != 'search' %>
-    <%= link_to_task(task) -%>
-    <% else %>
-    <%= link_to_task_with_highlight(task, @keys)  -%>
-    <% end %>
-    <span id="todo-status-<%= task.dom_id %>">
-      <a class="<%=(task.todos.empty? ? "todo-status-link-empty" :"todo-status-link")%>" href="#" onclick="Element.toggle('todo-container-<%=task.dom_id%>'); Sortable.create('todo-<%=task.dom_id%>', {containment:'todo-<%=task.dom_id%>', format:/^[^-]*-(.*)$/, onUpdate:function(){new Ajax.Request('/tasks/order_todos/<%=task.id%>', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize('todo-<%=task.dom_id%>')})}, only:'todo-active'}); return false;"><%=task.todo_status%></a>
-    </span>
-    <%  if current_user.option_tracktime.to_i == 1 -%>
-    <% if task.duration.to_i > 0 -%>
-       <span class="<%=task.worked_and_duration_class%>"><%="(#{worked_nice(task.worked_minutes)} / #{worked_nice( task.duration )})"%></span>
-     <% end %> 
-       <%= "(#{worked_nice(task.worked_minutes)})" if( task.duration.to_i == 0 && task.worked_minutes > 0) -%>
-     <% end -%>
-     <%= "<span class=\"task_milestone\"><br /><a href=\"/views/select_milestone/#{task.milestone.id}\">&diams;&nbsp;#{task.milestone.name}</a></span>" unless task.milestone_id.to_i == 0 -%>
+	<% if controller.controller_name != 'search' %>
+	<%= link_to_task(task) -%>
+	<% else %>
+	<%= link_to_task_with_highlight(task, @keys)  -%>
+	<% end %>
+	<span id="todo-status-<%= task.dom_id %>">
+	  <a class="<%=(task.todos.empty? ? "todo-status-link-empty" :"todo-status-link")%>" href="#" onclick="Element.toggle('todo-container-<%=task.dom_id%>'); Sortable.create('todo-<%=task.dom_id%>', {containment:'todo-<%=task.dom_id%>', format:/^[^-]*-(.*)$/, onUpdate:function(){new Ajax.Request('/tasks/order_todos/<%=task.id%>', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize('todo-<%=task.dom_id%>')})}, only:'todo-active'}); return false;"><%=task.todo_status%></a>
+	</span>
+	<%  if current_user.option_tracktime.to_i == 1 -%>
+	<% if task.duration.to_i > 0 -%>
+	   <span class="<%=task.worked_and_duration_class%>"><%="(#{worked_nice(task.worked_minutes)} / #{worked_nice( task.duration )})"%></span>
+	 <% end %> 
+	   <%= "(#{worked_nice(task.worked_minutes)})" if( task.duration.to_i == 0 && task.worked_minutes > 0) -%>
+	 <% end -%>
+	 <%= "<span class=\"task_milestone\"><br /><a href=\"/views/select_milestone/#{task.milestone.id}\">&diams;&nbsp;#{task.milestone.name}</a></span>" unless task.milestone_id.to_i == 0 -%>
    <% name = _("No one")
-      name = task.users.collect{|u| u.name}.join(', ') unless task.users.empty?
+	  name = task.users.collect{|u| u.name}.join(', ') unless task.users.empty?
    %>
 
    <div class="task_info description">
    <% if controller.controller_name != 'search' %>
-    <%= task.full_name %>
+	<%= task.full_name %>
    <% else %>
-    <%= highlight_all(task.full_name_without_links, @keys) %>
+	<%= highlight_all(task.full_name_without_links, @keys) %>
    <% end %>
-    <%= "<span class=\"otheruser\"><br />[#{name}]</span>" %>
-    <%= due_in_words(task) unless task.due_date && task.done?%>
-      <%= "<span class=\"overdue #{task.id}\" >[#{overdue_time(task.completed_at)}]</span>" if task.done?%>
+	<%= "<span class=\"otheruser\"><br />[#{name}]</span>" %>
+	<%= due_in_words(task) unless task.due_date && task.done?%>
+	  <%= "<span class=\"overdue #{task.id}\" >[#{overdue_time(task.completed_at)}]</span>" if task.done?%>
    </div>
    </div>
    </div>
