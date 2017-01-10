@@ -22,9 +22,9 @@ Chrono is based on [Clockingit] (http://clockingit.com); here are just a few thi
 
 ## Installation
 
-This will probably never be refined enough to be easily installed by anyone than us, and there's still boatloads of things hard-wired into the code that are unique to our environment. Sorry :(
+For the moment, installation is an undocumented mess.
 
-If you're interested though, the original installation documentation is in [/doc/README.ORIGINAL](https://github.com/EMRL/chrono/blob/master/doc/README.ORIGINAL)
+Original installation documentation is in [/doc/README.ORIGINAL](https://github.com/EMRL/chrono/blob/master/doc/README.ORIGINAL) although installing Chrono successfully will follow a different workflow.
 
 ### Step 1: Prerequisites
 
