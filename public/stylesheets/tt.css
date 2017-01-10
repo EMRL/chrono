@@ -302,6 +302,12 @@ img {
 	vertical-align: middle;
 	border: 0;
 	max-width: 100%;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -khtml-border-radius: 4px;  
+    border-radius: 4px;
+    overflow: hidden;
 }
 img.round {
     position: relative;
@@ -457,8 +463,9 @@ input:focus, textarea:focus {outline:none; border: 1px solid #47acdf;}
 input,textarea {
 	background-color: #fff;
 	border: 1px solid #dcdcdc;
-	padding: 0.4rem;
+	padding: 0.4em;
 	font-family: 'Roboto', sans-serif;
+	resize: vertical;
 
 }
 fieldset label {
@@ -1305,7 +1312,7 @@ a.description {
 	padding: 0.4rem;
 }
 #task_description {
-	font-size: 1.2rem;
+	font-size: 1.0em;
 }
 #task_comment {
 	font-size: 1.1rem;

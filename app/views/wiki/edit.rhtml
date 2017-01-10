@@ -1,40 +1,47 @@
 <%= use_tinymce %>
 <div id="wiki">
-<h1><%= @page.name %></h1>
-<fieldset style="border:none;padding:0;margin:0;">
-  <div style="float:right;width:19%;padding-left:0em;">
-    <h3 style="margin:0;">Linking to Pages</h3>
-    <pre style="padding:0.5em;">WikiPage
+	<h1><%= @page.name %></h1>
+	<fieldset style="border:none;padding:0;margin:0;">
+		<div style="float:right;width:19%;padding-left:0em;">
+			<h3 style="margin:0;">Linking to Pages</h3>
+			<pre style="padding:0.5em;">WikiPage
 [[Wikipage]]
 [[Wikipage|link name]]</pre>
-    <h3 style="">Auto Links</h3>
-	
-<pre style="padding:0.5em;">
+			<h3 style="">Auto Links</h3>
+		
+			<pre style="padding:0.5em;">
 #123</pre>
-    <h3 style="">Notes on Style</h3>
-<div class="stylenotes">
-<p>Create links to other wiki pages using the format shown above.</p><p>Task numbers will be linked to automatically when typed as shown under "Auto links."</p>
-<p>Divide main sections of the page by using &#60;h2&#62;, and subsections by using &#60;h3&#62;.
-The table of contents will be generated automatically if these tags are used correctly.<p>
-</div>
-  </div>
-   
-  <div style="width:75%;">
-  <% form_tag :action => 'create', :id => @page.name do %>
-    <% if @page.revisions.empty? %>
-    <h5 style="margin:0;">This wiki page doesn't exist yet. Create it by entering text and clicking the button below.</h5>
-    <textarea id="wiki_body" name="body" style="width:100%;" rows="20" class="tinymce"></textarea>
-    <% else %>
-    <textarea id="wiki_body" name="body" rows="20" style="width:100%;" class="tinymce"><%= html_encode(@page.to_plain_html(params[:rev].to_i)) %></textarea>
-    <% end %>
+			
+			<h3 style="">Notes on Style</h3>
+			<div class="stylenotes">
+				<p>Create links to other wiki pages using the format shown above.</p><p>Task numbers will be linked to automatically when typed as shown under "Auto links."</p>
+				<p>Divide main sections of the page by using &#60;h2&#62;, and subsections by using &#60;h3&#62;. The table of contents will be generated automatically if these tags are used correctly.<p>
+			</div>
+		</div>
+		 
+		<div style="width:75%;">
+			<% form_tag :action => 'create', :id => @page.name do %>
+			<% if @page.revisions.empty? %>
+			<h5 style="margin:0;">This wiki page doesn't exist yet. Create it by entering text and clicking the button elow.</h5>
+			<textarea id="wiki_body" name="body" style="width:100%;" rows="20" class="tinymce"></textarea>
+			<% else %>
+			<textarea id="wiki_body" name="body" rows="20" style="width:100%;" class="tinymce"><%= html_encode(@page.to_plain_html(params[:rev].to_i)) %></textarea>
+			<% end %><br />
 
-    <br /><div style="clear:both;float:left;"><label for="change" style="float:left;width:auto;"><%= _('Edit Summary')%></label><input type="text" name="change" /></div>
-    <div style="clear:both;float:left;"><%= submit_tag _("Save"), :class => "nolabel" %><% unless @page.revisions.empty?%> <span class="optional"><%= _('or')%></span> <%= link_to _("Cancel"), :controller => "wiki", :action => "cancel", :id => @page.name %><% end %></div>
-  <% end %>
-  </div>
-</fieldset>
+			<div style="clear:both;float:left;">
+				<strong><%= _('Edit Summary')%></strong><br />
+				<input type="text" name="change" required />
+			</div>
+			
+			<div style="clear:both;float:left;">
+				<%= submit_tag _("Save"), :class => "nolabel" %><% unless @page.revisions.empty?%>  <%= link_to _("Cancel"), :controller => "wiki", :action => "cancel", :id => @page.name %>
+				<% end %>
+			</div>
+			<% end %>
+		</div>
+	</fieldset>
 </div>
 
 <script type="text/javascript" language="javascript" charset="utf-8">
-tinyMCE.execCommand("mceAddControl", true, "wiki_body");
+	tinyMCE.execCommand("mceAddControl", true, "wiki_body");
 </script>
