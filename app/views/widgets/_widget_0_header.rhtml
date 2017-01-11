@@ -1,7 +1,13 @@
-<!-- TASKS (WIDGET_0) -->
+<!--// begin app\views\widgets\_widget_0_header.rhtml //-->
 <div style="height: 18px;">
 	<span id="name-<%=@widget.dom_id%>">
 		<%= @widget.name %>
 	</span>
-	<%= link_to( content_tag(:span, '<i class="icon-rss icon-2x"></i>', :style => "", :border => 0, :class => "tooltip", :title => _("Subscribe to this widgets RSS feed")), :controller => 'feeds', :action => 'rss', :id => current_user.uuid, :widget => @widget )%>
+	<%= link_to( content_tag(:span, '
+		<span class="icon-stack">
+		  <i class="icon-circle icon-stack-base"></i>
+		  <i class="icon-rss icon-light"></i>
+		</span>', 
+		:style => "", :border => 0, :class => "tooltip", :title => _("Subscribe to this widgets RSS feed")), :controller => 'feeds', :action => 'rss', :id => current_user.uuid, :widget => @widget )%>
 </div>
+<!--// end app\views\widgets\_widget_0_header.rhtml //-->

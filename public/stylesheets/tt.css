@@ -2010,7 +2010,7 @@ a.widget-collapsed {
 
 .widget-config select {
 	width: 8em;
-	padding: 3px;
+	padding: 0.4em;
 }
 .widget-menu img {
 	margin-bottom: -23px;
