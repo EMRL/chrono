@@ -103,7 +103,8 @@ class ProjectFile < ActiveRecord::Base
     if ImageOperations::is_image?(image)
       # Call ImageMagick from the shell, as RMagick/ImageMagick runs out of memory
       # very fast. 
-      res = %x[convert #{self.file_path}  -thumbnail "124x124" \\( +clone -background \\\#222222 -shadow 60x4+4+4 \\) +swap -background \\\#fafafa -layers merge +repage /tmp/thumb.jpg; mv /tmp/thumb.jpg #{self.thumbnail_path}]
+      res = %x[convert #{self.file_path}  -thumbnail "124x124" -layers merge +repage /tmp/thumb.jpg; mv /tmp/thumb.jpg #{self.thumbnail_path}]
+
       puts res
 
 #      thumb = ImageOperations::thumbnail(image, size)

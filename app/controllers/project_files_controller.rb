@@ -186,7 +186,7 @@ class ProjectFilesController < ApplicationController
 					if ImageOperations::is_image?(image)
             project_file.file_type = ProjectFile::FILETYPE_IMG
             project_file.mime_type = image.mime_type
-						thumb = ImageOperations::thumbnail(image,124)
+						thumb = ImageOperations::thumbnail(image,250)
 
             File.umask(0)
             t = File.new(project_file.thumbnail_path, "w", 0777)
