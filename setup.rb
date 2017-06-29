@@ -18,30 +18,26 @@ deps = { 'tzinfo' => 'tzinfo', 'redcloth' => 'RedCloth', 'rake' => 'rake', 'ferr
 
 puts "Verifying dependencies..."
 
+deps.keys.each do |dep|
+  begin
+    require dep
+  rescue LoadError
+    missing_deps << deps[dep]
+  end 
+end 
 
-# Disabling dependencies for now, we need to find a more reliable way to do this 
-# taking into account all the ancient deprecated things going on
-
-# deps.keys.each do |dep|
-#   begin
-#     require dep
-#   rescue LoadError
-#     missing_deps << deps[dep]
-#   end 
-# end 
-
-# if missing_deps.size > 0
-#   puts "Please install required Ruby Gems:"
-#   puts "  sudo gem install #{missing_deps.join(" ")} -r"
-#   puts
-#   if missing_deps.include? "rmagick"
-#     puts "rmagick requires ImageMagick. If you're unable to install ImageMagick 6.3.0+, which the latest"
-#     puts "version of rmagick requires, please install version 1.5.14 instead: "
-#     puts "  sudo gem install rmagick -v 1.5.14 -r"
-#   end
-#   
-#   exit
-# end
+if missing_deps.size > 0
+  puts "Please install required Ruby Gems:"
+  puts "  sudo gem install #{missing_deps.join(" ")} -r"
+  puts
+  if missing_deps.include? "rmagick"
+    puts "rmagick requires ImageMagick. If you're unable to install ImageMagick 6.3.0+, which the latest"
+    puts "version of rmagick requires, please install version 1.5.14 instead: "
+    puts "  sudo gem install rmagick -v 1.5.14 -r"
+  end
+  
+  exit
+end
 
 puts "Dependencies verified..."
 puts

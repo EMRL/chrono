@@ -13,28 +13,46 @@
 # this in either the global or user configuration files.
 REPOHOST="http://github.com/EMRL"
 
-# If you have no SSH key or wish to login manually using your account name/password 
-# in the console, set NOKEY to exactly "TRUE"
+# If you have no SSH key or wish to login manually using your account name and
+# password in the console, set NOKEY to exactly "TRUE"
 NOKEY="TRUE"
 
+# By default deploy will check for valid SSH keys; if you want to override this
+# behavior, set DISABLESSHCHECK to TRUE
+# DISABLESSHCHECK="FALSE"
+
 # A human readable project name
-PROJNAME="Chrono Project Manager"	
+PROJNAME="Chrono Project Manager"
 
 # A human readable client name
 PROJCLIENT="EMRL"
 
 # If you are using html logfiles, define the full URL to the client's logo
-# CLIENTLOGO="http://i0.kym-cdn.com/photos/images/newsfeed/000/178/638/enhanced-buzz-20188-1309988258-10.jpg?1317011006"
+CLIENTLOGO="http://icyshades.com/wp-content/uploads/2013/08/flavor_flav.jpg"
 
-# Client Notification Emails
+# If you'd like to send branded HTML emails using the `deploy --digest [project]` 
+# command, enter the recipient's email address below. Email value can be a comma 
+# separated string of multiple addresses. 
+# DIGESTEMAIL="deploy@emrl.com"
+
+# If you'd like to post a Slack notification with a URL to view the weekly digest  
+# set the following to TRUE. IF you want to use an incoming webhook other than the 
+# one defined in SLACKURL below, enter that here *instead* of TRUE.
+# DIGESTSLACK="TRUE"
+
+# If you want to use an email template unique to this project (instead of the 
+# globally configured template) define it below. HTML templates are stored in 
+# separate folders in /etc/deploy/html. The value used below should be the 
+# folder name of your template.
+# EMAILTEMPLATE="mui"
+
+# If you're sending HTML emails and you want to use an email template
+# unique to this project, define it below. HTML templates are stored in
+# separate folders in /etc/deploy/html. The value used below should be the
+# folder name of your template.
+# EMAILTEMPLATE="default"
 #
-# If you'd like to send short, branded HTML emails to someone on the client
-# side, set NOTIFYCLIENT to "TRUE" below, and define their email address.
-# Email value can also be a comma separated string of multiple addresses. 
-NOTIFYCLIENT="FALSE"
-CLIENTEMAIL="fdiebel@emrl.com"
-#
-# If you want the client to only receive these emails when running scheduled 
+# If you want the client to only receive these emails when running scheduled
 # updates (for example a weekly cron using deploy --automate) Set the following
 # to "TRUE"
 # AUTOMATEDONLY="TRUE"
@@ -46,12 +64,12 @@ CLIENTEMAIL="fdiebel@emrl.com"
 # PRODURL="http://productionurl.com/"
 
 # The exact name of the Bitbucket/Github repository
-REPO="deploy"
+REPO="chrono"
 
 # Advanced Custom Fields Pro License
 #
-# Too many issues seem to crop up with the normal method of updating the Wordpress 
-# plugin Advanced Custom Fields Pro. Including your license key below will enable 
+# Too many issues seem to crop up with the normal method of updating the Wordpress
+# plugin Advanced Custom Fields Pro. Including your license key below will enable
 # upgrades to happen more reliably.
 # ACFKEY="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
@@ -60,12 +78,18 @@ REPO="deploy"
 MASTER="master"
 # PRODUCTION="production"
 
-# Configure merge behavior. If you wish to automatically merge your MASTER and 
+# Configure merge behavior. If you wish to automatically merge your MASTER and
 # PRODUCTION branches when deploying, set AUTOMERGE to TRUE.
 # AUTOMERGE="TRUE"
 
-# Define CHECKBRANCH if you only want deploy to run when the set branch is 
-# currently checked out; e.g. if CHECKBRANCH="master" and the current branch is 
+# If dirty (yet to be committed) files exist in the repo, deploy will normally not halt
+# execution when running with the --automate flag. If you prefer to have the dirty files
+# stashed and proceed with updates set the below value to TRUE. Files will be unstashed
+# after the deployment is complete.
+# STASH="TRUE"
+
+# Define CHECKBRANCH if you only want deploy to run when the set branch is
+# currently checked out; e.g. if CHECKBRANCH="master" and the current branch is
 # "production", deployment will halt.
 CHECKBRANCH="master"
 
@@ -73,8 +97,22 @@ CHECKBRANCH="master"
 # always be editable before finalizing commit.	
 # COMMITMSG="This is a default commit message"
 
+# Wordpress configuration
+#
+# Some developers employ a file structure that separates Wordpress core from 
+# their application code. If you're using non-standard file paths, define the 
+# root, system, and app (plugin/theme) directories below. Note that the forward
+# slash is required. Just about everyone on the planet can leave this alone.
+# WPROOT="/public"
+# WPAPP="/app"
+# WPSYSTEM="/system"
+
 # The command to finalize deployment of your project(s)
 # DEPLOY="mina deploy"				
+
+# To require approval before pushing this project's code to a live production
+# environment, set REQUIREAPPROVAL="TRUE"
+# REQUIREAPPROVAL="TRUE"
 
 # If this project needs logs mailed to an address other than the one configured
 # globally, set it below. 
@@ -85,18 +123,18 @@ CHECKBRANCH="master"
 
 # Integration ID
 #
-# This is used to post deploy logs to project management systems that can 
-# external email input. For examples, for our task management system 
-# accepts emails in the format task-####@projects.emrl.com, with the #### 
+# This is used to post deploy logs to project management systems that can
+# external email input. For examples, for our task management system
+# accepts emails in the format task-####@projects.emrl.com, with the ####
 # being the task identification number for the project being deployed.
 TASK="3332"
 
 # Slack Integration
-# 
-# You'll need to set up an "Incoming Webhook" custom integration on the Slack 
-# side to get this ready to roll. 
-# See https://YOURTEAMNAME.slack.com/apps/manage/custom-integrations to get 
-# going. Once your Slack webhook is setup, run # 'deploy --slack-test' to 
+#
+# You'll need to set up an "Incoming Webhook" custom integration on the Slack
+# side to get this ready to roll.
+# See https://YOURTEAMNAME.slack.com/apps/manage/custom-integrations to get
+# going. Once your Slack webhook is setup, run # 'deploy --slack-test' to
 # test your configuration.
 #
 # Set POSTTOSLACK to "TRUE" to enable Slack integration.
@@ -111,3 +149,21 @@ SLACKERROR="TRUE"
 
 # Post commit logs to this URL.
 # POSTURL=""
+
+# Google Analytics
+#
+# API credentials
+# CLIENTID="#############################################.apps.googleusercontent.com"
+# CLIENTSECRET="########################"
+# REDIRECTURI="http://localhost"
+
+# OAuth authorization will expire after one hour, but will be updated when needed
+# if the tokens below are configured correctly
+# AUTHORIZATIONCODE="##############################################"
+
+# Tokens
+# ACCESSTOKEN="#################################################################################################################################"
+# REFRESHTOKEN="##################################################################"
+
+# Google Analytics ID
+# PROFILEID="########"

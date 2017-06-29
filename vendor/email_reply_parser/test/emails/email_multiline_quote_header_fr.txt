@@ -1,0 +1,8 @@
+Foo!
+
+De: john@example.com
+A: shelly@example.com
+Date: 01/02/2013 05:04 p.m.
+Objet: Requerimiento #12345
+
+Thank you for recently participating in our class. We're interested in feedback. Please reply to this email. 

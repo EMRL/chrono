@@ -49,7 +49,7 @@
 				<br />
 			</div>
 			<label>&nbsp;</label>
-		 
+
 			<div class="buttons">
 				<% if @task.new_record? %>
 				<%= submit_tag _("Create"), :class => "nolabel" %>
@@ -57,9 +57,9 @@
 			</div>
 			<% else %>
 			<%= submit_tag _("Save"), :class => "nolabel",:onclick=>"return status()" %>
-			
+
 			<div style="float:left;">
-				<% 
+				<%
 					options = []
 					options << [_("Leave Open"), 0] if @task.status == 0
 					options << [_("Revert to Open"), 0] if @task.status != 0
@@ -85,6 +85,7 @@
 					defer_options << [_("One week"), tz.local_to_utc(tz.now.at_midnight + 7.days).to_s(:db) ]
 					defer_options << [_("Next month"), tz.local_to_utc(tz.now.next_month.beginning_of_month).to_s(:db)]
 					defer_options << [_("One month"), tz.local_to_utc(tz.now.next_month.at_midnight).to_s(:db)]
+					defer_options << [_("Indefinitely"), tz.local_to_utc(tz.now.at_midnight + 1040.weeks).to_s(:db)]
 				%>
 				<%= select 'task', 'status', options, {:selected => @task.status}, can_close %>
 				<div id="defer_options" style="display:none;float:left;">
@@ -95,7 +96,7 @@
 				</div>
 				<%= check_box_tag 'notify', '1', (current_user.send_notifications > 0) %>
 				<div style="padding-top:0.5em;padding-left:0.2em;float:left;">
-					<%=_ 'Send notification emails' %>
+					<label for="notify" style="width:auto;font-weight:normal;float:none;"><%=_ 'Send notification emails' %></label>
 				</div>
 			</div>
 			<% end %>
@@ -153,7 +154,7 @@
 	</td>
 
 	<td valign="top" rowspan="2" style="width:22em;">
-		<% if @task.project_id > 0 
+		<% if @task.project_id > 0
 			selected_project = @task.project_id
 			elsif session[:last_project_id].to_i > 0 && Project.exists?(session[:last_project_id])
 			selected_project = session[:last_project_id].to_i
@@ -170,7 +171,7 @@
 			<label for="task_project_id">
 				<%=_ 'Project' %>
 			</label>
-	
+
 			<select name="task[project_id]" id="task_project_id" <%= "disabled=\"disabled\"" unless perms['reassign'].empty? %>>
 				<% @clients = Customer.find(:all, :conditions => ["company_id = ?", current_user.company_id], :order => "name") %>
 				<% @clients.each do |c| %>
@@ -184,7 +185,7 @@
 				<% end %>
 				<% end %>
 				</select>
-				<!--// Come back and finish this later //-->        
+				<!--// Come back and finish this later //-->
 
 				<% if current_user.admin > 0%>
 				<span id="edit_project">
@@ -213,7 +214,7 @@
 					<% end %>
 				</div>
 				<br />
-				<% users = Project.find(selected_project).users.find(:all, :order => 'name' ) rescue [] 
+				<% users = Project.find(selected_project).users.find(:all, :order => 'name' ) rescue []
 				resource_string = "<select id=\"task_users\" name=\"users[]\" #{"disabled=\"disabled\"" if @task.project && !current_user.can?( @task.project, 'reassign' )}><option value=\"\">[#{_('Unassigned')}]</option>" + users.collect{|us| "<option value=\"#{us.id}\">#{us.name}</option>"}.join('') + "</select>"
 				resource_string = resource_string.split(/\n/).join('').gsub(/'/, "\\\\\'")
 				owner_string = ''
@@ -298,8 +299,8 @@
 				<% end %>
 				<a href="/wiki/show/<%= client.name %>" class="tooltip" title="View the Wiki for <%= client.name %>">Client Wiki</a>
 				<% unless client.evernote.nil? || client.evernote == '' %> &bull;
-				<a target="_blank" href="<%= client.evernote %>" class="tooltip" title="View the Evernote Notebook for <%= client.name %>">Notes</a>     <% end %><br /> 
-							 <a target="_blank"  href="http://assets.emrl.com/pages/search.php?search=client:<%= client.name  %>" class="tooltip" title="View <%= client.name %> in the Asset Manager">Assets</a> &bull; 
+				<a target="_blank" href="<%= client.evernote %>" class="tooltip" title="View the Evernote Notebook for <%= client.name %>">Notes</a>     <% end %><br />
+							 <a target="_blank"  href="http://assets.emrl.com/pages/search.php?search=client:<%= client.name  %>" class="tooltip" title="View <%= client.name %> in the Asset Manager">Assets</a> &bull;
 				<a href="/views/select_client/<%= @task.project.customer_id %>" class="tooltip" title="View all open tasks for <%= client.name %>">All Tasks</a>
 			</span>
 		</fieldset>
@@ -317,19 +318,19 @@
 				<label for="task_type_id_0" style="float:none;text-align:left;width:auto;margin:0;font-weight:normal;" class="tooltip" title="<%=_'Task'%>">
 					&nbsp;<i class="icon-flag icon-large"></i>
 					<%=_'Task'%>
-				</label><br /> 
+				</label><br />
 
 				<input type="radio" name="task[type_id]" id="task_type_id_1" value="1" style="float:none;vertical-align:middle;" <%= "checked=\"checked\"" if @task.type_id.to_i == 1 %> <%= disabled %>/>
 				<label for="task_type_id_1" style="float:none;text-align:left;width:auto;margin:0;font-weight:normal;" class="tooltip" title="<%=_'Design'%>">
 					&nbsp;<i class="icon-pencil icon-large"></i>
 					<%=_'Design'%>
-				</label><br/> 
+				</label><br/>
 
 				<input type="radio" name="task[type_id]" id="task_type_id_2" value="2"  style="float:none;vertical-align:middle;" <%= "checked=\"checked\"" if @task.type_id.to_i == 2 %> <%= disabled %>/>
 				<label for="task_type_id_2" style="float:none;text-align:left;width:auto;margin:0;font-weight:normal;" title="Development" class="tooltip">
 					&nbsp;&nbsp;<i class="icon-code-fork icon-large"></i>&nbsp;
 					<%=_'Development'%>
-				</label><br/> 
+				</label><br/>
 
 				<input type="radio" name="task[type_id]" id="task_type_id_3" value="3"  style="float:none;vertical-align:middle;" <%= "checked=\"checked\"" if @task.type_id.to_i == 3 %> <%= disabled %>/>
 				<label for="task_type_id_3" style="float:none;text-align:left;width:auto;margin:0;font-weight:normal;" title="<%=_'Research'%>" class="tooltip">
@@ -350,7 +351,7 @@
 				</label>
 				</br><br />
 			</div>
-	
+
 			<label for="task_priority"><%=_ 'Priority' %></label>
 				<%= select 'task', 'priority', [[_('Critical'),3],[_('Urgent'),2],[_('High'),1],[_('Normal'),0],[_('Low'),-1],[_('Lowest'),-2]], {:selected => @task.priority}, perms['prioritize']  %><br/>
 			<label for="task_severity_id"><%=_ 'Status' %></label>
@@ -382,8 +383,8 @@
 				start_at_field.value = m + '/' + d + '/' + y;
 			}
 		</script>
-		
-		
+
+
 			<label for="task_due_at"><%=_ 'Due Date' %></label>
 				<% if perms['prioritize'].empty? %>
 					<% if( (current_user.locale || 'en_US') == 'en_US' )
@@ -483,24 +484,24 @@
 			var guests = 0;
 			document.getElementById("notify").onchange = function(){
 				if(document.getElementById("notify").checked){
-					checkAction = 1;          
+					checkAction = 1;
 				}
 				else{
-					checkAction = 0;      
+					checkAction = 0;
 				}
 			}
-				
+
 			function status(){
-				
+
 				<% unless @task.notify_emails.nil? %>
 					guests = <%= @task.notify_emails.size %>;
 				<% else %>
 					guests = 0;
 				<% end %>
-				
+
 				if(checkAction < 1){
-					guests = checkAction;          
-				}        
+					guests = checkAction;
+				}
 
 				if(guests > 0)
 				{
@@ -551,7 +552,7 @@ updateList('<%= w.gsub(/'/, "\\\\\'") %>');
 <% end %>
 </script>
 </fieldset>
-		
+
 
 
 <% if @task.attachments.size > 0 %>
@@ -571,7 +572,7 @@ updateList('<%= w.gsub(/'/, "\\\\\'") %>');
 			<% end %>
 
 
-		
+
 		</td>
 </tr>
 <!--[eoform:task]-->

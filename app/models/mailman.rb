@@ -1,4 +1,5 @@
 # Receive and handle emails sent to tasks
+require "#{RAILS_ROOT}/vendor/email_reply_parser/lib/email_reply_parser"
 
 class Mailman < ActionMailer::Base
 
@@ -19,14 +20,86 @@ class Mailman < ActionMailer::Base
       body ||= email.body
   end
 
+  # copied from app/controllers/application.rb
+  def parse_time(user, input, minutes = false)
+    total = 0
+    unless input.nil?
+      miss = false
+      reg = Regexp.new("(#{_('[wdhm]')})")
+      input.downcase.gsub(reg,'\1 ').split(' ').each do |e|
+        part = /(\d+)(\w+)/.match(e)
+        if part && part.size == 3
+          case  part[2]
+          when _('w') then total += e.to_i * user.workday_duration * user.days_per_week
+          when _('d') then total += e.to_i * user.workday_duration
+          when _('h') then total += e.to_i * 60
+          when _('m') then total += e.to_i
+          else
+            miss = true
+          end
+        end
+      end
+
+      # Fallback to default english parsing
+      if miss
+        eng_total = 0
+        reg = Regexp.new("([wdhm])")
+        input.downcase.gsub(reg,'\1 ').split(' ').each do |e|
+          part = /(\d+)(\w+)/.match(e)
+          if part && part.size == 3
+            case  part[2]
+            when 'w' then eng_total += e.to_i * user.workday_duration * user.days_per_week
+            when 'd' then eng_total += e.to_i * user.workday_duration
+            when 'h' then eng_total += e.to_i * 60
+            when 'm' then eng_total += e.to_i
+            end
+          end
+        end
+
+        if eng_total > total
+          total = eng_total
+        end
+
+      end
+
+      if total == 0
+        times = input.split(':')
+        while time = times.shift
+          case times.size
+          when 0 then total += time.to_i
+          when 1 then total += time.to_i * 60
+          when 2 then total += time.to_i * user.workday_duration
+          when 3 then total += time.to_i * user.workday_duration * user.days_per_week
+          end
+        end
+      end
+
+      if total == 0 && input.to_i > 0
+        total = input.to_i
+      end
+
+      total = total * 60 unless minutes
+
+    end
+    total
+  end
+
   def receive(email)
     e = Email.new
     e.to = email.to.join(", ")
     e.from = email.from.join(", ")
 
     e.body = get_body(email)
+    e.body = EmailReplyParser.parse_reply(e.body, e.from)
 
     e.subject = email.subject
+
+    # duration
+    #duration = 0
+
+    #if e.subject !~ /^Re:\s*\[EMRL\]/
+      #duration = parse_time(e.subject)
+    #end
 
     company = nil
     email.to.each do |to|
@@ -114,21 +187,21 @@ class Mailman < ActionMailer::Base
           user.name = email.from.first
           user.receive_notifications = 1
           w.body = e.body + "\n[" + user.email + "]"
-        else 
+        else
           user = e.user
           w.body = e.body
         end
 
-        
-        w.user = user        
+
+        w.user = user
         w.company = target.project.company
         w.customer = target.project.customer
         w.project = target.project
         w.task = target
         w.started_at = Time.now.utc
-        w.duration = 0
+        w.duration = parse_time(user, e.subject)
         w.log_type = EventLog::TASK_COMMENT
-        
+
         w.save
 
         w.event_log.user = e.user
@@ -146,7 +219,7 @@ class Mailman < ActionMailer::Base
 
         Notifications::deliver_changed( :comment, target, user, e.body.gsub(/<[^>]*>/,'')) rescue begin
 #                                                                                                    Rails.logger "Error sending notificaiton email"
-                                                                                                  end 
+                                                                                                  end
       else
         # Unknown email
         Notifications::deliver_unknown_from_address(email.from.first, company.subdomain) rescue nil
