@@ -65,7 +65,7 @@ Naturally you'll want to be running Apache httpd and have an appropriate virtual
 
 This will redirect requests for http://chrono.domain.com to https://chrono.domain.com
 and will proxy requests for https://chrono.domain.com to http://chrono.domain.com:3000 on the localhost
-The end-user who is contacting chrono.domain.com does not know that the request is being proxied, because apache will change the "Host:" values to itself as it sends back the response. The proxy request is performed on the localhost, which is informed by /etc/hosts that hostname.clockingit.com points to 127.0.0.1
+The end-user who is contacting chrono.domain.com does not know that the request is being proxied, because apache will change the "Host:" values to itself as it sends back the response. The proxy request is performed on the localhost, which is informed by /etc/hosts that chrono.domain.com points to 127.0.0.1
 ```
   ### Insecure VirtualHost ###
   <VirtualHost *:80>
@@ -137,7 +137,7 @@ chrono.domain.com
 Add an entry to /etc/mail/aliases to create an alias that will hand off emails to the mailman script:
 
 ```
-cit: "|/path/to/chrono/script/runner -e production 'Mailman.receive(STDIN.read)'"
+chrono: "|/path/to/chrono/script/runner -e production 'Mailman.receive(STDIN.read)'"
 ```
 
 Add an entry to /etc/mail/virtusertable to redirect all emails to your domain to the above alias:
