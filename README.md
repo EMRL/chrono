@@ -30,12 +30,35 @@ Original installation documentation is in [/doc/README.ORIGINAL](https://github.
 
 Chrono requires Ruby 1.8.X. We are running 1.8.7 in production; newer versions beyond 1.9.X will fail.
 
-Additionally the following packages are required:
+Additionally the following gems are required:
 
-- ruby18-gems
-- ruby18-mysql
-- rubygem-rake
-- ImageMagick
+- rails -v 1.2.6
+- activesupport-1.4.4
+- activerecord-1.15.6
+- actionpack-1.13.6
+- actionmailer-1.3.6
+- actionwebservice-1.2.6
+- rake -v 0.8.7
+- mongrel -v 1.1.5
+- gem_plugin-0.2.3
+- daemons-1.2.4
+- fastthread-1.0.7
+- cgi_multipart_eof_fix-2.5.0
+- ferret -v 0.11.6
+- fastercsv -v 1.5.0
+- tzinfo -v 0.3.16
+- eventmachine -v 0.12.10
+- json -v 1.2.0
+- json_pure -v 1.2.0
+- RedCloth -v 4.2.2
+- icalendar -v 1.1.0
+- ZenTest -v 4.2.1
+- gchartrb -v 0.8
+- test-spec -v 0.10.0
+- echoe -v 4.1
+- hoe -v 2.5.0
+- rubyforge-2.0.4
+- rmagick -v 2.12.2
 
 Use your favourite package manager to ensure you have the above components installed.
 
