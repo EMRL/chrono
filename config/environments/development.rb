@@ -18,4 +18,5 @@ config.action_mailer.raise_delivery_errors = false
 
 # Throttle the logs
 config.log_level = :fatal
+#config.log_level = :debug
 
