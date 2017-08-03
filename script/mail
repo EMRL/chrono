@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+if [[ -s "/usr/local/rvm/scripts/rvm" ]]; then
+  source "/usr/local/rvm/scripts/rvm"
+  rvm use 1.8.7 > /dev/null 2>&1
+  /var/chrono/script/runner -e production 'Mailman.receive(STDIN.read)'
+fi
+
