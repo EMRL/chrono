@@ -27,9 +27,9 @@ before_script:
 
 script:
 # Launch 
-- sh -c "./script/ferret_server start"
-- sh -c "./script/server start &""
-- sh -c "./script/push_server"
+- sh -c "./script/server start &"
+#- sh -c "./script/ferret_server start"
+#- sh -c "./script/push_server"
 
 - "echo \"Well, that was interesting.\""
 
