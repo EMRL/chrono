@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 18, 2017 at 11:55 AM
+-- Generation Time: Aug 18, 2017 at 03:17 PM
 -- Server version: 5.0.67
 -- PHP Version: 5.3.27
 
@@ -100,6 +100,13 @@ CREATE TABLE IF NOT EXISTS `companies` (
   UNIQUE KEY `companies_subdomain_index` (`subdomain`),
   KEY `companies_name_index` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `companies`
+--
+
+INSERT INTO `companies` (`id`, `name`, `contact_email`, `contact_name`, `created_at`, `updated_at`, `subdomain`, `show_wiki`, `show_forum`, `show_chat`, `show_messaging`, `restricted_userlist`) VALUES
+(1, 'Your Company', 'admin@localhost', 'admin', '2010-05-09 20:14:43', '2017-01-09 19:53:02', 'localhost', 1, 0, 0, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -852,7 +859,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   KEY `index_users_on_autologin` (`autologin`),
   KEY `users_company_id_index` (`company_id`,`name`),
   KEY `users_last_ping_at_idx` (`last_ping_at`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=31 ;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `username`, `password`, `company_id`, `created_at`, `updated_at`, `email`, `last_login_at`, `admin`, `time_zone`, `option_tracktime`, `option_externalclients`, `option_tooltips`, `seen_news_id`, `last_project_id`, `last_seen_at`, `last_ping_at`, `last_milestone_id`, `last_filter`, `date_format`, `time_format`, `send_notifications`, `receive_notifications`, `receive_own_notifications`, `uuid`, `seen_welcome`, `locale`, `duration_format`, `workday_duration`, `posts_count`, `newsletter`, `option_avatars`, `autologin`, `remember_until`, `option_floating_chat`, `days_per_week`, `enable_sounds`, `create_projects`, `show_type_icons`) VALUES
+(2, 'Default user', 'admin', 'admin', 1, '2010-05-09 20:24:32', '2017-07-03 21:12:51', 'admin@localhost.com', '2017-07-02 00:02:55', 2, 'US/Pacific', 1, 1, 1, 65, 0, '2017-07-03 20:59:22', '2017-07-03 21:12:51', 0, NULL, '%m/%d/%Y', '%I:%M%p', 1, 1, 1, 'da222717fb7b4dfc61f3ed49e3f62f4d', 1, 'en_US', 3, 480, 4, 1, 1, '0bc3ccb7e413dbcd372ced4aaeb5fec5', NULL, 1, 5, 1, 1, 1);
 
 -- --------------------------------------------------------
 
