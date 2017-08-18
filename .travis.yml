@@ -4,19 +4,19 @@ sudo: false
 
 before_script:
 # Create a database
-# - "echo \"CREATE DATABASE chrono DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; GRANT ALL ON chrono.* TO 'travis'@'localhost' IDENTIFIED BY 'chrono'; FLUSH PRIVILEGES;\" | mysql -u travis -p"
-# - "mysql -u chrono -p chrono < db/chrono.sql"
-# - "echo \"INSERT INTO `chrono`.`companies` (`id`, `name`, `contact_email`, `contact_name`, `created_at`, `updated_at`, `subdomain`, `show_wiki`, `show_forum`, `show_chat`, `show_messaging`, `restricted_userlist`) VALUES ('1', 'Company Name', 'admin@company.com', 'admin', '2017-08-18 00:00:00.000000', '2017-08-18 00:00:00.000000', 'localhost', '1', '1', '1', '1', '0');\" |  mysql -u travis -p"
+- "echo \"CREATE DATABASE chrono DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci; GRANT ALL ON chrono.* TO 'travis'@'localhost' IDENTIFIED BY 'chrono'; FLUSH PRIVILEGES;\" | mysql -u travis"
+- "mysql -u chrono -p chrono < db/chrono.sql"
+- "echo \"INSERT INTO `chrono`.`companies` (`id`, `name`, `contact_email`, `contact_name`, `created_at`, `updated_at`, `subdomain`, `show_wiki`, `show_forum`, `show_chat`, `show_messaging`, `restricted_userlist`) VALUES ('1', 'Company Name', 'admin@company.com', 'admin', '2017-08-18 00:00:00.000000', '2017-08-18 00:00:00.000000', 'localhost', '1', '1', '1', '1', '0');\" |  mysql -u travis"
 
 # Install dependencies
 # - "sudo apt-get install graphicsmagick-libmagick-dev-compat imagemagick ri rdoc librmagick-ruby"
 - "yes | (gem install rails -v 1.2.6; gem install rake -v 0.8.7; gem install mongrel -v 1.1.5; gem install ferret -v 0.11.6; gem install fastercsv -v 1.5.0; gem install tzinfo -v 0.3.16; gem install eventmachine -v 0.12.10; gem install json -v 1.2.0; gem install json_pure -v 1.2.0; gem install RedCloth -v 4.2.2; gem install icalendar -v 1.1.0; gem install ZenTest -v 4.2.1; gem install gchartrb -v 0.8; gem install test-spec -v 0.10.0; gem install echoe -v 4.1; gem install hoe -v 2.5.0; gem update --system 1.4.1)"
 
 # Install ImageMagick
-- "yum -y install ImageMagick; yum -y install ImageMagick-devel;"
+# - "yum -y install ImageMagick; yum -y install ImageMagick-devel;"
 
 # Now you can install Rmagick
-- "yes | (gem install rmagick -v 2.12.2)"
+# - "yes | (gem install rmagick -v 2.12.2)"
 
 script:
 - "echo \"Well, that was interesting.\""
