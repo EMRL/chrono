@@ -23,6 +23,7 @@ before_script:
 - sh -c "cp config/environment.rb-example config/environment.rb"
 - sh -c "cp config/ferret_server.yml-example config/ferret_server.yml"
 - sh -c "cp config/juggernaut_config.yml-example config/juggernaut_config.yml"
+- sh -c "mkdir log"
 
 script:
 # Launch 
