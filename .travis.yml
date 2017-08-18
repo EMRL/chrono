@@ -16,7 +16,7 @@ before_script:
 - "yum -y install ImageMagick; yum -y install ImageMagick-devel;"
 
 # Now you can install Rmagick
-- "yes | (gem install rmagick -v 2.12.2)
+- "yes | (gem install rmagick -v 2.12.2)"
 
 script:
 - "echo \"Well, that was interesting.\""
