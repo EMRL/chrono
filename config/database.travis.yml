@@ -1,26 +1,26 @@
 development:
   adapter: mysql
-  database: DATABASE
+  database: chrono
   host: localhost
-  username: USERNAME
-  password: PASSWORD
+  username: root
+  password: password
   encoding: utf8
   SOCKET
 
 test:
   adapter: mysql
-  database: DATABASE_test
+  database: chrono_test
   host: localhost
-  username: USERNAME
-  password: PASSWORD
+  username: root
+  password: password
   encoding: utf8
   SOCKET
 
 production:
   adapter: mysql
-  database: DATABASE
+  database: chrono
   host: localhost
-  username: USERNAME
-  password: PASSWORD
+  username: root
+  password: password
   encoding: utf8
   SOCKET
