@@ -31,6 +31,9 @@ script:
 #- sh -c "./script/ferret_server start"
 #- sh -c "./script/push_server"
 
+# Try to get a server response from server
+- sh -c "curl -sL --head projects.emrl.com:3000"
+
 - "echo \"Well, that was interesting.\""
 
 # - "bundle exec rake ci:build"
