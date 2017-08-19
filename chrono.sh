@@ -1,12 +1,11 @@
 #!/bin/sh
 #
-# Small script to control the Engine server
+# Small script to control the Chrono application
+# https://github.com/EMRL/chrono
 
 # Define environment variables
 APP="Chrono"
 CHRONOPATH="/var/chrono"
-
-rm -rf "${CHRONOPATH}"/log
 
 #source /usr/local/rvm/environments/ruby-1.8.7-head
 source $(rvm 1.8.7 do rvm env --path)
@@ -14,6 +13,7 @@ source $(rvm 1.8.7 do rvm env --path)
 
 start() {
 	cd  "${CHRONOPATH}" || exit 126
+	rm -rf "${CHRONOPATH}"/log 2>/dev/null
 	./script/ferret_server start > /dev/null
 	./script/server start >/dev/null 2>&1 &./script/server start >/dev/null 2>&1 &
 	./script/push_server >/dev/null  2>&1 &
@@ -26,6 +26,7 @@ stop() {
 
 restart() {
 	cd  "${CHRONOPATH}" || exit 126
+	rm -rf "${CHRONOPATH}"/log 2>/dev/null
 	./script/ferret_server start > /dev/null
 	./script/server start >/dev/null 2>&1 &./script/server start >/dev/null 2>&1 &
 	./script/push_server >/dev/null  2>&1 &
