@@ -18,6 +18,7 @@ config/ferret_server.yml
 config/environment.rb
 config/juggernaut_config.yml
 semantic.cache
+/.well-known
 
 # RAILS - https://github.com/github/gitignore/blob/master/Rails.gitignore
 *.rbc
