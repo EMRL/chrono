@@ -6,7 +6,7 @@ Chrono is project management and time tracking for design and development agenci
 
 ## Changes
 
-Chrono is based on [Clockingit] (http://clockingit.com); here are just a few things we've changed or added over the years. Many of these tasks are ongoing.
+Chrono is based on [ClockingIT](http://clockingit.com); here are just a few things we've changed or added over the years. Many of these tasks are ongoing.
 
 1. Improved user interface
 2. Replaced UI .gif & .png graphics with [Font Awesome](http://fontawesome.github.io/Font-Awesome/3.2.1/) icons (still on version 3 for now)
