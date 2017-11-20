@@ -151,7 +151,7 @@ class User < ActiveRecord::Base
 
   end
   
-  def avatar_url(size=32, secure = false)
+  def avatar_url(size=32, secure = true)
     if avatar?
       if size > 25 && File.exist?(avatar_large_path)
         "/users/avatar/#{self.id}?large=1&" + File.mtime(avatar_large_path).to_i.to_s
