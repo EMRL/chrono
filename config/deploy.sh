@@ -22,7 +22,7 @@ NOKEY="TRUE"
 # DISABLESSHCHECK="FALSE"
 
 # A human readable project name
-PROJNAME="Deploy Application"	
+PROJNAME="Chrono Project Management"	
 
 # A human readable client name
 PROJCLIENT="EMRL"
@@ -53,10 +53,10 @@ DIGESTSLACK="TRUE"
 # HTMLTEMPLATE="mui"
 
 # Development project URL, including http:// or https:// 
-DEVURL="https://github.com/EMRL/deploy"
+DEVURL="https://github.com/EMRL/chrono"
 
 # Production, or "Live" project URL, including http:// or https://
-# PRODURL="http://productionurl.com"
+PRODURL="https://projects.emrl.com"
 
 # The exact name of the Bitbucket/Github repository
 REPO="chrono"
