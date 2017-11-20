@@ -2,7 +2,7 @@ Welcome to EMRL's Project Manager.
 
 <%= @created_by.name %> has created an account for you.
 
-Log in at http://<%= @created_by.company.subdomain %>.<%= $CONFIG[:domain] %>
+Log in at https://<%= @created_by.company.subdomain %>.<%= $CONFIG[:domain] %>
 <% if @welcome_message && @welcome_message.length > 0 %>
 
 Message from <%= @created_by.name %>:
