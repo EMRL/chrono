@@ -1881,9 +1881,9 @@ h4 {
 	vertical-align: middle;
 }
 #task_tooltip th.client-name img {
-	padding-right: 10px;
-	padding-bottom: 5px;
-        border-radius: 0px;
+    border-radius: 50%;
+    margin-right: 10px;
+	margin-bottom: 5px;
 }
 .pagination {
 	margin: 3px;
