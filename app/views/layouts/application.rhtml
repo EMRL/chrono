@@ -252,6 +252,8 @@
 					  							</td>
 											</tr>
 
+											<% if current_user.option_tracktime.to_i == 1 %>
+
 											<tr>
 												<td align="left" class="page_header_side tooltip" colspan="2" width="100%" title="<%= _'Custom saved filters showing a subset of your tasks'%>">
 													<div style="float: left;">
@@ -384,6 +386,8 @@
 													&nbsp;
 											  	</td>
 											</tr> //-->
+
+											<% end %>
 											<tr>
 												<td align="left" class="page_header_side tooltip" width="100%" colspan="2" title="<%= _'EMRL Blog'%>">
 													<div style="float:left;">
@@ -533,3 +537,4 @@
 		</table>
 	</body>
 </html>
+

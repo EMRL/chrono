@@ -16,7 +16,7 @@ start() {
 	rm -rf "${CHRONOPATH}"/log 2>/dev/null
 	./script/ferret_server start > /dev/null
 	./script/server start >/dev/null 2>&1 &./script/server start >/dev/null 2>&1 &
-	./script/push_server >/dev/null  2>&1 &
+	sudo ./script/push_server >/dev/null  2>&1 &
 
 }
 
@@ -29,7 +29,7 @@ restart() {
 	rm -rf "${CHRONOPATH}"/log 2>/dev/null
 	./script/ferret_server start > /dev/null
 	./script/server start >/dev/null 2>&1 &./script/server start >/dev/null 2>&1 &
-	./script/push_server >/dev/null  2>&1 &
+	sudo ./script/push_server >/dev/null  2>&1 &
 }
 
 # Check the sudo situation
