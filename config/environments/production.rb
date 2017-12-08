@@ -2,6 +2,8 @@
 
 # The production environment is meant for finished, "live" apps.
 # Code is not reloaded between requests
+
+# DO NOT SET THIS TO FALSE IT WILL RAIN TERROR AND KITTENS ON YOU
 config.cache_classes = true
 
 # Use a different logger for distributed setups

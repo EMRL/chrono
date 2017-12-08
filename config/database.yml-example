@@ -2,25 +2,34 @@ development:
   adapter: mysql
   database: DATABASE
   host: localhost
-  username: USERNAME
-  password: PASSWORD
+  username: chrono
+  password: chrono
   encoding: utf8
+  # SOCKET is what seems to work best for CentOS/Redhat
+  # If you are using Debian or some such you might want to try
+  # socket: /var/run/mysql/mysql.sock
   SOCKET
 
 test:
   adapter: mysql
   database: DATABASE_test
   host: localhost
-  username: USERNAME
-  password: PASSWORD
+  username: chrono
+  password: chrono
   encoding: utf8
+  # SOCKET is what seems to work best for CentOS/Redhat
+  # If you are using Debian or some such you might want to try
+  # socket: /var/run/mysql/mysql.sock
   SOCKET
 
 production:
   adapter: mysql
   database: DATABASE
   host: localhost
-  username: USERNAME
-  password: PASSWORD
+  username: chrono
+  password: chrono
   encoding: utf8
+  # SOCKET is what seems to work best for CentOS/Redhat
+  # If you are using Debian or some such you might want to try
+  # socket: /var/run/mysql/mysql.sock
   SOCKET

@@ -4,6 +4,8 @@
 # test suite.  You never need to work with it otherwise.  Remember that
 # your test database is "scratch space" for the test suite and is wiped
 # and recreated between test runs.  Don't rely on the data there!
+
+# DO NOT SET THIS TO FALSE IT WILL RAIN TERROR AND KITTENS ON YOU
 config.cache_classes = true
 
 # Log error messages when you accidentally call methods on nil.

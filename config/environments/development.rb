@@ -3,6 +3,8 @@
 # In the development environment your application's code is reloaded on
 # every request.  This slows down response time but is perfect for development
 # since you don't have to restart the webserver when you make code changes.
+
+# DO NOT SET THIS TO FALSE IT WILL RAIN TERROR AND KITTENS ON YOU
 config.cache_classes = true
 
 # Log error messages when you accidentally call methods on nil.

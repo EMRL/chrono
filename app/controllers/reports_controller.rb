@@ -207,7 +207,7 @@ class ReportsController < ApplicationController
   def list
     sql_filter = ""
     date_filter = ""
-    filename = "clockingit"
+    filename = "chrono"
 
     @tags = Tag.top_counts({ :company_id => current_user.company_id, :project_ids => current_project_ids})
     @users = User.find(:all, :order => 'name', :conditions => ['users.company_id = ?', current_user.company_id], :joins => "INNER JOIN project_permissions ON project_permissions.user_id = users.id")
