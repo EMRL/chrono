@@ -152,6 +152,37 @@ SLACKURL="https://hooks.slack.com/services/T04B0NA6U/B0D7W06NM/gmy89VOJHLTEZf3JM
 # Enable the settings below to post on WARNiNG and/or ERROR.
 SLACKERROR="TRUE"
 
+# Logging
+#
+# Post HTML logs to remote server. This needs to be set to "TRUE" even you
+# are only posting to LOCALHOST.
+REMOTELOG="TRUE"
+#
+# Define the root url where the deploy log will be accessible with no
+# trailing slash
+REMOTEURL="https://dply.emrl.co"
+#
+# If using HTML logs, define which template you'd like to use. HTML templates
+# are stored in separate folders in /etc/deploy/html. The value used below
+# should be the folder name of your template.
+# REMOTETEMPLATE="default"
+#
+# Post logs via SCP
+SCPPOST="TRUE"
+SCPUSER="deploy"
+SCPHOST="ligeti.emrl.com"
+SCPHOSTPATH="/var/www/html/deploy"
+#
+# DANGER DANGER: If for some reason you absolutely can't use an SSH key you
+# can configure your password here
+SCPPASS="/var/www/.deployaccess"
+#
+# If you're posting logs to a place on the same machine you're deploying from,
+# set POSTTOLOCALHOST to "TRUE" and define the path where you want to store
+# the HTML logs.
+# LOCALHOSTPOST="TRUE"
+# LOCALHOSTPATH="/var/www/production/deploy"
+
 # Post commit logs to this URL.
 #POSTURL="http://webhook.site/0f724483-236e-4001-b7ec-a508881d8864"
 POSTURL="https://hooks.zapier.com/hooks/catch/415258/ix8zkg/"
