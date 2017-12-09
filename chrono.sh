@@ -15,7 +15,7 @@ start() {
 	cd  "${CHRONOPATH}" || exit 126
 	rm -rf "${CHRONOPATH}"/log 2>/dev/null
 	./script/ferret_server start > /dev/null
-	./script/server start >/dev/null 2>&1 &./script/server start >/dev/null 2>&1 &
+	./script/server start >/dev/null 2>&1
 	sudo ./script/push_server >/dev/null  2>&1 &
 
 }
@@ -28,7 +28,7 @@ restart() {
 	cd  "${CHRONOPATH}" || exit 126
 	rm -rf "${CHRONOPATH}"/log 2>/dev/null
 	./script/ferret_server start > /dev/null
-	./script/server start >/dev/null 2>&1 &./script/server start >/dev/null 2>&1 &
+	./script/server start >/dev/null 2>&1 &
 	sudo ./script/push_server >/dev/null  2>&1 &
 }
 

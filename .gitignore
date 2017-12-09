@@ -19,6 +19,8 @@ config/environment.rb
 config/juggernaut_config.yml
 semantic.cache
 /.well-known
+/.deploy.sh
+/vchrono.sh
 
 # RAILS - https://github.com/github/gitignore/blob/master/Rails.gitignore
 *.rbc
