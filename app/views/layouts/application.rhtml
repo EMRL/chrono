@@ -197,9 +197,9 @@
 														<%= "#{online_users} #{_('Online')}" %>
 													</div>
 													<div>
-														<div style="float:right;padding-top:0.1em;">
+														<div style="float:right;padding-top:0.1em;"><a href="/users/edit_preferences">
 															<%= "<img src=\"#{h(@current_user.avatar_url(50))}\" class=\"photo desaturate tooltip\" title=\"
-															You are a beautiful butterfly\" />" %><br />
+															You are a beautiful butterfly\" />" %></a><br />
 														</div>
 													</div>
 												</td>
@@ -486,14 +486,15 @@
 											<div class="presence-bar-text presence-toggle" id="presence-toggle-users">
 												<!-- <i class="icon-user icon-large"></i> -->
 												<!--  <%= _('Online')%> (<span id="presence-online"><%= online_users %></span>) -->
+												
 												<% all_users.each do |u| %>										   
 													<% if u.id != current_user.id %>
 														<% if u.online? %>   
 															<div class="user-avatars" style="float:right;padding:0.25%">         
-																<img src="<%= u.avatar_url(32) %>" class="photo tooltip" style="height:32px;width:32px;border-radius:50%" class="tooltip" title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>">
+																<img src="<%= u.avatar_url(32) %>" class="photo tooltip" style="border-radius:50%" class="tooltip" title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>">
 															</div>
 					  									<% elsif u.idle? %>
-															<img src="<%= u.avatar_url(32) %>" class="photo desaturate tooltip" style="height:32px;width:32px;border-radius:50%;opacity:0.3;filter:alpha(opacity=30)" title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>"><!-- end of image tag -->    
+															<img src="<%= u.avatar_url(32) %>" class="photo desaturate tooltip" style="border-radius:50%;opacity:0.3;filter:alpha(opacity=30)" title="<%= u.name %> <%= _('Active %s ago', (u.idle? ? time_ago_in_words(u.last_seen_at) : time_ago_in_words(u.last_ping_at) ) ) %>"><!-- end of image tag -->    
 					  									<% end %> 
 													<% end %>
 			  									<% end %>
@@ -502,6 +503,7 @@
 									</div>
 	  							</div>
 	  							<% end %>
+
 								<!-- task/update_sheet_info refresh the page every 90 sec  -->
 								<%= periodically_call_remote(:url => { :controller => 'tasks', :action => 'update_sheet_info' }, :frequency => 90 ) -%>
 								<%= flash_plugin(session[:channels]) %>
