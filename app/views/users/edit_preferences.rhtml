@@ -23,13 +23,35 @@
 								<%=_ 'Custom Avatar' %>
 							</legend>         
 
+							<% if @user.avatar? -%>
+							<p>
+								<label for="current_logo">
+									<%=_ 'Current Avatar' %>
+								</label>
+								<%= tag("img", {:src => @user.avatar_url(25), :border => 0 } ) %><%= tag("img", {:src => @user.avatar_url, :border => 0 } ) %><%= link_to _("[Delete]"), :controller => 'users', :action => "delete_avatar", :id => "#{@user.id}" %>
+							</p>
+							
+							<% else -%>
+
 							<p>
 								<a href="http://en.gravatar.com/emails/"><%= "<img src=\"#{h(@current_user.avatar_url(150))}\" class=\"photo tooltip\" title=\"You can change your avatar at gravatar.com\" />" %></a>
 							</p>
 							<p>
-							  To change your avatar, login to <a href="http://en.gravatar.com/emails/">gravatar.com</a> with your EMRL email address and password.
-							</p><br />
-						  <a href="http://en.gravatar.com/emails/" style="background-color: #47acdf; border-style: none; color: #fff; cursor: pointer; font-family: 'Arimo', sans-serif; font-size: 1.1rem; font-weight: bold; margin-right: 0.5em; overflow: visible; padding: 9px 10px;"> Change Avatar </a>
+							  To change your avatar, add an image at <a href="http://en.gravatar.com/emails/">gravatar.com</a> or upload one below.
+							</p>
+							<% end -%>
+							
+<p>
+								<% form_tag({ :controller => 'users', :action => 'upload_avatar', :id => @user.id}, { :multipart => "true" }) do %>
+								
+									<%= file_field 'user', 'tmp_file' %>&nbsp;&nbsp;
+									<%= submit_tag _("Upload"), :class => 'nolabel' %><% end %>
+								</p><br />
+
+
+								<label>
+									&#160;
+								</label>					
 						</fieldset>
 
 						<% if current_user.admin > 1 %>
@@ -47,34 +69,6 @@
 								<a href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d">Work RSS Feed</a><br />
 								<a href="/users/new">Create User</a><br />
 							</fieldset>
-
-							<!--fieldset>
-								<legend>
-									<%=_ 'Custom Avatar' %>
-								</legend>
-								<% if @user.avatar? -%>
-								<p>
-									<label for="current_logo">
-										<%=_ 'Current Avatar' %>
-									</label>
-									<%= tag("img", {:src => @user.avatar_url(25), :border => 0 } ) %><%= tag("img", {:src => @user.avatar_url, :border => 0 } ) %><%= link_to _("[Delete]"), :controller => 'users', :action => "delete_avatar", :id => "#{@user.id}" %>
-								</p><% end -%>
-								<% form_tag({ :controller => 'users', :action => 'upload_avatar', :id => @user.id}, { :multipart => "true" }) do %>
-								<p>
-									<label for="users_tmp_file">
-										<%=_ 'New Avatar' %>
-									</label>
-									<%= file_field 'user', 'tmp_file' %>&nbsp;&nbsp;
-									<%= submit_tag _("Upload"), :class => 'nolabel' %><% end %>
-								</p><br />
-								<label for="options_text"></label>
-									<span class="optional" style="clear:both;">
-										<%=_ "Thie file you upload will be resized to 25x25 and 50x50 while preserving its aspect ratio." %>
-									</span>
-								<label>
-									&#160;
-								</label>
-							</fieldset-->
 						<% end %>
 					</td>
 				</tr>

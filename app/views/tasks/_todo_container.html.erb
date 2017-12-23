@@ -10,8 +10,8 @@
 		<%= _('or') %> <a href="#" onclick="Element.hide('todo-form-<%=task.dom_id%>');$('new-todo-<%=task.dom_id%>').show(); return false;"><%=_('Cancel')%></a>
 	</form>
 
-	<span id="new-todo-<%=task.dom_id%>" style="font-size: 1.0em;">
-		<i class="icon-plus-sign-alt"></i>&nbsp;&nbsp;<a href="#" onclick="$('todo-form-<%=task.dom_id%>').show();$('new-todo-<%=task.dom_id%>').hide();$('todo_text_<%=task.id%>').focus();; return false;"><%=_'New To-do Item'%></a>
+	<span id="new-todo-<%=task.dom_id%>">
+		<a href="#" onclick="$('todo-form-<%=task.dom_id%>').show();$('new-todo-<%=task.dom_id%>').hide();$('todo_text_<%=task.id%>').focus();; return false;" style="font-size: 1.8em; text-decoration: none;"><i class="icon-plus-sign"></i></a>
 	</span>
 
 	<ul id="todo-done-<%=task.dom_id%>" class="task-todo">

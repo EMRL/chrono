@@ -163,7 +163,7 @@ h4 {
 .page_header a {
 	font-size: 1.1rem;
 	letter-spacing: 0em;
-	padding-right: 1em;
+	padding-right: 1.0em;
 	text-transform: capitalize;
 }
 
@@ -341,7 +341,6 @@ img.desaturate {
 	border-radius: 50%;
 }
 input.checkbox {
-	margin-top: 2px;
 	vertical-align: middle;
 }
 .task_done {
@@ -853,11 +852,11 @@ pre.auto_generated {
 #content li {
 	clear: both;
 	display: block;
-	font-size: 0.8em;
 	list-style: none;
 	margin: 0 0 0 0;
-	padding: 0;
+	padding: 4px 0 4px;
 	position: relative;
+    border-top: dotted 1px #ccc;
 }
 .todo-container {
 	margin-top: -10px;
