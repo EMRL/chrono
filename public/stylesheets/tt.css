@@ -871,6 +871,7 @@ pre.auto_generated {
 	color: #a6a6a6;
 	text-decoration: line-through;
 }
+
 #content .empty {
 	border-left: none;
 	list-style: none;
@@ -2025,11 +2026,12 @@ a.widget-collapsed {
 	padding-bottom: 1em;
 }
 .user-heading {
-	border-bottom: 1px solid #ccc;
-	clear: both;
-	height: 32px;
-	padding-right: 1em;
-	position: relative;
+	border-top: 1px solid #ccc;
+    padding-top: 10px;
+    clear: both;
+    height: 32px;
+    padding-right: 1em;
+    position: relative;
 }
 .user-avatar {
 	margin-right: 1em;

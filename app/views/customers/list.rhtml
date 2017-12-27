@@ -25,7 +25,7 @@
 <% for customer in @customers %>
   <tr class="hoverrow" height="60">
     <td>
-      <div class="customer"><a href="http://projects.emrl.com/customers/edit/<%= customer.id %>">
+      <div class="customer"><a href="/customers/edit/<%= customer.id %>">
         <img src="/admin/show_logo/<%= customer.id %>" title="<%=h customer.name %>"></a>
       </div>
     </td>
@@ -38,7 +38,7 @@
       <a href="mailto:<%=h customer.contact_email %>"><%=h customer.contact_email %></a>
     </td>
     <td>
-      <a href="/wiki/show/<%=h customer.name %>"><%= image_tag('wiki.png', :border => 0, :height => 16, :style => "padding-right: 10px; margin-top:0px;", :class => 'tooltip', :title => 'View the Wiki page for this client') %></a>
+      <a href="/wiki/show/<%=h customer.name %>"><!--%= image_tag('wiki.png', :border => 0, :height => 16, :style => "padding-right: 10px; margin-top:0px;", :class => 'tooltip', :title => 'View the Wiki page for this client') % -->Wiki</a>
     
       <!-- COMMENTED OUT THE EDIT LINK 
         <%= link_to _('Edit'), :action => 'edit', :id => customer %> 
