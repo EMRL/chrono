@@ -290,7 +290,7 @@
 											<tr>
 												<td class="views_item">
 													<%= link_to view.name, :controller => 'views', :action => 'select', :id => view %>
-													<%= link_to _('<i class="icon-edit-sign" style="color: #B8B8B8; text-decoration: none;"></i>'), :controller => 'views', :action => 'edit', :id => view if(view.user_id == current_user.id || current_user.admin?)%>
+													<%= link_to _('<i class="icon-edit-sign" style="color: #dcdcdc; text-decoration: none;"></i>'), :controller => 'views', :action => 'edit', :id => view if(view.user_id == current_user.id || current_user.admin?)%>
 												</td>
 												<td align="right">
 													&nbsp;
