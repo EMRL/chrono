@@ -1929,14 +1929,12 @@ h4 {
 }
 .todo-status-link {
 	color: #ffffff;
-	display: inline-grid;
 	background-color: #99c440;
     text-decoration: none;
     font-size: smaller;
     font-weight: 500;
     letter-spacing: .05em;
-    vertical-align: middle;
-    padding: .25em .4em .20em;
+    padding: .2em .3em .16em;
     color: #fff;
     text-align: center;
     white-space: nowrap;
@@ -1945,19 +1943,16 @@ h4 {
 }
 .todo-status-link-empty {
 	color: #ffffff;
-	display: inline-grid;
 	background-color: #ddd;
     text-decoration: none;
     text-transform: uppercase;
     font-size: smaller;
     font-weight: 500;
     letter-spacing: .05em;
-    vertical-align: middle;
-    padding: .25em .4em .20em;
+    padding: .2em .3em .16em;
     color: #fff;
     text-align: center;
     white-space: nowrap;
-    vertical-align: baseline;
     border-radius: .25em;
 }
 
