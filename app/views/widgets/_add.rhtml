@@ -8,8 +8,13 @@
 		<%= _("Title") %>
 	</label>
 
+<% if current_user.option_tracktime.to_i == 1 %>
 	<%= text_field 'widget', 'name', {:size => 15} %><% gadgets = [[_('Tasks'),0],[_('Projects'),1],[_('Recent Activities'),2],[_('Due Tasks'),7],[_('Comments'),6],[_('Tasks / Day Chart'),3],[_('Burndown Chart'),4],[_('Burnup Chart'),5],[_('Work Status'),9], [_('Active Tasks'),10]]
 		%> 
+		<% else %>
+	<%= text_field 'widget', 'name', {:size => 15} %><% gadgets = [[_('Tasks'),0],[_('Projects'),1],[_('Due Tasks'),7],[_('Comments'),6],[_('Tasks / Day Chart'),3],[_('Burndown Chart'),4],[_('Burnup Chart'),5]]
+		%> 
+<% end %>
 
 	<label for="widget_widget_type">
 		<%= _("Type") %>

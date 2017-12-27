@@ -23,14 +23,15 @@
       <%= link_to "#{_('<i class="icon-calendar icon-3x"></i><br />Calendar')}", :controller => 'schedule', :action => 'list' %></li>
       <% end %>
 
-  <% if controller.action_name == 'gantt' %>
-    <li class="active">
+  <% if current_user.option_tracktime.to_i == 1 %>
+    <% if controller.action_name == 'gantt' %>
+      <li class="active">
+        <%= link_to "#{_('<i class="icon-sitemap icon-3x"></i><br />Plan')}", :controller => 'schedule', :action => 'gantt'%></li>
+        <% else %> 
+    <li>
       <%= link_to "#{_('<i class="icon-sitemap icon-3x"></i><br />Plan')}", :controller => 'schedule', :action => 'gantt'%></li>
-      <% else %> 
-  <li>
-    <%= link_to "#{_('<i class="icon-sitemap icon-3x"></i><br />Plan')}", :controller => 'schedule', :action => 'gantt'%></li>
-    <% end %>
-
+      <% end %>
+<% end %>
   <% if current_user.option_tracktime.to_i == 1 && current_user.can_any?(current_user.projects, 'report') %>
     <% if controller.controller_name == "reports"  %>
       <li class="active">
