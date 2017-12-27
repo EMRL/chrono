@@ -1,3 +1,4 @@
+
 development:
   adapter: mysql
   database: chrono
@@ -5,7 +6,7 @@ development:
   username: root
   password: password
   encoding: utf8
-  SOCKET
+  socket: /var/run/mysql/mysql.sock
 
 test:
   adapter: mysql
@@ -14,7 +15,7 @@ test:
   username: root
   password: password
   encoding: utf8
-  SOCKET
+  socket: /var/run/mysql/mysql.sock
 
 production:
   adapter: mysql
@@ -23,4 +24,4 @@ production:
   username: root
   password: password
   encoding: utf8
-  SOCKET
+  socket: /var/run/mysql/mysql.sock
