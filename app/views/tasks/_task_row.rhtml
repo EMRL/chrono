@@ -90,14 +90,20 @@ class="task <%=classes%>" style="position:relative;<% if depth > 1 %>margin-left
 	<span id="todo-status-<%= task.dom_id %>">
 	  <a class="<%=(task.todos.empty? ? "todo-status-link-empty" :"todo-status-link")%>" href="#" style="text-decoration: none;" onclick="Element.toggle('todo-container-<%=task.dom_id%>'); Sortable.create('todo-<%=task.dom_id%>', {containment:'todo-<%=task.dom_id%>', format:/^[^-]*-(.*)$/, onUpdate:function(){new Ajax.Request('/tasks/order_todos/<%=task.id%>', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize('todo-<%=task.dom_id%>')})}, only:'todo-active'}); return false;"><%=task.todo_status%></a>
 	</span>
+	<!--// This is horrible -->
 	<%  if current_user.option_tracktime.to_i == 1 -%>
-	<% if task.duration.to_i > 0 -%>
-	   <span class="<%=task.worked_and_duration_class%>"><%="(#{worked_nice(task.worked_minutes)} / #{worked_nice( task.duration )})"%></span>
-	 <% else %> 
-	  <span class="noestimatedtime"><%= "(#{worked_nice(task.worked_minutes)})" if( task.duration.to_i == 0 && task.worked_minutes > 0) -%></span>
-	 <% end -%>
-	 <% end -%>
-	 <%= "<span class=\"task_milestone\"><br /><a href=\"/views/select_milestone/#{task.milestone.id}\">&diams;&nbsp;#{task.milestone.name}</a></span>" unless task.milestone_id.to_i == 0 -%>
+		<% if task.duration.to_i > 0 -%>
+		   	<span class="<%=task.worked_and_duration_class%>"><%="(#{worked_nice(task.worked_minutes)} / #{worked_nice( task.duration )})"%></span>
+		 	<% else %> 
+
+			<% if task.worked_minutes > 0 -%>
+				<span class="noestimatedtime"><%= "(#{worked_nice(task.worked_minutes)})" if( task.duration.to_i == 0 && task.worked_minutes > 0) -%></span>
+			<% end -%>
+		<% end -%>
+	<% end -%>
+
+
+	<%= "<span class=\"task_milestone\"><br /><a href=\"/views/select_milestone/#{task.milestone.id}\">&diams;&nbsp;#{task.milestone.name}</a></span>" unless task.milestone_id.to_i == 0 -%>
    <% name = _("No one")
 	  name = task.users.collect{|u| u.name}.join(', ') unless task.users.empty?
    %>

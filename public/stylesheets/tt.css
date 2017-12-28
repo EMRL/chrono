@@ -1974,7 +1974,7 @@ h4 {
 }
 .todo-status-link-empty {
 	color: #ffffff;
-	background-color: #a3a3a3 ;
+	background-color: #ccc ;
     text-decoration: none;
     text-transform: uppercase;
     font-size: smaller;
