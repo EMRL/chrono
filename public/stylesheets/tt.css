@@ -1966,24 +1966,23 @@ h4 {
     font-weight: 500;
     letter-spacing: .05em;
     padding: .2em .3em .16em;
-    color: #fff;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
     border-radius: .25em;
 }
 .todo-status-link-empty {
-	color: #ffffff;
-	background-color: #ccc ;
+    color: #B8B8B8;
+	/* background-color: #e8e8e8; */
     text-decoration: none;
     text-transform: uppercase;
     font-size: smaller;
     font-weight: 500;
     letter-spacing: .05em;
     padding: .2em .3em .16em;
-    color: #fff;
     text-align: center;
     white-space: nowrap;
+	box-shadow: inset 0 0 0 1px #B8B8B8;
     border-radius: .25em;
 }
 
