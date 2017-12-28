@@ -696,7 +696,7 @@ class Task < ActiveRecord::Base
     if worked_minutes > duration
       "overtime"
     else 
-      ""
+      "undertime"
     end 
   end 
 end
