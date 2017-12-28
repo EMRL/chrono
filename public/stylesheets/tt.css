@@ -639,6 +639,17 @@ input.button {
 .due_overdue {
 	color: #FC5C04;
 }
+.noestimatedtime {
+	background-color: #e8e8e8;
+    font-size: smaller;
+    font-weight: 500;
+    letter-spacing: .05em;
+    padding: .2em .3em .16em;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: .25em;
+}
 .undertime {
 	background-color: #69c;
     color: #ffffff;
@@ -646,7 +657,6 @@ input.button {
     font-weight: 500;
     letter-spacing: .05em;
     padding: .2em .3em .16em;
-    color: #fff;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
@@ -659,7 +669,6 @@ input.button {
     font-weight: 500;
     letter-spacing: .05em;
     padding: .2em .3em .16em;
-    color: #fff;
     text-align: center;
     white-space: nowrap;
     vertical-align: baseline;
@@ -1965,7 +1974,7 @@ h4 {
 }
 .todo-status-link-empty {
 	color: #ffffff;
-	background-color: #ddd;
+	background-color: #a3a3a3 ;
     text-decoration: none;
     text-transform: uppercase;
     font-size: smaller;
