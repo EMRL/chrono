@@ -34,10 +34,10 @@
 							<% else -%>
 
 							<p>
-								<a href="http://en.gravatar.com/emails/"><%= "<img src=\"#{h(@current_user.avatar_url(150))}\" class=\"photo tooltip\" title=\"You can change your avatar at gravatar.com\" />" %></a>
+								<a href="//en.gravatar.com/emails/"><%= "<img src=\"#{h(@current_user.avatar_url(150))}\" class=\"photo tooltip\" title=\"You can change your avatar at gravatar.com\" />" %></a>
 							</p>
 							<p>
-							  To change your avatar, add an image at <a href="http://en.gravatar.com/emails/">gravatar.com</a> or upload one below.
+							  To change your avatar, add an image at <a href="//en.gravatar.com/emails/">gravatar.com</a> or upload one below.
 							</p>
 							<% end -%>
 							
@@ -66,7 +66,7 @@
 								<a href="/companies/edit/1">System Settings</a><br />
 								<a href="/admin/news">Manage News</a><br />
 								<a href="<%=request.protocol%><%=request.host_with_port%>/login/shortlist_auth/<%= current_user.autologin %>">Mobile View</a><br />
-								<a href="http://projects.emrl.com/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d">Work RSS Feed</a><br />
+								<a href="/feeds/rss/da222717fb7b4dfc61f3ed49e3f62f4d">Work RSS Feed</a><br />
 								<a href="/users/new">Create User</a><br />
 							</fieldset>
 						<% end %>

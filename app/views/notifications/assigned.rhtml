@@ -8,4 +8,4 @@ Assigned to: <%= @owners.collect {|o| o.name}.join(', ') unless @owners.empty? %
 <%= "Description:\n" + @task.description if @task.description.length > 0 %>
 
 --
-http://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/tasks/view/<%=@task.task_num%>
+https://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/tasks/view/<%=@task.task_num%>

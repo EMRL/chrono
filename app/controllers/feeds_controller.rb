@@ -29,7 +29,7 @@ class FeedsController < ApplicationController
     user.newsletter = 0
     user.save
 
-    render :text => "You're now unsubscribed... http://#{user.company.subdomain}.#{$CONFIG[:domain]}"
+    render :text => "You're now unsubscribed... https://#{user.company.subdomain}.#{$CONFIG[:domain]}"
 
   end
 
@@ -83,7 +83,7 @@ class FeedsController < ApplicationController
       # Create the RSS
       content = RSS::Maker.make("2.0") do |m|
         m.channel.title = "#{user.company.name} Activities"
-        m.channel.link = "http://#{user.company.subdomain}.#{$CONFIG[:domain]}/activities/list"
+        m.channel.link = "https://#{user.company.subdomain}.#{$CONFIG[:domain]}/activities/list"
         m.channel.description = "Last changes for #{user.name}@#{user.company.name}."
         m.items.do_sort = true # sort items by date
       
@@ -93,7 +93,7 @@ class FeedsController < ApplicationController
           i = m.items.new_item
           i.title = " #{action}: #{log.task.issue_name}" unless log.task.nil?
           i.title ||= "#{action}"
-          i.link = "http://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{log.task.task_num}" unless log.task.nil?
+          i.link = "https://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{log.task.task_num}" unless log.task.nil?
           i.description = log.body unless log.body.blank?
           i.date = user.tz.utc_to_local(log.started_at)
           i.author = log.user.name unless log.user.nil?
@@ -138,13 +138,13 @@ class FeedsController < ApplicationController
         # Create the RSS
         content = RSS::Maker.make("2.0") do |m|
           m.channel.title = widget.name
-          m.channel.link = "http://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/list"
+          m.channel.link = "https://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/list"
           m.channel.description = widget.name
           m.items.do_sort = true # sort items by date
           tasks.each do |task|
             i = m.items.new_item
             i.title = "#{task.issue_name}"
-            i.link = "http://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{task.task_num}"
+            i.link = "https://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{task.task_num}"
             i.description = task.description unless task.description.blank?
             i.date = user.tz.utc_to_local(task.created_at)
             i.author = task.creator.name unless task.creator.nil?
@@ -153,13 +153,13 @@ class FeedsController < ApplicationController
       else  
         content = '<?xml version="1.0" encoding="UTF-8"?>
         <rss version="2.0"
-          xmlns:content="http://purl.org/rss/1.0/modules/content/"
-          xmlns:itunes="http://www.itunes.com/dtds/podcast-1.0.dtd"
-          xmlns:dc="http://purl.org/dc/elements/1.1/"
-          xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+          xmlns:content="https://purl.org/rss/1.0/modules/content/"
+          xmlns:itunes="https://www.itunes.com/dtds/podcast-1.0.dtd"
+          xmlns:dc="https://purl.org/dc/elements/1.1/"
+          xmlns:trackback="https://madskills.com/public/xml/rss/module/trackback/">
           <channel>
             <title>No such Chrono widget</title>
-            <link>http://projects.emrl.com/</link>
+            <link>https://projects.emrl.com/</link>
             <description>No such Chrono widget.</description>
           </channel>
         </rss>'
@@ -271,7 +271,7 @@ class FeedsController < ApplicationController
       event.duration = "PT#{user.workday_duration}M"
       event.uid =  "m#{m.id}_#{event.created}@#{user.company.subdomain}.#{$CONFIG[:domain]}"
       event.organizer = "MAILTO:#{m.user.nil? ? user.email : m.user.email}"
-      event.url = "http://#{user.company.subdomain}.#{$CONFIG[:domain]}/views/select_milestone/#{m.id}"
+      event.url = "https://#{user.company.subdomain}.#{$CONFIG[:domain]}/views/select_milestone/#{m.id}"
       event.summary = "Milestone: #{m.name}"
 
       if m.description
@@ -306,7 +306,7 @@ class FeedsController < ApplicationController
       todo.created = to_localtime(tz, t.created_at)
       todo.uid =  "t#{t.id}_#{todo.created}@#{user.company.subdomain}.#{$CONFIG[:domain]}"
       todo.organizer = "MAILTO:#{t.users.first.email}" if t.users.size > 0
-      todo.url = "http://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{t.task_num}"
+      todo.url = "https://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{t.task_num}"
       todo.summary = "#{t.issue_name}"
 
       description = t.description.gsub(/<[^>]*>/,'').gsub(/[\r]/, '') if t.description
@@ -351,7 +351,7 @@ class FeedsController < ApplicationController
       event.uid = "l#{log.id}_#{event.created}@#{user.company.subdomain}.#{$CONFIG[:domain]}"
       event.organizer = "MAILTO:#{log.user.email}"
 
-      event.url = "http://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{log.task.task_num}"
+      event.url = "https://#{user.company.subdomain}.#{$CONFIG[:domain]}/tasks/view/#{log.task.task_num}"
 
       action = get_action(log)
 
@@ -391,7 +391,7 @@ class FeedsController < ApplicationController
 
   def igoogle_feed
     if params[:up_uid].nil? || params[:up_uid].empty?
-      render :text => "Please enter your widget key in this gadgets settings. The key can be found on your <a href=\"http://#{user.company.subdomain}.#{$CONFIG[:domain]}/users/edit_preferences\">preferences page</a>.", :layout => false
+      render :text => "Please enter your widget key in this gadgets settings. The key can be found on your <a href=\"https://#{user.company.subdomain}.#{$CONFIG[:domain]}/users/edit_preferences\">preferences page</a>.", :layout => false
       return
     end
 

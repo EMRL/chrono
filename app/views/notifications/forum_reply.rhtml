@@ -4,5 +4,5 @@
 
 --
 <% unless @post.forum.company_id.nil? -%>
-http://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/forums/<%= @post.forum.id %>/topics/<%= @post.topic.id %>#posts-<%= @post.id %>
+https://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/forums/<%= @post.forum.id %>/topics/<%= @post.topic.id %>#posts-<%= @post.id %>
 <% end -%>

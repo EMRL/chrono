@@ -303,7 +303,7 @@
 				<a href="/wiki/show/<%= client.name %>" class="tooltip" title="View the Wiki for <%= client.name %>">Client Wiki</a>
 				<% unless client.evernote.nil? || client.evernote == '' %> &bull;
 				<a target="_blank" href="<%= client.evernote %>" class="tooltip" title="View the Evernote Notebook for <%= client.name %>">Notes</a>     <% end %><br />
-							 <a target="_blank"  href="http://assets.emrl.com/pages/search.php?search=client:<%= client.name  %>" class="tooltip" title="View <%= client.name %> in the Asset Manager">Assets</a> &bull;
+							 <a target="_blank"  href="//assets.emrl.com/pages/search.php?search=client:<%= client.name  %>" class="tooltip" title="View <%= client.name %> in the Asset Manager">Assets</a> &bull;
 				<a href="/views/select_client/<%= @task.project.customer_id %>" class="tooltip" title="View all open tasks for <%= client.name %>">All Tasks</a>
 			</span>
 		</fieldset>

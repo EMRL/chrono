@@ -5,5 +5,5 @@
 <%= "Description:\n#{@task.description}\n" if @task.description.length > 0 -%>
 
 --
-http://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/tasks/view/<%=@task.task_num%>
+https://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/tasks/view/<%=@task.task_num%>
 

@@ -8,5 +8,5 @@
 
 --
 <% unless @action == 'deleted' -%>
-http://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/views/select_milestone/<%= @milestone.id %>
+https://<%= @user.company.subdomain%>.<%= $CONFIG[:domain] %>/views/select_milestone/<%= @milestone.id %>
 <% end -%>
