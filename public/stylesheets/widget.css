@@ -1,0 +1,123 @@
+#content .widget tr:hover a.rtct,#content a.rtct.open {
+	visibility: visible;
+}
+div.rtcf {
+	display: none;
+}
+div.rtcf.open {
+	display: block;
+}
+#content .rtc textarea {
+	margin: 5px 0;
+	width: 95%;
+}
+#content .rtc input.checkbox {
+	vertical-align: middle;
+}
+.widget_ghost {
+	background: #FFF;
+	border: 3px dashed #CC2233;
+	filter: alpha(opacity=50);
+	margin: 0px;
+	margin-right: 1em;
+	opacity: 0.5;
+	padding: 0;
+	position: relative;
+}
+.widget_title {
+    color: #757575;
+    font-size: 1.7rem;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-bottom: .85em;
+    /* padding-left: 0.2em; */
+    padding-top: 0.29em;
+    /* margin-bottom: 10px; */
+}
+.widget_content {
+	margin-right: 1em;
+	z-index: 1;
+}
+.widget {
+	margin-right: 1em;
+	padding-bottom: 2.5em;
+	z-index: 1;
+}
+.widget .page_header {
+	padding-right: 0;
+}
+.widget_title a {
+	font-size: 1.1rem;
+	letter-spacing: 0em;
+	padding-right: 1em;
+	text-decoration: none;
+}
+#widget_col_0,#widget_col_2 {
+	padding-left: 1em;	text-decoration: none;
+}
+a.widget-open {
+	color: #a6a6a6;
+	float: left;
+	/* font-size: 80%; */
+	height: 13px;
+	margin-top: 6px;
+	padding-left: 0px;
+	padding-right: 2px;
+	width: 13px;
+	text-decoration: none;
+}
+a.widget-collapsed {
+	color: #a6a6a6;
+	float: left;
+	/* font-size: 80%; */
+	height: 13px;
+	margin-top: 6px;
+	padding-left: 0px;
+	padding-right: 2px;
+	width: 13px;
+	text-decoration: none;
+}
+.widget-config {
+	background-color: #fafafa;
+	border-left: 4px solid #47acdf;
+	color: #333;
+	margin: 0;
+	margin-right: 14px;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 1em;
+}
+.widget-config label {
+	font-weight: bold;
+	padding-right: 0.3em;
+}
+/*.widget-config,.widget-config select,.widget-config input {font-size: 0.9rem;}*/
+/*.widget select,.widget input {
+	font-size: 0.9rem;
+	padding: 3px;
+}*/
+
+.widget-config select {
+	width: 8em;
+	padding: 0.4em;
+}
+.widget-menu img {
+	margin-bottom: -23px;
+}
+.handle,.widget_draggable {
+	cursor: move;
+}
+.widget_sub_header {
+	color: #666666;
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+	padding-left: 1em;
+}
+.widget_sub_heading {
+	color: #666666;
+	font-size: 1.2rem;
+	font-weight: bold;
+	margin-bottom: 0.5em;
+}
