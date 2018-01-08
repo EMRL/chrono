@@ -67,6 +67,10 @@ div.rtcf.open {
 .widget select,.widget input {
 	margin: 0 0 10px 0;
 }
+
+.widget input.checkbox {
+	margin: 0 0 1px 0px;
+}
 .widget_content {
 	margin-right: 1em;
 	z-index: 1;
