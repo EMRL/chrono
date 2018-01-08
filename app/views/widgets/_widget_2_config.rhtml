@@ -1,13 +1,14 @@
 <div id="config-<%= @widget.dom_id %>" style="display:none;" class="widget-config">
-	<span>
-		<% form_remote_tag :url => {:controller => 'widgets', :action => 'update', :id => @widget },
-									:loading => "Element.show('loading');",
-	                                :complete => "Element.hide('loading');" do  %>
-		<label for="widget_name"><%= _("Title") %></label><%= text_field 'widget', 'name', {:size => 10} %> 
-		<label for="widget_number"><%= _("Activities") %></label><%= select( 'widget', 'number', [1,2,3,4,5,6,7,8,9,10,15,20,25,30,50].collect{|i| [i.to_s, i]}) %>
-		<div>
-			<%= submit_tag _("Save"), :class => "nolabel" %> <%= _'or'%> <%= link_to_function(_('Cancel'), "Element.remove($('config-#{@widget.dom_id}'));") %>
-		</div>
-	</span>
-	<% end %>
+	<% form_remote_tag :url => {:controller => 'widgets', :action => 'update', :id => @widget },
+		:loading => "Element.show('loading');",
+	    :complete => "Element.hide('loading');" do  %>
+
+	<label for="widget_name"><%= _("Title") %></label><%= text_field 'widget', 'name', {:size => 10} %> 
+	<label for="widget_number"><%= _("Activities") %></label><%= select( 'widget', 'number', [1,2,3,4,5,6,7,8,9,10,15,20,25,30,50].collect{|i| [i.to_s, i]}) %>
+		
+	<div>
+		<%= submit_tag _("Save"), :class => "nolabel" %>
+		<%= link_to_function(_('<i class="icon icon-ban-circle icon-2x danger cancel"></i>'), "Element.remove($('config-#{@widget.dom_id}'));") %>
+	</div>
+<% end %>
 </div>

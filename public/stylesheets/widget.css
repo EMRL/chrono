@@ -53,18 +53,20 @@ div.rtcf.open {
     display: block;
     padding: 0 0 4px 0;
 }
-
-
 .widget-config,.widget-config select,.widget-config input {
-
+	/* null */
 }
+
+ .widget-config .cancel {
+ 	text-decoration: none;
+    position: relative;
+    top: 0.2em;
+ }
+
+
 .widget select,.widget input {
 	margin: 0 0 10px 0;
 }
-
-
-
- 
 .widget_content {
 	margin-right: 1em;
 	z-index: 1;
@@ -122,6 +124,7 @@ a.widget-collapsed {
     border: none;
     border-bottom: 1px solid #aaa;
     box-sizing: border-box;
+    margin: 0 0 10px 0;
 }
 input.nolabel {
 	background-color: #47acdf;
@@ -140,8 +143,7 @@ input.nolabel {
     border: none;
     border-bottom: 1px solid #aaa;
     box-sizing: border-box;
-
-
+    margin: 0 0 10px 0;
 }
 .widget-menu {
 	float: right;

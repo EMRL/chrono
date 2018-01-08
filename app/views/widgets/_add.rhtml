@@ -1,9 +1,6 @@
 <div id="add-widget" style="display:none;margin-bottom:1em;margin-left:1em;padding-top:1em;padding-bottom:1em;" class="widget-config">
-	<div style="float:right;">
-		<%= link_to_function(_('<i class="icon icon-ban-circle icon-2x danger"></i>'), "Element.remove($('add-widget'));") %>
-	</div>
 	<p>Add New Widget</p>
-<% form_remote_tag :url => {:controller => 'widgets', :action => 'create' },
+	<% form_remote_tag :url => {:controller => 'widgets', :action => 'create' },
 										   :loading => "Element.show('loading');",
 										   :complete => "Element.hide('loading');" do  %>
 	<label for="widget_name">
@@ -21,5 +18,11 @@
 	<label for="widget_widget_type">
 		<%= _("Type") %>
 	</label> 
-	<%= select( 'widget', 'widget_type', gadgets) %> <%= submit_tag _("Create"), :class => "nolabel" %><% end %>
+	<%= select( 'widget', 'widget_type', gadgets) %> 
+
+	<div>
+		<%= submit_tag _("Create"), :class => "nolabel" %> 
+		<%= link_to_function(_('<i class="icon icon-ban-circle icon-2x danger cancel"></i>'), "Element.remove($('add-widget'));") %>
+	</div>
+	<% end %>
 </div>
