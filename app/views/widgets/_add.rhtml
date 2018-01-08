@@ -1,23 +1,25 @@
 <div id="add-widget" style="display:none;margin-bottom:1em;margin-left:1em;padding-top:1em;padding-bottom:1em;" class="widget-config">
-	<strong>Add New Widget</strong>
-	<br />
-	<br /><% form_remote_tag :url => {:controller => 'widgets', :action => 'create' },
+	<div style="float:right;">
+		<%= link_to_function(_('<i class="icon icon-ban-circle icon-2x danger"></i>'), "Element.remove($('add-widget'));") %>
+	</div>
+	<p>Add New Widget</p>
+<% form_remote_tag :url => {:controller => 'widgets', :action => 'create' },
 										   :loading => "Element.show('loading');",
 										   :complete => "Element.hide('loading');" do  %>
 	<label for="widget_name">
 		<%= _("Title") %>
 	</label>
 
-<% if current_user.option_tracktime.to_i == 1 %>
-	<%= text_field 'widget', 'name', {:size => 15} %><% gadgets = [[_('Tasks'),0],[_('Projects'),1],[_('Recent Activities'),2],[_('Due Tasks'),7],[_('Comments'),6],[_('Tasks / Day Chart'),3],[_('Burndown Chart'),4],[_('Burnup Chart'),5],[_('Work Status'),9], [_('Active Tasks'),10]]
-		%> 
-		<% else %>
-	<%= text_field 'widget', 'name', {:size => 15} %><% gadgets = [[_('Tasks'),0],[_('Projects'),1],[_('Due Tasks'),7],[_('Comments'),6],[_('Tasks / Day Chart'),3],[_('Burndown Chart'),4],[_('Burnup Chart'),5]]
-		%> 
-<% end %>
+	<% if current_user.option_tracktime.to_i == 1 %>
+		<%= text_field 'widget', 'name', {:size => 15} %><% gadgets = [[_('Tasks'),0],[_('Projects'),1],[_('Recent Activities'),2],[_('Due Tasks'),7],[_('Comments'),6],[_('Tasks / Day Chart'),3],[_('Burndown Chart'),4],[_('Burnup Chart'),5],[_('Work Status'),9], [_('Active Tasks'),10]]
+			%> 
+			<% else %>
+		<%= text_field 'widget', 'name', {:size => 15} %><% gadgets = [[_('Tasks'),0],[_('Projects'),1],[_('Due Tasks'),7],[_('Comments'),6],[_('Tasks / Day Chart'),3],[_('Burndown Chart'),4],[_('Burnup Chart'),5]]
+			%> 
+	<% end %>
 
 	<label for="widget_widget_type">
 		<%= _("Type") %>
 	</label> 
-	<%= select( 'widget', 'widget_type', gadgets) %> <%= submit_tag _("Create"), :class => "nolabel" %> <%=_'or'%> <%= link_to_function(_('Cancel'), "Element.remove($('add-widget'));") %><% end %>
+	<%= select( 'widget', 'widget_type', gadgets) %> <%= submit_tag _("Create"), :class => "nolabel" %><% end %>
 </div>

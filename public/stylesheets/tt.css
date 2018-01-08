@@ -2188,4 +2188,14 @@ tr:hover > td.gantt-task img.work_icon {
 .rss-item a:hover { 
 }
 .rss-date {
+}
+
+/* Colors */
+.danger {
+	color: #CC2233;
 } 
+
+/* Icons */
+a [class^="icon-"], a [class*=" icon-"] {
+    text-decoration: none;
+}

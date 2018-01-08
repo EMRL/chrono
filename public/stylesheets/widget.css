@@ -14,6 +14,61 @@ div.rtcf.open {
 #content .rtc input.checkbox {
 	vertical-align: middle;
 }
+.widget {
+	margin-right: 1em;
+	padding-bottom: 2.5em;
+	z-index: 1;
+}
+.widget_title {
+    color: #757575;
+    font-size: 1.3em;
+    line-height: 20px;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    /* padding-left: 0.2em; 
+    padding-top: 0.29em;
+    /* margin-bottom: 10px; */
+}
+.widget-config {
+	background-color: #fafafa;
+	border-left: 4px solid #47acdf;
+	color: #333;
+	margin: 0;
+	margin-right: 14px;
+	padding: 1em;
+}
+.widget-config p {
+	font-weight: 700;
+	margin: 4px 0 20px 0;
+}
+.widget-config span {
+	/* padding: 0 10em 0 0; */
+}
+.widget-config label {
+    font-weight: bold;
+    /* padding-right: 0.3em; */
+    display: block;
+    padding: 0 0 4px 0;
+}
+
+
+.widget-config,.widget-config select,.widget-config input {
+
+}
+.widget select,.widget input {
+	margin: 0 0 10px 0;
+}
+
+
+
+ 
+.widget_content {
+	margin-right: 1em;
+	z-index: 1;
+}
 .widget_ghost {
 	background: #FFF;
 	border: 3px dashed #CC2233;
@@ -23,26 +78,6 @@ div.rtcf.open {
 	opacity: 0.5;
 	padding: 0;
 	position: relative;
-}
-.widget_title {
-    color: #757575;
-    font-size: 1.7rem;
-    letter-spacing: -0.04em;
-    text-transform: uppercase;
-    font-weight: 700;
-    padding-bottom: .85em;
-    /* padding-left: 0.2em; */
-    padding-top: 0.29em;
-    /* margin-bottom: 10px; */
-}
-.widget_content {
-	margin-right: 1em;
-	z-index: 1;
-}
-.widget {
-	margin-right: 1em;
-	padding-bottom: 2.5em;
-	z-index: 1;
 }
 .widget .page_header {
 	padding-right: 0;
@@ -78,29 +113,38 @@ a.widget-collapsed {
 	width: 13px;
 	text-decoration: none;
 }
-.widget-config {
-	background-color: #fafafa;
-	border-left: 4px solid #47acdf;
-	color: #333;
-	margin: 0;
-	margin-right: 14px;
-	padding-left: 1em;
-	padding-right: 1em;
-	padding-bottom: 1em;
+.widget-config input {
+	width: 400px;
+	max-width: 40%;
+	padding: 0.45em;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    box-sizing: border-box;
 }
-.widget-config label {
-	font-weight: bold;
-	padding-right: 0.3em;
+input.nolabel {
+	background-color: #47acdf;
+	padding: 10px;
+	width: 80px;
+	border: none;
+	font-size: 1.0em;
+    margin-right: 6px;
 }
-/*.widget-config,.widget-config select,.widget-config input {font-size: 0.9rem;}*/
-/*.widget select,.widget input {
-	font-size: 0.9rem;
-	padding: 3px;
-}*/
-
 .widget-config select {
-	width: 8em;
-	padding: 0.4em;
+    width: 12em;
+    padding: 0.4em;
+    max-width: 100%;
+    outline: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #aaa;
+    box-sizing: border-box;
+
+
+}
+.widget-menu {
+	float: right;
 }
 .widget-menu img {
 	margin-bottom: -23px;
