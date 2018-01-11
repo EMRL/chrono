@@ -49,6 +49,7 @@
 		<%= stylesheet_link_tag "widget" if ['activities'].include? controller.controller_name %>
 		<%= stylesheet_link_tag "forum" if ['forums', 'posts', 'topics'].include? controller.controller_name %>
 		<%= stylesheet_link_tag "wiki" if ['wiki'].include? controller.controller_name %>
+		<%= stylesheet_link_tag "quickadd" if ['tasks', 'schedule'].include? controller.controller_name %>
 		<%= stylesheet_link_tag "print", { :media => "print" } %>
 		
 		<title>
