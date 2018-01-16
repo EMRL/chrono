@@ -1,3 +1,13 @@
+
+#wiki h1 {
+	border-bottom: none;
+	padding-left: 0;
+}
+#wiki h2 {
+	background-color: transparent;
+	border-bottom: none;
+	padding-left: 0;
+}
 #wiki-toc {
 	background-color: #fff;
 	border: 2px solid #47acdf;
@@ -17,16 +27,13 @@
 	font-weight: bold;
 }
 #wiki-toc h2 {
-	font-size: 1.2rem;
 	padding-left: 1.0em;
 }
 #wiki-toc h3 {
-	font-size: 1.1rem;
 	padding-left: 2.0em;
 }
 #wiki-toc h4 {
 	display: none;
-	font-size: 1.0rem;
 	padding-left: 3.0em;
 }
 #wiki-toc h5 {
@@ -61,7 +68,11 @@
 	font-family: 'Roboto', sans-serif;
 	line-height: 1.7em;
 	padding-right: 2.0em;
-		font-weight: normal;
+	font-weight: normal;
+}
+
+#wiki p {
+	padding-bottom: 1.0em;
 }
 
 #wiki ul {

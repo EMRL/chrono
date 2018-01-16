@@ -2178,3 +2178,21 @@ tr:hover > td.gantt-task img.work_icon {
 a [class^="icon-"], a [class*=" icon-"] {
     text-decoration: none;
 }
+
+/* Inline Replies */
+#content .widget tr:hover a.rtct,#content a.rtct.open {
+	visibility: visible;
+}
+div.rtcf {
+	display: none;
+}
+div.rtcf.open {
+	display: block;
+}
+#content .rtc textarea {
+	margin: 5px 0;
+	width: 95%;
+}
+#content .rtc input.checkbox {
+	vertical-align: middle;
+}
