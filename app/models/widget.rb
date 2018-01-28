@@ -16,7 +16,10 @@ class Widget < ActiveRecord::Base
                  User.find(self.user_id).projects.find(self.filter_by[1..-1]).name
                when 'm'
                  m = Milestone.find(self.filter_by[1..-1], :conditions => ["project_id IN (#{User.find(self.user_id).projects.collect(&:id).join(',')})"])
-                 "#{m.project.name} / #{m.name}"
+                 # Originally displayed both project name and milestone name
+                 # "#{m.project.name} / #{m.name}"
+                 "#{m.name}"
+
                when 'u'
                  _('[Unassigned]')
                else 
