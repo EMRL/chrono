@@ -15,7 +15,7 @@
 			<%= link_to "#{_('<i class="icon-tasks icon-3x"></i><br />Browse')}", :controller => 'views', :action => 'browse' %></li>
 			<% end %>
 
-	<% if controller.action_name == "list" %>
+	<% if controller.controller_name == "schedule" && controller.action_name == "list" %>
 		<li class="active">
 			<%= link_to "#{_('<i class="icon-calendar icon-3x"></i><br />Calendar')}", {:controller => 'schedule', :action => 'list'}, :class => "active" %></li>
 			<% else %>  
