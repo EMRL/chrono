@@ -1,78 +1,78 @@
 <!--// begin app\views\layouts\_tabmenu.html.erb //-->
 <ul id="primary">
-  <% if controller.controller_name == "activities" %>
-    <li class="active">
-      <%= link_to "#{_('<i class="icon-dashboard icon-3x"></i><br />Dashboard') }", { :controller => 'activities', :action => 'list'}, :class => "active"%></li>
-      <% else %>
-    <li>
-      <%= link_to "#{_('<i class="icon-dashboard icon-3x"></i><br />Dashboard')}", { :controller => 'activities', :action => 'list'} %></li>
-      <% end %>
-  <% if controller.controller_name == "tasks" && !['timeline', 'new'].include?(controller.action_name) %>
-    <li class="active">
-      <%= link_to "#{_('<i class="icon-tasks icon-3x"></i><br />Browse')}", { :controller => 'views', :action => 'browse'}, :class => "active"%></li>
-      <% else %>
-    <li>
-      <%= link_to "#{_('<i class="icon-tasks icon-3x"></i><br />Browse')}", :controller => 'views', :action => 'browse' %></li>
-      <% end %>
+	<% if controller.controller_name == "activities" %>
+		<li class="active">
+			<%= link_to "#{_('<i class="icon-dashboard icon-3x"></i><br />Dashboard') }", { :controller => 'activities', :action => 'list'}, :class => "active"%></li>
+			<% else %>
+		<li>
+			<%= link_to "#{_('<i class="icon-dashboard icon-3x"></i><br />Dashboard')}", { :controller => 'activities', :action => 'list'} %></li>
+			<% end %>
+	<% if controller.controller_name == "tasks" && !['timeline', 'new'].include?(controller.action_name) %>
+		<li class="active">
+			<%= link_to "#{_('<i class="icon-tasks icon-3x"></i><br />Browse')}", { :controller => 'views', :action => 'browse'}, :class => "active"%></li>
+			<% else %>
+		<li>
+			<%= link_to "#{_('<i class="icon-tasks icon-3x"></i><br />Browse')}", :controller => 'views', :action => 'browse' %></li>
+			<% end %>
 
-  <% if controller.controller_name == "schedule" %>
-    <li class="active">
-      <%= link_to "#{_('<i class="icon-calendar icon-3x"></i><br />Calendar')}", {:controller => 'schedule', :action => 'list'}, :class => "active" %></li>
-      <% else %>  
-    <li>
-      <%= link_to "#{_('<i class="icon-calendar icon-3x"></i><br />Calendar')}", :controller => 'schedule', :action => 'list' %></li>
-      <% end %>
+	<% if controller.action_name == "list" %>
+		<li class="active">
+			<%= link_to "#{_('<i class="icon-calendar icon-3x"></i><br />Calendar')}", {:controller => 'schedule', :action => 'list'}, :class => "active" %></li>
+			<% else %>  
+		<li>
+			<%= link_to "#{_('<i class="icon-calendar icon-3x"></i><br />Calendar')}", :controller => 'schedule', :action => 'list' %></li>
+			<% end %>
 
-  <% if current_user.option_tracktime.to_i == 1 %>
-    <% if controller.action_name == 'gantt' %>
-      <li class="active">
-        <%= link_to "#{_('<i class="icon-sitemap icon-3x"></i><br />Plan')}", :controller => 'schedule', :action => 'gantt'%></li>
-        <% else %> 
-    <li>
-      <%= link_to "#{_('<i class="icon-sitemap icon-3x"></i><br />Plan')}", :controller => 'schedule', :action => 'gantt'%></li>
-      <% end %>
+	<% if current_user.option_tracktime.to_i == 1 %>
+		<% if controller.action_name == 'gantt' %>
+			<li class="active">
+				<%= link_to "#{_('<i class="icon-sitemap icon-3x"></i><br />Plan')}", {:controller => 'schedule', :action => 'gantt'}, :class => "active" %></li>
+				<% else %> 
+		<li>
+			<%= link_to "#{_('<i class="icon-sitemap icon-3x"></i><br />Plan')}", :controller => 'schedule', :action => 'gantt' %></li>
+			<% end %>
 <% end %>
-  <% if current_user.option_tracktime.to_i == 1 && current_user.can_any?(current_user.projects, 'report') %>
-    <% if controller.controller_name == "reports"  %>
-      <li class="active">
-        <%= link_to "#{_('<i class="icon-bar-chart icon-3x"></i><br />Report')}", {:controller => 'reports', :action => 'list'}, :class => "active" %></li>
-        <% else %>
-      <li>
-        <%= link_to "#{_('<i class="icon-bar-chart icon-3x"></i><br />Report')}", :controller => 'reports', :action => 'list' %></li>
-        <% end %>
-      <% end %>
+	<% if current_user.option_tracktime.to_i == 1 && current_user.can_any?(current_user.projects, 'report') %>
+		<% if controller.controller_name == "reports"  %>
+			<li class="active">
+				<%= link_to "#{_('<i class="icon-bar-chart icon-3x"></i><br />Report')}", {:controller => 'reports', :action => 'list'}, :class => "active" %></li>
+				<% else %>
+			<li>
+				<%= link_to "#{_('<i class="icon-bar-chart icon-3x"></i><br />Report')}", :controller => 'reports', :action => 'list' %></li>
+				<% end %>
+			<% end %>
 
-  <% if controller.controller_name == "projects" %>
-    <li class="active">
-    <%= link_to "#{_('<i class="icon-screenshot icon-3x"></i><br />Projects')}", {:controller => 'projects', :action => 'list'}, :class => "active" %>
-    </li><% else %>
-    <li>
-    <%= link_to "#{_('<i class="icon-screenshot icon-3x"></i><br />Projects')}", {:controller => 'projects', :action => 'list'} %></li>
-    <% end %>
-  <% if controller.controller_name == "tasks" && controller.action_name == 'new'  %>
-  <li class="active">
-    <%= link_to "#{_('<i class="icon-plus-sign icon-3x"></i><br />New Task')}", {:controller => 'tasks', :action => 'new'}, :class => "active" %></li>
-    <% else %>
-  <li>
-    <%= link_to "#{_('<i class="icon-plus-sign icon-3x"></i><br />New Task')}", {:controller => 'tasks', :action => 'new'} %> </li>
-    <% end %>
+	<% if controller.controller_name == "projects" %>
+		<li class="active">
+		<%= link_to "#{_('<i class="icon-screenshot icon-3x"></i><br />Projects')}", {:controller => 'projects', :action => 'list'}, :class => "active" %>
+		</li><% else %>
+		<li>
+		<%= link_to "#{_('<i class="icon-screenshot icon-3x"></i><br />Projects')}", {:controller => 'projects', :action => 'list'} %></li>
+		<% end %>
+	<% if controller.controller_name == "tasks" && controller.action_name == 'new'  %>
+	<li class="active">
+		<%= link_to "#{_('<i class="icon-plus-sign icon-3x"></i><br />New Task')}", {:controller => 'tasks', :action => 'new'}, :class => "active" %></li>
+		<% else %>
+	<li>
+		<%= link_to "#{_('<i class="icon-plus-sign icon-3x"></i><br />New Task')}", {:controller => 'tasks', :action => 'new'} %> </li>
+		<% end %>
 
-  <li class="right">
-    <%= link_to "#{_('<i class="icon-off icon-3x"></i><br />Log Out')}", { :controller => 'login', :action => 'logout'}, :class => "right" %></li>
-  
-  <% if controller.action_name == 'edit_preferences' %>
-    <li class="right active">
-    <%= link_to "#{_('<i class="icon-cogs icon-3x"></i><br />Settings')}", { :controller => 'users', :action => 'edit_preferences'}, :class => "right" %></li>
-    <% else %>
-    <li class="right">
-    <%= link_to "#{_('<i class="icon-cogs icon-3x"></i><br />Settings')}", { :controller => 'users', :action => 'edit_preferences'}, :class => "right" %></li>
-    <% end %>
+	<li class="right">
+		<%= link_to "#{_('<i class="icon-off icon-3x"></i><br />Log Out')}", { :controller => 'login', :action => 'logout'}, :class => "right" %></li>
+	
+	<% if controller.action_name == 'edit_preferences' %>
+		<li class="right active">
+		<%= link_to "#{_('<i class="icon-cogs icon-3x"></i><br />Settings')}", { :controller => 'users', :action => 'edit_preferences'}, :class => "right" %></li>
+		<% else %>
+		<li class="right">
+		<%= link_to "#{_('<i class="icon-cogs icon-3x"></i><br />Settings')}", { :controller => 'users', :action => 'edit_preferences'}, :class => "right" %></li>
+		<% end %>
 
-  <li class="right">
-    <% if controller.controller_name == "activities" && controller.action_name == 'list'  %>
-    <%= link_to_remote _('<i class="icon-desktop icon-3x"></i><br />Widgets'), :url => { :controller => 'widgets', :action => 'add'} %>
-    <% else %>
-    <% end %>
-  </li>
+	<li class="right">
+		<% if controller.controller_name == "activities" && controller.action_name == 'list'  %>
+		<%= link_to_remote _('<i class="icon-desktop icon-3x"></i><br />Widgets'), :url => { :controller => 'widgets', :action => 'add'} %>
+		<% else %>
+		<% end %>
+	</li>
 </ul>
 <!--// end _tabmenu.html.erb //-->
