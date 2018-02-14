@@ -19,7 +19,7 @@ class TasksController < ApplicationController
     unless @projects.collect{ |p| p[1] }.include? session[:filter_project].to_i
       session[:filter_project] = nil
     end
-    
+
     if @projects.nil? || @projects.empty?
       flash['notice'] = _("You need to create a project to hold your tasks, or get access to create tasks in an existing project...")
       redirect_to :controller => 'projects', :action => 'new'
@@ -39,7 +39,7 @@ class TasksController < ApplicationController
   def index
     redirect_to 'list'
   end
-  
+
   def list
     # Subscribe to the juggernaut channel for Task updates
     session[:channels] += ["tasks_#{current_user.company_id}"]
@@ -95,7 +95,7 @@ class TasksController < ApplicationController
 
     if session[:hide_deferred].to_i > 0
       filter << "(tasks.hide_until IS NULL OR tasks.hide_until < '#{tz.now.utc.to_s(:db)}') AND "
-    end 
+    end
 
     unless session[:filter_type].to_i == -1
       filter << "tasks.type_id = #{session[:filter_type].to_i} AND "
@@ -103,11 +103,11 @@ class TasksController < ApplicationController
 
     unless session[:filter_severity].to_i == -10
       filter << "tasks.severity_id >= #{session[:filter_severity].to_i} AND "
-    end 
+    end
 
     unless session[:filter_priority].to_i == -10
       filter << "tasks.priority >= #{session[:filter_priority].to_i} AND "
-    end 
+    end
 
     unless session[:filter_customer].to_i == 0
       filter << "tasks.project_id IN (#{current_user.projects.find(:all, :conditions => ["customer_id = ?", session[:filter_customer]]).collect(&:id).compact.join(',') }) AND "
@@ -128,13 +128,13 @@ class TasksController < ApplicationController
     @tasks = case session[:sort].to_i
              when 0:
                  @tasks.sort_by{|t| [-t.completed_at.to_i, t.priority + t.severity_id/2.0, -(t.due_date || 9999999999).to_i, -t.task_num] }.reverse
-             when 1: 
+             when 1:
                  @tasks.sort_by{|t| [-t.completed_at.to_i, (t.due_date || 9999999999).to_i, t.priority + t.severity_id/2.0,  -t.task_num] }
-             when 2: 
+             when 2:
                  @tasks.sort_by{|t| [-t.completed_at.to_i, t.created_at.to_i, t.priority + t.severity_id/2.0,  -t.task_num] }
-             when 3: 
+             when 3:
                  @tasks.sort_by{|t| [-t.completed_at.to_i, t.name.downcase, t.priority + t.severity_id/2.0,  -t.task_num] }
-             when 4: 
+             when 4:
                  @tasks.sort_by{|t| [-t.completed_at.to_i, t.updated_at.to_i, t.priority + t.severity_id/2.0,  -t.task_num] }.reverse
              end
 
@@ -233,14 +233,14 @@ class TasksController < ApplicationController
     res = '{"options":[{"value":"0", "text":"' + _('[None]') + '"}'
     res << ", #{@milestones}" unless @milestones.nil? || @milestones.empty?
     res << ']}'
-  
+
     p = current_user.projects.find(params[:project_id]) rescue nil
     script = ""
     if p && current_user.can?(p, 'milestone')
       script = "\n<script type=\"text/javascript\">if($('add_milestone')){$('add_milestone').show();}</script>"
-    else 
+    else
       script = "\n<script type=\"text/javascript\">if($('add_milestone')){$('add_milestone').hide();}</script>"
-    end 
+    end
     render :text => "#{res}#{script}"
   end
 
@@ -259,7 +259,7 @@ class TasksController < ApplicationController
     current_projects.each do |p|
       projects << "|#{p.id}"
     end
-    projects = "+project_id:\"#{projects}\"" 
+    projects = "+project_id:\"#{projects}\""
 
     # Find the tasks
     @tasks = Task.find_by_contents("+company_id:#{current_user.company_id} #{projects} #{query}", {:limit => 13})
@@ -321,7 +321,7 @@ class TasksController < ApplicationController
     else
       @task.repeat = nil
     end
-	
+
 	if !params[:task].nil? && !params[:task][:start_at].nil? && params[:task][:start_at].length > 0
 	  start_date = DateTime.strptime( params[:task][:start_at], current_user.date_format ) rescue begin
 																									flash['notice'] = _('Invalid start date ignored.')
@@ -333,8 +333,8 @@ class TasksController < ApplicationController
     @task.company_id = current_user.company_id
     @task.updated_by_id = current_user.id
     @task.creator_id = current_user.id
-    @task.duration = parse_time(params[:task][:duration], true) 
-    @task.set_tags(tags) 
+    @task.duration = parse_time(params[:task][:duration], true)
+    @task.set_tags(tags)
     @task.set_task_num(current_user.company_id)
     @task.duration = 0 if @task.duration.nil?
 
@@ -352,11 +352,11 @@ class TasksController < ApplicationController
       render :action => 'new'
       return
     end
-    
+
     if @task.save
 
       session[:last_project_id] = @task.project_id
-      
+
       if params[:watchers]
         params[:watchers].uniq.each do |elem|
           elem.split(',').each do |w|
@@ -404,7 +404,7 @@ class TasksController < ApplicationController
       end
 
       create_attachments(@task)
-      
+
       worklog = WorkLog.new
       worklog.user = current_user
       worklog.company = @task.project.company
@@ -417,7 +417,7 @@ class TasksController < ApplicationController
       if (!params[:comment].nil? && params[:comment].length > 0)
         worklog.body =  CGI::escapeHTML(params[:comment])
         worklog.comment = true
-      end 
+      end
 
       worklog.save
       if params['notify'].to_i == 1
@@ -457,10 +457,10 @@ class TasksController < ApplicationController
                                                                                                                            flash['notice'] = _("You don't have access to that task, or it doesn't exist.")
                                                                                                                            redirect_from_last
                                                                                                                            return
-                                                                                                                         end 
-                                                                                                                           
-    
-    
+                                                                                                                         end
+
+
+
     @task.due_at = tz.utc_to_local(@task.due_at) unless @task.due_at.nil?
 	  @task.start_at = tz.utc_to_local(@task.start_at) unless @task.start_at.nil?
     @tags = Tag.top_counts({ :company_id => current_user.company_id, :project_ids => current_project_ids, :filter_hidden => session[:filter_hidden]})
@@ -471,8 +471,8 @@ class TasksController < ApplicationController
 
     @notify_targets = current_projects.collect{ |p| p.users.collect(&:name) }.flatten.uniq
     @notify_targets += Task.find(:all, :conditions => ["project_id IN (#{current_project_ids}) AND notify_emails IS NOT NULL and notify_emails <> ''"]).collect{ |t| t.notify_emails.split(',').collect{ |i| i.strip } }.flatten.uniq
-    
-    
+
+
 
   end
 
@@ -524,18 +524,18 @@ class TasksController < ApplicationController
     @repeat.save
 
   end
-  
+
   def add_comment
 	  projects = current_user.projects.collect{|p|p.id}
-	
+
 	  update_type = :updated
-	
+
 	  @task = Task.find(params[:id], :conditions => ["project_id IN (?)", projects], :include => [:tags])
-	
+
 	  body = ""
-	
+
 	  email_body = body
-	  
+
 	  worklog = WorkLog.new
       worklog.log_type = EventLog::TASK_MODIFIED
 
@@ -543,7 +543,7 @@ class TasksController < ApplicationController
 		update_type = :comment if body.length == 0
 		worklog.log_type = EventLog::TASK_COMMENT if body.length == 0
 		worklog.comment = true
-		
+
 		body << "\n" if body.length > 0
 		email_body = body + current_user.name + ":\n"
 
@@ -566,7 +566,7 @@ class TasksController < ApplicationController
   		  Notifications::deliver_changed( update_type, @task, current_user, email_body.gsub(/<[^>]*>/,'')) rescue nil
   		end
 	  end
-	  
+
 	  Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => @task.id)}');", ["tasks_#{current_user.company_id}"])
       Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'activities', :action => 'refresh')}');", ["activity_#{current_user.company_id}"])
 
@@ -617,12 +617,12 @@ class TasksController < ApplicationController
       else
         @task.repeat = nil
       end
-	  
+
 	  if !params[:task].nil? && !params[:task][:start_at].nil? && params[:task][:start_at].length > 0
 		start_date = DateTime.strptime( params[:task][:start_at], current_user.date_format ) rescue begin
 																									  flash['notice'] = _('Invalid start date ignored.')
 																									  start_date = nil
-		
+
 																							end
 		@task.start_at = tz.local_to_utc(start_date.to_time) unless start_date.nil?
 	  end
@@ -642,7 +642,7 @@ class TasksController < ApplicationController
               if w.include?('@')
                 @task.notify_emails ||= ""
                 @task.notify_emails << "," unless @task.notify_emails.empty?
-                @task.notify_emails << w                
+                @task.notify_emails << w
               end
             end
           end
@@ -661,7 +661,7 @@ class TasksController < ApplicationController
       end
 
       if params[:dependencies]
-        
+
         in_deps = []
         new_dependencies = []
 
@@ -673,14 +673,14 @@ class TasksController < ApplicationController
             in_deps << [dep.to_i]
           end
         end
-        
+
         in_deps.compact.uniq.each do |dep|
           t = Task.find(:first, :conditions => ["company_id = ? AND task_num = ?", current_user.company_id, dep])
           unless t.nil?
             new_dependencies << t
           end
         end
-        
+
         removed = @task.dependencies - new_dependencies
         @task.dependencies.delete(removed) if removed.size > 0
 
@@ -691,7 +691,7 @@ class TasksController < ApplicationController
             @task.dependencies << t
           end
         end
-        
+
       end
 
       @task.duration = parse_time(params[:task][:duration], true) if (params[:task] && params[:task][:duration])
@@ -761,14 +761,14 @@ class TasksController < ApplicationController
 
         body << "- <strong>Milestone</strong>: #{old_name} -> #{new_name}\n"
       end
-	  
+
 	  if @old_task.start_at != @task.start_at
 	    old_name = "None"
 		old_name = current_user.tz.utc_to_local(@old_task.start_at).strftime_localized("%A, %d %B %Y") unless @old_task.start_at.nil?
-		
+
 		new_name = "None"
 		new_name = current_user.tz.utc_to_local(@task.start_at).strftime_localized("%A, %d %B %Y") unless @task.start_at.nil?
-		
+
 		body << "- <strong>Start</strong>: #{old_name} -> #{new_name}\n"
 	  end
 
@@ -820,7 +820,7 @@ class TasksController < ApplicationController
 
         if( @old_task.status == 6 )
           @task.hide_until = nil
-        end 
+        end
 
       end
 
@@ -835,7 +835,7 @@ class TasksController < ApplicationController
         update_type = :comment if body.length == 0
         worklog.log_type = EventLog::TASK_COMMENT if body.length == 0
         worklog.comment = true
-        
+
         body << "\n" if body.length > 0
         email_body = body + current_user.name + ":\n"
 
@@ -929,10 +929,10 @@ class TasksController < ApplicationController
     rescue
       render :nothing => true
       return
-    end 
+    end
 
     old_status = @task.status_type
-    
+
     unless @task.completed_at
 
       worklog = WorkLog.new
@@ -951,13 +951,13 @@ class TasksController < ApplicationController
         worklog.log_type = EventLog::TASK_COMPLETED
         unless @current_sheet.body.blank?
           body = "\n#{@current_sheet.body}"
-          worklog.comment = true 
-        end 
-      else 
+          worklog.comment = true
+        end
+      else
         worklog.started_at = Time.now.utc
         worklog.duration = 0
         worklog.log_type = EventLog::TASK_COMPLETED
-      end 
+      end
 
       @task.completed_at = Time.now.utc
       @task.updated_by_id = current_user.id
@@ -968,7 +968,7 @@ class TasksController < ApplicationController
       worklog.body = "- <strong>Status</strong>: #{old_status} -> #{@task.status_type}\n" + body
       if worklog.save
         @current_sheet.destroy if @current_sheet && @current_sheet.task_id == @task.id
-      end 
+      end
 
 
       if @task.next_repeat_date != nil
@@ -1022,7 +1022,7 @@ class TasksController < ApplicationController
     if @current_sheet
       self.swap_work_ajax
     end
-    
+
     task = Task.find(params[:id], :conditions => ["company_id = ?", current_user.company_id])
     sheet = Sheet.new
 
@@ -1051,7 +1051,7 @@ class TasksController < ApplicationController
   end
 
   def cancel_work_ajax
-    if @current_sheet 
+    if @current_sheet
       @task = @current_sheet.task
       @current_sheet.destroy
       Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => @current_sheet.task_id)}');", ["tasks_#{current_user.company_id}"])
@@ -1120,7 +1120,7 @@ class TasksController < ApplicationController
     @log.started_at = tz.utc_to_local(Time.now.utc)
     @log.duration = 0
     @log.log_type = EventLog::TASK_WORK_ADDED
-    
+
     @log.save
     Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => @task.id)}');", ["tasks_#{current_user.company_id}"])
 
@@ -1140,8 +1140,8 @@ class TasksController < ApplicationController
       worklog.paused_duration = @current_sheet.paused_duration
       worklog.body = @current_sheet.body
       worklog.log_type = EventLog::TASK_WORK_ADDED
-      worklog.comment = true if @current_sheet.body && @current_sheet.body.length > 0 
-      
+      worklog.comment = true if @current_sheet.body && @current_sheet.body.length > 0
+
       if worklog.save
         worklog.task.updated_by_id = current_user.id
         worklog.task.save
@@ -1154,7 +1154,7 @@ class TasksController < ApplicationController
         @ts = Task.find(:first, :conditions=> ["id =?", @task.id])
         @task.severity_id = @ts.severity_id
 
-        
+
         render :action => 'edit_log'
         Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => @task.id)}');", ["tasks_#{current_user.company_id}"])
       else
@@ -1185,17 +1185,17 @@ class TasksController < ApplicationController
     unless @current_sheet
       render :text => "#{_("Task not worked on")} #{current_user.tz.utc_to_local(Time.now.utc).strftime_localized("%H:%M:%S")}"
       return
-    end 
-    if params[:worklog] && params[:worklog][:body] 
-      @current_sheet.body = params[:worklog][:body] 
+    end
+    if params[:worklog] && params[:worklog][:body]
+      @current_sheet.body = params[:worklog][:body]
       @current_sheet.save
       render :text => "#{_("Saved")} #{current_user.tz.utc_to_local(Time.now.utc).strftime_localized("%H:%M:%S")}"
-    else 
+    else
       render :text => "#{_("Error saving")} #{current_user.tz.utc_to_local(Time.now.utc).strftime_localized("%H:%M:%S")}"
-    end 
+    end
   end
-  
-  
+
+
   def update_sheet_info
   end
 
@@ -1296,26 +1296,26 @@ class TasksController < ApplicationController
     updated = false
 
     unless @log.nil?
-      if severity.eql? "sever" 
-        if @log.task.severity_id != 3       
-          Task.update( @task.id, :severity_id => 3 )        
+      if severity.eql? "sever"
+        if @log.task.severity_id != 3
+          Task.update( @task.id, :severity_id => 3 )
           updated = true
           if !@log.task.nil?
             @log.task.severity_id = 3
-            @log.task.save  
-          end 
-        end   
+            @log.task.save
+          end
+        end
       else
         if @log.task.severity_id != 0
-          Task.update( @task.id, :severity_id => 0 )        
+          Task.update( @task.id, :severity_id => 0 )
           updated = true
           unless @log.task.nil?
             @log.task.severity_id = 0
-            @log.task.save  
+            @log.task.save
           end
-        end 
+        end
       end
-    end   
+    end
 
 
     if !params[:log].nil? && !params[:log][:started_at].nil? && params[:log][:started_at].length > 0
@@ -1334,31 +1334,31 @@ class TasksController < ApplicationController
       @log.started_at = Time.now.utc if(@log.started_at.blank? || (params[:log] && (params[:log][:started_at].blank?)) )
 
       @log.duration = parse_time(params[:log][:duration])
-      @log.duration = old_duration if((old_duration / 60) == (@log.duration / 60)) 
+      @log.duration = old_duration if((old_duration / 60) == (@log.duration / 60))
 
       @log.task.updated_by_id = current_user.id
 
       @log.comment = !@log.body.blank?
-      
+
       if params[:task] && params[:task][:status].to_i != @log.task.status
 
         status_type = :completed
 
         if params[:task][:status].to_i < 2
-          @log.log_type = EventLog::TASK_WORK_ADDED 
+          @log.log_type = EventLog::TASK_WORK_ADDED
           status_type = :updated
-        end 
-        
+        end
+
         if params[:task][:status].to_i > 1 && @log.task.status < 2
-          @log.log_type = EventLog::TASK_COMPLETED 
+          @log.log_type = EventLog::TASK_COMPLETED
           status_type = :completed
-        end 
+        end
 
         if params[:task][:status].to_i < 2 && @log.task.status > 1
-          @log.log_type = EventLog::TASK_REVERTED 
+          @log.log_type = EventLog::TASK_REVERTED
           status_type= :reverted
-        end 
-        
+        end
+
         @log.task.status = params[:task][:status].to_i
         @log.task.updated_by_id = current_user.id
         @log.task.completed_at = Time.now.utc
@@ -1367,20 +1367,25 @@ class TasksController < ApplicationController
       elsif !params[:log][:body].blank? && params[:log][:body] != old_note && !params[:notify].nil?
         Notifications::deliver_changed( :comment, @log.task, current_user, params[:log][:body].gsub(/<[^>]*>/,'')) rescue nil
       end
-      
+
       @log.task.save
       @log.save
 
       # Assign log to user(s)
       if !params[:users].nil? && params[:users].length > 0
-        params[:users].each do |u|
-          newlog = @log.clone
-          newlog.user = User.find(u)
-          newlog.task.updated_by_id = u
-          newlog.save
+        # "Fix" bug where time was doubled if current user was the only one selected
+        if params[:users].length > 1 || (params[:users].length == 1 && params[:users].first.to_i != current_user.id)
+          last_updated_user = nil
+          params[:users].each do |u|
+            newlog = @log.clone
+            newlog.user = User.find(u.to_i)
+            newlog.save
+            last_updated_user = u.to_i
+          end
+          @task.updated_by_id = last_updated_user
+          @task.save
+          @log.destroy
         end
-
-        @log.destroy
       end
 
       flash['notice'] = _("Log entry saved...")
@@ -1582,7 +1587,7 @@ class TasksController < ApplicationController
         if elems[1].split('_').size > 2
           milestone = Milestone.find(elems[1].split('_')[2], :conditions => ["project_id IN (#{current_project_ids})"])
 
-          
+
           if @task.milestone_id != milestone.id
             old_milestone = @task.milestone.nil? ? "None" : @task.milestone.name
             new_milestone = milestone.nil? ? "None" : milestone.name
@@ -1633,9 +1638,9 @@ class TasksController < ApplicationController
     session[:only_comments] = 1 - session[:only_comments]
 
     @task = Task.find(params[:id], :conditions => ["project_id IN (#{current_project_ids})"])
-    unless @logs = WorkLog.find(:all, 
-                    :order => "work_logs.started_at desc,work_logs.id desc", 
-                    :conditions => ["work_logs.task_id = ? #{"AND (work_logs.comment = 1 OR work_logs.log_type=6)" if session[:only_comments].to_i == 1}", @task.id], 
+    unless @logs = WorkLog.find(:all,
+                    :order => "work_logs.started_at desc,work_logs.id desc",
+                    :conditions => ["work_logs.task_id = ? #{"AND (work_logs.comment = 1 OR work_logs.log_type=6)" if session[:only_comments].to_i == 1}", @task.id],
                     :include => [:user, :task, :project])
       @logs = []
     end
@@ -1658,7 +1663,7 @@ class TasksController < ApplicationController
       page.visual_effect(:highlight, "quick_add_container", :duration => 0.5)
     end
   end
-  
+
   def quick_add_schedule
     self.new
 	render :update do |page|
@@ -1687,7 +1692,7 @@ class TasksController < ApplicationController
       end
     end
   end
-  
+
   def create_ajax_schedule
     self.create
 	unless @task.id
@@ -1801,7 +1806,7 @@ class TasksController < ApplicationController
   end
 
   def pause_work_ajax
-    if @current_sheet 
+    if @current_sheet
       if @current_sheet.paused_at
         @current_sheet.paused_duration += (Time.now.utc - @current_sheet.paused_at).to_i
         @current_sheet.paused_at = nil
@@ -1809,7 +1814,7 @@ class TasksController < ApplicationController
         @current_sheet.paused_at = Time.now.utc
       end
       @current_sheet.save
-    else 
+    else
       render :nothing => true
       Juggernaut.send( "do_update(0, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => params[:id])}');", ["tasks_#{current_user.company_id}"])
       return
@@ -1873,18 +1878,18 @@ class TasksController < ApplicationController
       render :update do |page|
         page.replace @todo.dom_id, :partial => "todo_edit_row"
         page << "$('todo_text_#{@todo.dom_id}').focus();"
-      end 
-    else 
+      end
+    else
       @todo.name = params[:todo][:name]
       @todo.save
       render :update do |page|
         page.replace_html @todo.dom_id, :partial => "todo_row"
         page << "Sortable.create(\"todo-#{@todo.task.dom_id}\", {containment:'todo-#{@todo.task.dom_id}', format:/^[^-]*-(.*)$/, onUpdate:function(){new Ajax.Request('/tasks/order_todos/#{@todo.task.id}', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize(\"todo-#{@todo.task.dom_id}\")})}, only:'todo-active'})"
         page.call("updateTooltips")
-      end 
+      end
       Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'tasks', :action => 'update_tasks', :id => @todo.task.id)}');", ["tasks_#{current_user.company_id}"])
       Juggernaut.send( "do_update(#{current_user.id}, '#{url_for(:controller => 'activities', :action => 'refresh')}');", ["activity_#{current_user.company_id}"])
-    end 
+    end
   end
 
   def todo_edit_cancel_ajax
@@ -1900,9 +1905,9 @@ class TasksController < ApplicationController
     render :update do |page|
       page.replace @todo.dom_id, :partial => "todo_row"
       page << "Sortable.create(\"todo-#{@todo.task.dom_id}\", {containment:'todo-#{@todo.task.dom_id}', format:/^[^-]*-(.*)$/, onUpdate:function(){new Ajax.Request('/tasks/order_todos/#{@todo.task.id}', {asynchronous:true, evalScripts:true, parameters:Sortable.serialize(\"todo-#{@todo.task.dom_id}\")})}, only:'todo-active'})"
-    end 
+    end
 
-  end 
+  end
 
   def todo_check_ajax
     begin
@@ -1994,7 +1999,7 @@ class TasksController < ApplicationController
 
   def tags
     @tags = current_user.company.tags
-  end 
+  end
 
   def delete_tag
     tag = current_user.company.tags.find(params[:id]) rescue nil
@@ -2002,53 +2007,53 @@ class TasksController < ApplicationController
       tag.destroy
       render :update do |page|
         page.remove tag.dom_id
-      end 
-    else 
+      end
+    else
       render :nothing => true
-    end 
-  end 
+    end
+  end
 
   def save_tag
     @tag = current_user.company.tags.find(params[:id]) rescue nil
     if @tag && !params['tag-name'].blank?
       if Tag.exists?(:company_id => current_user.company_id, :name => params['tag-name'])
-        
+
         @existing = current_user.company.tags.find(:first, :conditions => ["name = ?", params['tag-name']] )
         if @existing.id != @tag.id
           @tag.tasks.each do |t|
             @existing.tasks << t
-          end 
+          end
           @tag.destroy
           render :update do |page|
             page[@tag.dom_id].remove
             @tag = @existing
             page[@tag.dom_id].replace :partial => 'edit_tag_row'
-          end 
+          end
         else
           render :update do |page|
             page[@tag.dom_id].replace :partial => 'edit_tag_row'
-          end 
+          end
 
-        end 
+        end
 
-      else 
+      else
         @tag.name = params['tag-name']
         @tag.save
         render :update do |page|
           page[@tag.dom_id].replace :partial => 'edit_tag_row'
-        end 
-      end 
-    else 
+        end
+      end
+    else
       render :nothing => true
-    end 
+    end
   end
 
   def get_comment
     @task = Task.find(params[:id], :conditions => "project_id IN (#{current_project_ids})") rescue nil
     if @task
       @comment = WorkLog.find(:first, :order => "work_logs.started_at desc,work_logs.id desc", :conditions => ["work_logs.task_id = ? AND work_logs.comment = 1", @task.id], :include => [:user, :task, :project])
-    end 
-  end 
+    end
+  end
 
   private
 
@@ -2061,7 +2066,7 @@ class TasksController < ApplicationController
         filename = filename.split("/").last
         filename = filename.split("\\").last
         filename = filename.gsub(/[^\w.]/, '_')
-        
+
         task_file = ProjectFile.new()
         task_file.company = current_user.company
         task_file.customer = task.project.customer
@@ -2072,15 +2077,15 @@ class TasksController < ApplicationController
         task_file.name = filename
         task_file.save
         task_file.file_size = tmp_file.size
-        
+
         task_file.save
         task_file.reload
-        
+
         File.umask(0)
         if !File.directory?(task_file.path)
           Dir.mkdir(task_file.path, 0777) rescue nil
         end
-        
+
         File.open(task_file.file_path, "wb", 0777) { |f| f.write( tmp_file.read ) } rescue begin
                                                                                              task_file.destroy
                                                                                              task_file = nil
@@ -2107,6 +2112,6 @@ class TasksController < ApplicationController
     filenames
   end
 
-  
+
 
 end
