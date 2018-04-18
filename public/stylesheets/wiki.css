@@ -112,11 +112,14 @@
   text-align: right;
   content: counter(item) ".";
 }
-
 #wiki pre {
 	background-color: #eee;
 	border: 1px dashed #47acdf;
 	font-size: 1.6rem;
+	overflow: auto;
+    overflow-x: scroll;
+    width: 100%;
+    max-width: 800px;
 }
 #wiki .external a {
 	background: url(/images/icon_world.gif) no-repeat 0% 0;
