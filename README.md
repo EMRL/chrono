@@ -4,6 +4,9 @@
 
 Chrono is project management and time tracking for design and development agencies.
 
+![Chrono screenshot](https://raw.githubusercontent.com/EMRL/chrono/master/public/images/chrono.png
+)
+
 ## Changes
 
 Chrono is based on [ClockingIT](http://clockingit.com); here are just a few things we've changed or added over the years. Many of these tasks are ongoing.
