@@ -1518,21 +1518,21 @@ h4 {
 }
 .file_cell_img {
 	display: table-cell;
-	height: 145px;
+	height: 200px;
 	padding-left: 14px;
 	padding-top: 0.5em;
 	text-align: center;
 	vertical-align: middle;
-	width: 175px;
+	width: 200px;
 }
 .file_cell_icon {
 	display: table-cell;
-	height: 145px;
+	height: 200px;
 	padding-top: 0.5em;
 	text-align: center;
 	vertical-align: middle;
-	width: 175px;
-		font-size: 5.0em;
+	width: 200px;
+	font-size: 8.0em;
 }
 .group-active {
 	border-left: 3px solid #FF9900;
