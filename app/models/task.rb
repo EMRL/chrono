@@ -54,6 +54,8 @@ class Task < ActiveRecord::Base
   validates_presence_of		:company
   validates_presence_of		:project
 
+  validates_numericality_of :duration, :greater_than => 0, :if => Proc.new { |o| o.creator.option_tracktime.to_i == 1 }
+
   after_save { |r|
     r.ical_entry.destroy if r.ical_entry
 
