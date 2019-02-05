@@ -867,6 +867,11 @@ class TasksController < ApplicationController
       flash['notice'] ||= "#{link_to_task(@task)} - #{_('Task was successfully updated.')}"
       redirect_from_last
     else
+      unless @logs = WorkLog.find(:all, :order => "work_logs.started_at desc,work_logs.id desc", :conditions => ["work_logs.task_id = ? #{"AND (work_logs.comment = 1 OR work_logs.log_type=6)" if session[:only_comments].to_i == 1}", @task.id], :include => [:user, :task, :project])
+          @logs = []
+      end
+      @notify_targets = current_projects.collect{ |p| p.users.collect(&:name) }.flatten.uniq
+      @notify_targets += Task.find(:all, :conditions => ["project_id IN (#{current_project_ids}) AND notify_emails IS NOT NULL and notify_emails <> ''"]).collect{ |t| t.notify_emails.split(',').collect{ |i| i.strip } }.flatten.uniq
       render :action => 'edit'
     end
   end

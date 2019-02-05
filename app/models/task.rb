@@ -2,7 +2,7 @@
 #
 # Belongs to a project, milestone, creator
 # Has many tags, users (through task_owners), tags (through task_tags),
-#   dependencies (tasks which should be done before this one) and 
+#   dependencies (tasks which should be done before this one) and
 #   dependants (tasks which should be done after this one),
 #   todos, and sheets
 #
@@ -50,11 +50,11 @@ class Task < ActiveRecord::Base
 
   validates_length_of           :name,  :maximum=>200, :allow_nil => true
   validates_presence_of         :name
-  
+
   validates_presence_of		:company
   validates_presence_of		:project
 
-  validates_numericality_of :duration, :greater_than => 0, :if => Proc.new { |o| o.creator.option_tracktime.to_i == 1 }
+  validates_presence_of :duration, :if => Proc.new { |o| o.creator.option_tracktime.to_i == 1 }
 
   after_save { |r|
     r.ical_entry.destroy if r.ical_entry
@@ -76,7 +76,7 @@ class Task < ActiveRecord::Base
       p.total_tasks = nil
       p.save
     end
-    
+
     r.milestone.update_counts if r.milestone
   }
 
@@ -299,15 +299,15 @@ class Task < ActiveRecord::Base
   def started?
     worked_minutes > 0 || self.worked_on?
   end
-  
+
   def due_date
     if self.due_at?
       self.due_at
     elsif self.milestone_id.to_i > 0 && milestone && milestone.due_at?
       milestone.due_at
-    else 
+    else
       nil
-    end 
+    end
   end
 
   def scheduled_date
@@ -316,62 +316,62 @@ class Task < ActiveRecord::Base
         self.scheduled_at
       elsif self.milestone
         self.milestone.scheduled_date
-      end 
-    else 
+      end
+    else
       if self.due_at?
         self.due_at
       elsif self.milestone
         self.milestone.scheduled_date
       end
-    end 
-  end 
+    end
+  end
 
   def scheduled_due_at
     if self.scheduled?
       self.scheduled_at
-    else 
+    else
       self.due_at
-    end 
-  end 
+    end
+  end
 
   def scheduled_duration
     if self.scheduled?
       @attributes['scheduled_duration'].to_i
-    else 
+    else
       self.duration.to_i
-    end 
+    end
   end
 
   def recalculate_worked_minutes
     self.worked_minutes = WorkLog.sum(:duration, :conditions => ["task_id = ?", self.id]).to_i / 60
   end
-  
+
   def minutes_left
-    d = self.duration.to_i - self.worked_minutes 
+    d = self.duration.to_i - self.worked_minutes
     d = 240 if d < 0 && self.duration.to_i > 0
     d = 0 if d < 0
     d
   end
 
   def scheduled_minutes_left
-    d = self.scheduled_duration.to_i - self.worked_minutes 
+    d = self.scheduled_duration.to_i - self.worked_minutes
     d = 240 if d < 0 && self.scheduled_duration.to_i > 0
     d = 0 if d < 0
     d
-  end 
+  end
 
   def overworked?
     ((self.duration.to_i - self.worked_minutes) < 0 && (self.duration.to_i) > 0)
   end
-  
+
   def full_name
     if self.project
 	  # Removed tags display in task list until better formatting can be implemented.
       #[self.project.full_name, self.full_tags].join(' / ')
 	  [self.project.full_name].join(' / ')
-    else 
+    else
       ""
-    end 
+    end
   end
 
   def full_tags
@@ -614,12 +614,12 @@ class Task < ActiveRecord::Base
       owners = self.users.collect{|u| u.name}.join(', ') unless self.users.empty?
 
       res = "<table id=\"task_tooltip\" cellpadding=0 cellspacing=0>"
-	  
+
 	  img = nil
 	  if File.exists?(self.project.customer.logo_path)
 		img = "<img width=\"25\" height=\"25\" src=\"/admin/show_logo/#{self.project.customer_id}\" />"
 	  end
-	  
+
 	  res << "<tr><th class=\"client-name\" colspan=\"2\">#{img}#{self.project.customer.name}</th></tr>"
       res << "<tr><th>#{_('Summary')}</th><td>#{self.name}</tr>"
       res << "<tr><th>#{_('Project')}</th><td>#{self.project.full_name}</td></tr>"
@@ -641,7 +641,7 @@ class Task < ActiveRecord::Base
       res << "<tr><th>#{_('Description')}</th><td class=\"tip_description\">#{self.description_wrapped.gsub(/\n/, '<br/>').gsub(/\"/,'&quot;').gsub(/</,'&lt;').gsub(/>/,'&gt;')}</td></tr>" unless self.description.blank?
       res << "</table>"
       @tip = res.gsub(/\"/,'&quot;')
-    end 
+    end
     @tip
   end
 
@@ -651,7 +651,7 @@ class Task < ActiveRecord::Base
     else
       nil
     end
-  end 
+  end
 
   def css_classes
     unless @css
@@ -659,10 +659,10 @@ class Task < ActiveRecord::Base
       when 0 then ""
       when 1 then " in_progress"
       when 2 then " closed"
-      else 
+      else
         " invalid"
       end
-    end   
+    end
     @css
   end
 
@@ -676,11 +676,11 @@ class Task < ActiveRecord::Base
 
   def order_default
     [-(self.severity_id + self.priority), self.due_date.to_i, self.milestone ? 1 : 0, self.milestone_id.to_i > 0 ? self.milestone.name : ""]
-  end 
+  end
 
   def order_date
     [self.created_at.to_i]
-  end 
+  end
 
   def icon(icon_type = nil)
     icon_type ||= type_id
@@ -691,14 +691,14 @@ class Task < ActiveRecord::Base
       when 3 then "<i class=\"icon-book icon-large tooltip\" title=\"#{_'Research'}\"></i>"
       when 4 then "<i class=\"icon-briefcase icon-large tooltip\" title=\"#{_'Management'}\"></i>"
 	  when 5 then "<i class=\"icon-group icon-large tooltip\" title=\"#{_'Meeting'}\"></i>"
-    end 
-  end 
+    end
+  end
 
   def worked_and_duration_class
     if worked_minutes > duration
       "overtime"
-    else 
+    else
       "undertime"
-    end 
-  end 
+    end
+  end
 end
