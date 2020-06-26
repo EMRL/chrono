@@ -1164,6 +1164,11 @@ a.description {
 	filter: alpha(opacity=100);
 	opacity: 1.0;
 }
+
+#task_list [name="task[done]"] {
+    display: none;
+}
+
 .content_body {
 	background-color: #FFFFFF;
 }
