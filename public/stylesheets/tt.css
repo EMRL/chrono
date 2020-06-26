@@ -1165,7 +1165,24 @@ a.description {
 	opacity: 1.0;
 }
 
-#task_list [name="task[done]"] {
+.task input[type="checkbox"][name="task[done]"] {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    bottom: -1px;
+    left: 37px;
+    color: #c00;
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 10px;
+}
+
+.task input[type="checkbox"][name="task[done]"]::after {
+    content: "Close task";
+}
+
+.task:not(:hover) input[type="checkbox"][name="task[done]"]::after {
     display: none;
 }
 
