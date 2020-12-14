@@ -17,18 +17,7 @@
     }
     window.onload=GetClock;
   </script>
-  <span id="clockbox"></span> &bull; 
-  <span id="res" class="tooltip" title="This is the temperature at our shop.<br />It whimsically updates whenever it feels like it."></span><br />
-
-  <!--// Ok, grabbing the weather from Yahoo's JSON API. The URL seems more than a little bit ghetto, with slow or no updates. FML //-->
-  <script>
-    function weather(o){
-    document.getElementById("res").innerHTML=""+o.query.results.channel.item.condition.temp+"&deg;"
-    document.getElementById("upd").innerHTML=o.query.results.channel.item.condition.date
-    }
-  </script>
-  <script type="text/javascript" src="http://query.yahooapis.com/v1/public/yql?q=select%20item%20from%20weather.forecast%20where%20location%3D%2295814%22&format=json&callback=weather">
-  </script>
+  <span id="clockbox"></span>
   <%= "#{online_users} #{_('Online')}" %>
 </div>
 

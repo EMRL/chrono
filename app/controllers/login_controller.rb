@@ -38,7 +38,7 @@ class LoginController < ApplicationController
         if !@company.nil?
           render :action => 'login', :layout => false
         else
-          redirect_to "http://www.#{$CONFIG[:domain]}"
+          redirect_to "//www.#{$CONFIG[:domain]}"
         end
       end
     end   
